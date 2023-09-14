@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Personal;
 
 class PersonalController extends Controller
 {
@@ -11,7 +12,8 @@ class PersonalController extends Controller
      */
     public function index()
     {
-        //
+        $personals = Personal::all();
+        return view('VistaPersonal.index', compact('personals'));
     }
 
     /**
@@ -60,5 +62,30 @@ class PersonalController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function buscarPersonal(Request $request){
+        $texto = $request->input('texto');
+        $ordenarPor = $request->input('ordenar', 'id');
+
+    switch ($ordenarPor) {
+        case 'salario-desc':
+            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('precio', 'desc')->get();
+            break;
+        case 'salario-asc':
+            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('precio', 'asc')->get();
+            break;
+        case 'stock-desc':
+            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('especialidad')->get();
+            break;
+        case 'stock-asc':
+            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('turno')->get();
+            break;
+        default:
+            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('id')->get();
+            break;
+    }
+
+    return view('_resultadoPersonal', compact('personals'));
     }
 }

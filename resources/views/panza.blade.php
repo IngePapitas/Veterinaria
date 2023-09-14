@@ -53,14 +53,14 @@
         <!-- Barra lateral de navegación (oculta en dispositivos pequeños) -->
         <div class="p-2 bg-white w-full md:w-60 flex flex-col md:flex hidden" id="sideNav">
             <nav>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('dashboard') }}">
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Dashboard') }}">
                     <i class="fas fa-home mr-2"></i>Inicio
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
                     <i class="fas fa-file-alt mr-2"></i>Autorizaciones
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Personal.index')}}">
-                    <i class="fas fa-users mr-2"></i>Usuarios
+                    <i class="fas fa-users mr-2"></i>Personal
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
                     <i class="fas fa-store mr-2"></i>Comercios
@@ -92,7 +92,7 @@
                 <div class="absolute top-1 left-2 inline-flex items-center p-2">
                     <i class="fas fa-search text-gray-400"></i>
                 </div>
-                <input class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" type="search" placeholder="Buscar...">
+                <input class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" id="buscar"type="search" placeholder="Buscar...">
             </div>
 
             <!-- Contenedor de Gráficas -->
@@ -100,7 +100,7 @@
                 <!-- Primer contenedor -->
                 <!-- Sección 1 - Gráfica de Usuarios -->
                 <div class="flex-1 bg-white p-4 shadow rounded-lg md:w-1/2">
-                {{ $slot }}
+                @yield('Panza')
                 </div>
 
 
