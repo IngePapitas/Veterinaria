@@ -6,7 +6,13 @@
     </td>
     <td class="border px-4 py-2">{{ $personal->nombre }}</td>
     <!-- <td class="border px-4 py-2">{{ $producto->descripcion }}</td> -->
-    <td class="border px-2 py-2">{{ $personal->especialidad }} Bs.</td>
+
+    <td class="border px-2 py-2">
+        @php
+        $especialidad = $personal->especialidad;
+        @endphp
+        {{ $especialidad ? $especialidad->descripcion : 'Sin especialidad' }}
+    </td>
     <td class="border px-4 py-2">{{ $personal->salario }}</td>
     <td class="border px-4 py-2">
         <a href="{{ route('Personal.edit', $personal->id) }}" class="text-blue-600 hover:text-gray-800">

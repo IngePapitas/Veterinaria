@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            @include('_resultadosProductos')
+            @include('_resultadoPersonal')
         </tbody>
     </table>
 </div>

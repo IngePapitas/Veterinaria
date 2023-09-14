@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Personal;
+use App\Models\Especialidad;
 
 class PersonalController extends Controller
 {
@@ -12,6 +13,7 @@ class PersonalController extends Controller
      */
     public function index()
     {
+        $especialidads = Especialidad::all();
         $personals = Personal::all();
         return view('VistaPersonal.index', compact('personals'));
     }
@@ -21,7 +23,7 @@ class PersonalController extends Controller
      */
     public function create()
     {
-        //
+        return view('VistaPersonal.create');
     }
 
     /**

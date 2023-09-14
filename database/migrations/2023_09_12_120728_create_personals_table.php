@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('imagen_path');
             $table->string('telefono');
             $table->integer('sueldo');
-            $table->string('especialidad');
+            $table->unsignedBigInteger('id_especialidad'); // Debe ser unsigned
             $table->timestamps();
+
+            // Definir la relación con la tabla 'especialidades'
+            $table->foreign('id_especialidad')->references('id')->on('especialidads');
         });
     }
 
