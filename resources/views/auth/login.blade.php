@@ -1,5 +1,40 @@
 <x-guest-layout>
-    <x-authentication-card>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col">
+                <div class="text-end">
+                    <img src="{{asset('images/logo-prueba.jpg')}}" width="48" alt="">
+                </div>
+                <h2 class="fw-bold text-center py-5">Bienvenido</h2>
+
+                <!--LOGIN-->
+                <form action="#">
+                    <div class="mb-4">
+                        <label for="email" class="form-label"> Correo Electronico</label>
+                        <input type="email" class="form-control" name="email">
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label"> Contraseña</label>
+                        <input type="password" class="form-control" name="password">
+                    </div>
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" name="connected" class="form-check-input">
+                        <label for="connected" class="form-check-label">Mantenerme conectado</label>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--<x-authentication-card>        
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
@@ -43,6 +78,6 @@
                     {{ __('Log in') }}
                 </x-button>
             </div>
-        </form>
-    </x-authentication-card>
+        </form> 
+    </x-authentication-card> -->
 </x-guest-layout>
