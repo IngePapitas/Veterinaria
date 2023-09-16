@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('personals', function (Blueprint $table) {
             $table->id();
+            $table->string('ci');
             $table->string('nombre');
-            $table->string('imagen_path');
+            $table->string('imagen_path')->nullable();
             $table->string('telefono');
-            $table->integer('sueldo');
+            $table->integer('sueldo')->nullable();
+            $table->boolean('estado');
+            $table->boolean('baja');
             $table->unsignedBigInteger('id_especialidad'); // Debe ser unsigned
             $table->timestamps();
 

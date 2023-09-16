@@ -9,7 +9,7 @@ class Personal extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nombre', 'imagen_path', 'telefono', 'sueldo', 'id_especialidad',
+        'ci','nombre', 'imagen_path', 'telefono', 'sueldo', 'estado', 'baja', 'id_especialidad',
     ];
 
     // Definir la relación con la tabla 'especialidades'

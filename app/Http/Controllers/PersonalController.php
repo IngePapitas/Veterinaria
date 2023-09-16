@@ -13,7 +13,6 @@ class PersonalController extends Controller
      */
     public function index()
     {
-        $especialidads = Especialidad::all();
         $personals = Personal::all();
         return view('VistaPersonal.index', compact('personals'));
     }
@@ -23,7 +22,8 @@ class PersonalController extends Controller
      */
     public function create()
     {
-        return view('VistaPersonal.create');
+        $especialidades = [];
+        return view('VistaPersonal.create', compact('especialidades'));
     }
 
     /**
@@ -31,7 +31,27 @@ class PersonalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $personal = new Personal();
+        $personal->ci = $request->ci;
+        $personal->nombre = $request->nombre;
+        $personal->telefono = $request->sueldo;
+        $personal->imagen_path = $request->imagen_path;
+        $personal->baja = false;
+        $personal->estado = false;
+        $personal->sueldo = $request->sueldo;
+        
+        $especialidad = Especialidad::where('descripcion', $request->especialidad)->first();
+
+        if(!$especialidad){
+            $especialidad = new Especialidad();
+            $especialidad->descripcion = $request->especialidad;
+            $especialidad->save();
+        }
+        
+        $personal->id_especialidad = $especialidad->id; 
+        $personal->save();
+        return redirect()->route('Personal.index');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Especialidad;
 use Illuminate\Http\Request;
 
 class EspecialidadController extends Controller
@@ -60,5 +61,12 @@ class EspecialidadController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function buscarEspecilalidad(Request $request){
+        $texto = $request->input('texto');
+        $especialidades = Especialidad::where('descripcion','LIKE', "%$texto%")->get();
+        return view('_resultadoEspecialidades_PersonalCreate', compact('especialidades'));
+
     }
 }
