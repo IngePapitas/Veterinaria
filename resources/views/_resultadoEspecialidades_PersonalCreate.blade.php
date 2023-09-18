@@ -1,4 +1,9 @@
 @foreach($especialidades as $especialidad)
-    <button id="buttonEspecialidad{{ $especialidad->id }}" value="{{ $especialidad->descripcion }}" class="border px-4 py-2 m-2">{{ $especialidad->descripcion }}</button>
+<tr class="border-t-2 border-gray-200"> 
+    <td>
+    <button id="buttonEspecialidad{{ $especialidad->id }}" type="button" value="{{ $especialidad->descripcion }}" class="px-4 - m-2">{{ $especialidad->descripcion }}</button>
+    </td>
+</tr>
 @endforeach
+
 
