@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('imagen_path')->nullable();
             $table->string('telefono');
+            $table->string('sexo');
             $table->integer('sueldo')->nullable();
             $table->boolean('estado');
             $table->boolean('baja');

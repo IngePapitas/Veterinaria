@@ -31,12 +31,22 @@ class PersonalController extends Controller
      */
     public function store(Request $request)
     {
+         /*else {
+            // Si no se proporcionó una imagen, determinar el avatar en función del sexo
+            $sexo = $request->input('sexo');
+            $avatar = ($sexo === 'Mujer') ? 'AvataresDoctor/AvatarMujer.jpeg' : 'AvataresDoctor/AvatarDoctor.jpeg';
+            $imagenPath = 'public/' . $avatar;
+        }*/
         // dd($request);
         $personal = new Personal();
         $personal->ci = $request->ci;
         $personal->nombre = $request->nombre;
-        $personal->telefono = $request->sueldo;
-        $personal->imagen_path = $request->imagen_path;
+        $personal->telefono = $request->telefono;
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('public/imagenesPersonal');
+            $personal->imagen_path = $imagenPath;
+        }
+        $personal->sexo = $request->sexo;
         $personal->baja = false;
         $personal->estado = false;
         $personal->sueldo = $request->sueldo;
@@ -67,47 +77,106 @@ class PersonalController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $personal = Personal::findOrFail($id);
+        $especialidades = Especialidad::all();
+        return view('VistaPersonal.edit', compact('personal', 'especialidades'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, $id)
+{
+    // Validar los datos del formulario si es necesario
+
+    // Obtener el registro existente de Personal que deseas actualizar
+    $personal = Personal::findOrFail($id);
+
+    // Actualizar los campos con los datos del formulario
+    $personal->ci = $request->ci;
+    $personal->nombre = $request->nombre;
+    $personal->telefono = $request->telefono;
+    $personal->sexo = $request->sexo;
+    $personal->sueldo = $request->sueldo;
+
+    // Actualizar la especialidad (similar a cómo lo hiciste en el controlador de store)
+    $especialidad = Especialidad::where('descripcion', $request->especialidad)->first();
+    if (!$especialidad) {
+        $especialidad = new Especialidad();
+        $especialidad->descripcion = $request->especialidad;
+        $especialidad->save();
     }
+    $personal->id_especialidad = $especialidad->id;
+
+    // Actualizar la imagen si se proporciona una nueva
+    if ($request->hasFile('imagen')) {
+        $imagenPath = $request->file('imagen')->store('public/imagenesPersonal');
+        $personal->imagen_path = $imagenPath;
+    }
+
+    // Guardar los cambios en la base de datos
+    $personal->save();
+    $personals = Personal::all();
+    // Redirigir a la vista de detalles o a donde desees después de la actualización
+    return redirect()->route('Personal.index', compact('personals'));
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        try {
+            $personal = Personal::findOrFail($id); // Encuentra el personal por su ID o lanza una excepción si no existe
+            $personal->delete(); // Elimina el registro del personal
+
+            return redirect()->route('Personal.index')->with('success', 'Personal eliminado correctamente');
+        } catch (\Exception $e) {
+            return redirect()->route('Personal.index')->with('error', 'No se pudo eliminar el personal');
+        }
     }
 
     public function buscarPersonal(Request $request){
         $texto = $request->input('texto');
         $ordenarPor = $request->input('ordenar', 'id');
-
+        $especialidades = Especialidad::all();
     switch ($ordenarPor) {
         case 'salario-desc':
-            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('precio', 'desc')->get();
+            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('sueldo', 'desc')->get();
             break;
         case 'salario-asc':
-            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('precio', 'asc')->get();
+            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('sueldo', 'asc')->get();
             break;
-        case 'stock-desc':
-            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('especialidad')->get();
+        case 'especialidad':
+            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('id_especialidad')->get();
             break;
-        case 'stock-asc':
+        case 'turno':
             $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('turno')->get();
             break;
         default:
-            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('id')->get();
+        $personals = Personal::where(function ($query) use ($texto) {
+            $query->where('nombre', 'LIKE', "%$texto%")
+                  ->orWhereHas('especialidades', function ($query) use ($texto) {
+                      $query->where('descripcion', 'LIKE', "%$texto%");
+                  });
+        })
+        ->orderBy('id')
+        ->get();
+        
             break;
     }
 
     return view('_resultadoPersonal', compact('personals'));
     }
+
+    public function baja($id){
+        //dd($id);
+        $personal = Personal::findOrFail($id);
+        $personal->baja = !$personal->baja;
+        $personal->save();
+        $personals = Personal::all();
+        return redirect()->route('Personal.index', compact('personals'));
+    }
+    
 }

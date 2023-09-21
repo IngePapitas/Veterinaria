@@ -1,7 +1,7 @@
 @extends('Panza')
 
 @section('Panza')
-<form action="{{ route('Personal.store') }}" method="POST" class="flex mt-4 overflow-hidden">
+<form action="{{ route('Personal.store') }}" method="POST" class="flex mt-4 overflow-hidden" enctype="multipart/form-data">
     @csrf
     <div class="w-1/4 h-screen bg-gray-200">
         <div class="w-full bg-blue-300 flex items-center justify-center" id="avatar-container" style="padding-bottom: 100%;">
@@ -10,7 +10,7 @@
             </button>
         </div>
         <div class="mb-4 flex items-center justify-center my-4">
-            <input type="file" id="cargarImagen" accept="image/*" class="hidden">
+            <input type="file" name="imagen" id="cargarImagen" accept="image/*" class="hidden">
             <label for="cargarImagen" class="cursor-pointer bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Cargar imagen
             </label>
@@ -19,8 +19,7 @@
 
     </div>
     <div class="w-3/4 h-screen bg-blue-200 p-16">
-        <form action="{{ route('Personal.store') }}" method="POST" class="flex mt-4 overflow-hidden">
-            @csrf
+        
 
             <div class="mb-4">
                 <label for="ci" class="block text-gray-700 text-sm font-bold mb-2">CI:</label>
@@ -75,7 +74,7 @@
                     Guardar
                 </button>
             </div>
-        </form>
+        
     </div>
 
 
