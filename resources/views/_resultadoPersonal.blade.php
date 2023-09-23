@@ -7,9 +7,9 @@
         <img src="{{ Storage::url($personal->imagen_path) }}" alt="{{ $personal->nombre }}" class="h-20 w-20 object-cover rounded-full">
         @else
         @if($personal->sexo === 'Mujer')
-        <img src="{{ asset('public/AvataresDoctor/AvatarMujer.jpeg') }}" alt="Avatar Mujer" class="h-20 w-20 object-cover rounded-full">
+        <img src="{{ Storage::url('AvataresDoctor/AvatarMujer.jpeg') }}" alt="Avatar Mujer" class="h-20 w-20 object-cover rounded-full">
         @else
-        <img src="{{ asset('public/AvataresDoctor/AvatarDoctor.jpeg') }}" alt="Avatar Hombre" class="h-20 w-20 object-cover rounded-full">
+        <img src="{{ Storage::url('AvataresDoctor/AvatarDoctor.jpeg') }}" alt="Avatar Hombre" class="h-20 w-20 object-cover rounded-full">
         @endif
         @endif
     </td>

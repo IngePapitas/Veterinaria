@@ -56,18 +56,13 @@
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Dashboard') }}">
                     <i class="fas fa-home mr-2"></i>Inicio
                 </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                    <i class="fas fa-file-alt mr-2"></i>Autorizaciones
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Paciente.index')}}">
+                    <i class="fa-solid fa-dog mr-2"></i>Pacientes
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Personal.index')}}">
                     <i class="fas fa-users mr-2"></i>Personal
                 </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                    <i class="fas fa-store mr-2"></i>Comercios
-                </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                    <i class="fas fa-exchange-alt mr-2"></i>Transacciones
-                </a>
+                
             </nav>
 
             <!-- Ítem de Cerrar Sesión -->

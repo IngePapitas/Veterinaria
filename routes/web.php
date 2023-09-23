@@ -31,5 +31,12 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::put('/personal/{personal}/baja', [PersonalController::class, 'baja'])->name('Personal.baja');
     Route::get('/buscar-especialidades-create', [EspecialidadController::class, 'buscarEspecilalidad'])->name('Especialidad.buscarEspecilalidad');
     Route::delete('/personal/{personal}', [PersonalController::class, 'destroy'])->name('Personal.destroy');
+
+    Route::get('/paciente', [PacienteController::class, 'index'])->name('Paciente.index');
+    Route::get('/paciente/create', [PacienteController::class, 'create'])->name('Paciente.create');
+    Route::post('/paciente', [PacienteController::class, 'store'])->name('Paciente.store');
+    Route::get('/paciente/{paciente}/edit', [PacienteController::class, 'edit'])->name('Paciente.edit');
+    Route::put('/paciente/{paciente}', [PacienteController::class, 'update'])->name('Paciente.update');
+    Route::get('/buscar-paciente', [PacienteController::class, 'buscarPaciente'])->name('Paciente.buscarPaciente');
     
 });

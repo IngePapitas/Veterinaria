@@ -88,7 +88,7 @@ class PersonalController extends Controller
     public function update(Request $request, $id)
 {
     // Validar los datos del formulario si es necesario
-
+  
     // Obtener el registro existente de Personal que deseas actualizar
     $personal = Personal::findOrFail($id);
 
@@ -112,6 +112,11 @@ class PersonalController extends Controller
     if ($request->hasFile('imagen')) {
         $imagenPath = $request->file('imagen')->store('public/imagenesPersonal');
         $personal->imagen_path = $imagenPath;
+    }else{
+        if($request->imagen_cargada == 0){
+            $personal->imagen_path = null;
+        }
+        
     }
 
     // Guardar los cambios en la base de datos
@@ -141,31 +146,15 @@ class PersonalController extends Controller
         $texto = $request->input('texto');
         $ordenarPor = $request->input('ordenar', 'id');
         $especialidades = Especialidad::all();
-    switch ($ordenarPor) {
-        case 'salario-desc':
-            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('sueldo', 'desc')->get();
-            break;
-        case 'salario-asc':
-            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('sueldo', 'asc')->get();
-            break;
-        case 'especialidad':
-            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('id_especialidad')->get();
-            break;
-        case 'turno':
-            $personals = Personal::where('nombre', 'LIKE', "%$texto%")->orderBy('turno')->get();
-            break;
-        default:
-        $personals = Personal::where(function ($query) use ($texto) {
-            $query->where('nombre', 'LIKE', "%$texto%")
-                  ->orWhereHas('especialidades', function ($query) use ($texto) {
-                      $query->where('descripcion', 'LIKE', "%$texto%");
-                  });
+        $personals = Personal::select('personals.*')
+        ->join('especialidads', 'personals.id_especialidad', '=', 'especialidads.id')
+        ->where(function ($query) use ($texto) {
+            $query->where('personals.nombre', 'LIKE', "%$texto%")
+                  ->orWhere('especialidads.descripcion', 'LIKE', "%$texto%");
         })
-        ->orderBy('id')
+        ->orderBy($ordenarPor === 'salario-desc' ? 'sueldo' : 'id', $ordenarPor === 'salario-asc' ? 'asc' : 'desc')
         ->get();
-        
-            break;
-    }
+    
 
     return view('_resultadoPersonal', compact('personals'));
     }

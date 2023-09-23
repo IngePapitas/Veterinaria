@@ -19,6 +19,8 @@
         </div>
     </div>
 
+
+
     <div class="w-3/4 h-screen bg-blue-200 p-16">
         <div class="mb-4">
             <label for="ci" class="block text-gray-700 text-sm font-bold mb-2">CI:</label>
@@ -68,6 +70,9 @@
             </div>
         </div>
 
+        <input type="hidden" name="imagen_cargada" id="imagenCargadaInput" value="0">
+
+
         <div class="mb-4">
             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Guardar
@@ -85,18 +90,16 @@
         const cargarImagenInput = document.getElementById('cargarImagen');
         let imagenCargada = false;
 
-
-        const avatarUrl = "{{ asset('storage/AvataresDoctor/AvatarDoctor.jpeg') }}";
-        console.log(avatarUrl);
-        avatarContainer.style.backgroundImage = `url('${avatarUrl}')`;
         avatarContainer.style.backgroundSize = '100% 100%';
 
         cargarImagenInput.addEventListener('change', (event) => {
-            const imagenSeleccionada = event.target.files[0]; // Obtener la imagen seleccionada
+            const imagenSeleccionada = event.target.files[0];
+            console.log(imagenSeleccionada); // Obtener la imagen seleccionada
             if (imagenSeleccionada) {
                 const imageUrl = URL.createObjectURL(imagenSeleccionada); // Crear una URL para la imagen seleccionada
                 avatarContainer.style.backgroundImage = `url('${imageUrl}')`; // Establecer la imagen como fondo   
                 imagenCargada = true;
+                document.getElementById('imagenCargadaInput').value = 1;
                 eliminarImagenBtn.classList.remove('hidden');
             }
         });
@@ -112,6 +115,22 @@
                 cargarEspecialidades(texto);
             }
         });
+        verificarAvatar();
+
+        function verificarAvatar() {
+            const imagenPath = "{{ Storage::url($personal->imagen_path) }}"; // Obtener la URL de la imagen desde Laravel
+            console.log(imagenPath);
+            if (imagenPath != "/storage/") {
+                avatarContainer.style.backgroundImage = `url('${imagenPath}')`; // Establecer la imagen como fondo
+                imagenCargada = true;
+                document.getElementById('imagenCargadaInput').value = 1;
+                eliminarImagenBtn.classList.remove('hidden');
+            } else {
+                actualizarAvatar();
+            }
+        }
+
+
 
         function cargarEspecialidades(texto) {
             fetch(`/buscar-especialidades-create?texto=${texto}`)
@@ -141,6 +160,7 @@
         function actualizarAvatar() {
             console.log("Avatar ACtualizado");
             const sexoSeleccionado = document.querySelector('input[name="sexo"]:checked').value;
+            console.log(imagenCargada);
             if (!imagenCargada) {
                 if (sexoSeleccionado == 'Mujer') {
                     const avatarUrl = "{{ asset('storage/AvataresDoctor/AvatarMujer.jpeg') }}";
@@ -160,7 +180,8 @@
         eliminarImagenBtn.addEventListener('click', () => {
             cargarImagenInput.value = ''; // Borrar la selección de imagen
             eliminarImagenBtn.classList.add('hidden'); // Ocultar el botón de eliminación
-            imagenCargada = false; // Marcar que no hay imagen cargada
+            imagenCargada = false; 
+            document.getElementById('imagenCargadaInput').value = 0;// Marcar que no hay imagen cargada
             actualizarAvatar();
         });
 
