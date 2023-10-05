@@ -9,11 +9,11 @@
         
 
         <!-- Comienzo del login-->
-        <div class="container w-65 bg-white mt-3 rounded shadow">
+        <div class="container w-40 bg-white mt-3 rounded shadow">
             <div class="row align-items-stretch">
 
                 <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded p-0">
-                    <img src="{{asset("images/portada.jpg")}}" alt="">
+                    <img src="{{asset("images/ports.jpeg")}}" alt="" class="img-fluid">
                 </div>
 
                 <div class="col bg-white p-5 rounded-end ">
@@ -68,6 +68,14 @@
 
                         <div class="my-3">
                             <span>No tienes cuenta? <a href="{{ route('register') }}">Registrate</a></span>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="/" class="float-end"> Menu principal</a>
+                                </div>
+                            </div>
                         </div>
 
                     </form>
