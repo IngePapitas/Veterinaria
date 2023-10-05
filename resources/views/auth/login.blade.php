@@ -6,7 +6,7 @@
             background: linear-gradient(to right, #eafafe, #bdd3d6)
         }
     </style>
-        <!--Verificacion de la validacion de inicio de sesion-->
+        
 
         <!-- Comienzo del login-->
         <div class="container w-65 bg-white mt-3 rounded shadow">
@@ -21,7 +21,7 @@
                         <img src="{{asset('images/logo-prueba.jpg')}}" width="48" alt="">
                     </div>
                     <h2 class="fw-bold text-center py-3">Bienvenido</h2>
-
+                    <!--Verificacion de la validacion de inicio de sesion-->
                     <x-validation-errors class="mb-2" />
                     @if (session('status'))
                         <div class="mb-4 font-medium text-sm text-green-600">
