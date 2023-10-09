@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EspecialidadController;
+use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\RazaController;
+use App\Http\Controllers\EspecieController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,5 +41,17 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('/paciente/{paciente}/edit', [PacienteController::class, 'edit'])->name('Paciente.edit');
     Route::put('/paciente/{paciente}', [PacienteController::class, 'update'])->name('Paciente.update');
     Route::get('/buscar-paciente', [PacienteController::class, 'buscarPaciente'])->name('Paciente.buscarPaciente');
-    
+
+    Route::get('/buscar-especie-imagen', [EspecieController::class, 'buscarEspecieImagen'])->name('Especie.buscarImagen');
+    Route::get('/buscar-especies-create', [EspecieController::class, 'buscarEspecie'])->name('Especie.buscarEspecie');
+
+    Route::get('/buscar-razas-create', [RazaController::class, 'buscarRaza'])->name('Raza.buscarRaza');
+
+    Route::get('/especie', [EspecieController::class, 'index'])->name('Especie.index');
+    Route::get('/especie/create', [EspecieController::class, 'create'])->name('Especie.create');
+    Route::post('/especie', [EspecieController::class, 'store'])->name('Especie.store');
+    Route::get('/especie/{especie}/edit', [EspecieController::class, 'edit'])->name('Especie.edit');
+    Route::put('/especie/{especie}', [EspecieController::class, 'update'])->name('Especie.update');
+    Route::get('/buscar-especie', [EspecieController::class, 'buscarEspecieIndex'])->name('Especie.buscarEspecie');
+    Route::delete('/especie/{especie}', [EspecieController::class, 'destroy'])->name('Especie.destroy');
 });

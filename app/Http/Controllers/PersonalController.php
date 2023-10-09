@@ -145,7 +145,6 @@ class PersonalController extends Controller
     public function buscarPersonal(Request $request){
         $texto = $request->input('texto');
         $ordenarPor = $request->input('ordenar', 'id');
-        $especialidades = Especialidad::all();
         $personals = Personal::select('personals.*')
         ->join('especialidads', 'personals.id_especialidad', '=', 'especialidads.id')
         ->where(function ($query) use ($texto) {
