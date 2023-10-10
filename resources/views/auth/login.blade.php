@@ -20,7 +20,7 @@
                     <div class="text-end">
                         <img src="{{asset('images/logo-prueba.jpg')}}" width="48" alt="">
                     </div>
-                    <h2 class="fw-bold text-center py-3">Bienvenido</h2>
+                    <h2 class="fw-bold text-center py-3">Bienvenido a Vetlink</h2>
                     <!--Verificacion de la validacion de inicio de sesion-->
                     <x-validation-errors class="mb-2" />
                     @if (session('status'))

@@ -24,7 +24,7 @@ class Paciente extends Model
 {
     $results = DB::table('pacientes')
         ->select('pacientes.id','pacientes.nombre', 'pacientes.peso', 'pacientes.tamano',
-         'pacientes.imagen_path', 'razas.nombre as raza', 'especies.nombre as especie', 'especies.imagen_path as especie_imagen')
+            'pacientes.imagen_path', 'razas.nombre as raza', 'especies.nombre as especie', 'especies.imagen_path as especie_imagen')
         ->leftJoin('especies', 'especies.id', '=', 'pacientes.id_especie')
         ->leftJoin('razas', 'razas.id_especie', '=', 'especies.id')
         ->orderBy('pacientes.nombre') 

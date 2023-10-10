@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaMedicamentoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\DashboardController;
@@ -7,6 +8,9 @@ use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\RazaController;
 use App\Http\Controllers\EspecieController;
+use App\Http\Controllers\LaboratorioController;
+use App\Http\Controllers\MedicamentoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,4 +58,14 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::put('/especie/{especie}', [EspecieController::class, 'update'])->name('Especie.update');
     Route::get('/buscar-especie', [EspecieController::class, 'buscarEspecieIndex'])->name('Especie.buscarEspecie');
     Route::delete('/especie/{especie}', [EspecieController::class, 'destroy'])->name('Especie.destroy');
-});
+
+    Route::get('/medicamento', [MedicamentoController::class, 'index'])->name('Medicamento.index');
+    Route::get('/medicamento/create', [MedicamentoController::class, 'create'])->name('Medicamento.create');
+    Route::post('/medicamento', [MedicamentoController::class, 'store'])->name('Medicamento.store');
+    Route::get('/medicamento/{medicamento}/edit', [MedicamentoController::class, 'edit'])->name('Medicamento.edit');
+    Route::put('/medicamento/{medicamento}', [MedicamentoController::class, 'update'])->name('Medicamento.update');
+    Route::delete('/medicamento/{medicamento}', [MedicamentoController::class, 'destroy'])->name('Medicamento.destroy');
+    Route::get('/buscar-laboratorio-create', [LaboratorioController::class, 'buscarLaboratorio'])->name('Laboratorio.buscarLaboratorio');
+    Route::get('/buscar-categoriamedicamento-create', [CategoriaMedicamentoController::class, 'buscarCategoriaMedicamento'])->name('Categoriamedicamento.buscarCategoriaMedicamento');
+
+}) ;

@@ -149,7 +149,7 @@ class PersonalController extends Controller
         ->join('especialidads', 'personals.id_especialidad', '=', 'especialidads.id')
         ->where(function ($query) use ($texto) {
             $query->where('personals.nombre', 'LIKE', "%$texto%")
-                  ->orWhere('especialidads.descripcion', 'LIKE', "%$texto%");
+                ->orWhere('especialidads.descripcion', 'LIKE', "%$texto%");
         })
         ->orderBy($ordenarPor === 'salario-desc' ? 'sueldo' : 'id', $ordenarPor === 'salario-asc' ? 'asc' : 'desc')
         ->get();

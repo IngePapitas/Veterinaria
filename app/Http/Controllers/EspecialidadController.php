@@ -67,6 +67,5 @@ class EspecialidadController extends Controller
         $texto = $request->input('texto');
         $especialidades = Especialidad::where('descripcion','LIKE', "%$texto%")->get();
         return view('_resultadoEspecialidades_PersonalCreate', compact('especialidades'));
-
     }
 }
