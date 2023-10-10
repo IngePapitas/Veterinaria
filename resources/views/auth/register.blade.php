@@ -1,60 +1,90 @@
 <x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #ffff;
+            background: linear-gradient(to right, #eafafe, #bdd3d6)
+        }
 
-        <x-validation-errors class="mb-4" />
+        .custom-container {
+            max-width: 500px; /* Ajusta el ancho máximo del contenedor */
+        }
+    </style>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <div>
-                <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                <div class="mt-4">
-                    <x-label for="terms">
-                        <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
-
-                            <div class="ml-2">
-                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
-                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
-                                ]) !!}
-                            </div>
-                        </div>
-                    </x-label>
+    <!-- Comienzo del registro -->
+    <div class="container custom-container mt-3 rounded shadow">
+        <div class="row align-items-stretch">
+            
+            <div class="col bg-white p-5 rounded-end">
+                <div class="text-end">
+                    <img src="{{ asset('images/logo-prueba.jpg') }}" width="48" alt="">
                 </div>
-            @endif
+                <h2 class="fw-bold text-center py-3">Registro</h2>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
+                <!-- Verificación de la validación del registro -->
+                <x-validation-errors class="mb-2" />
 
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
+                <!-- Registro -->
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+
+                    <div class="mb-3">
+                        <!-- Nombre -->
+                        <label class="form-label" for="name">{{ __('Nombre Completo') }}</label>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <!-- Correo Electrónico -->
+                        <label class="form-label" for="email">{{ __('Correo Electrónico') }}</label>
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <!-- Contraseña -->
+                        <label class="form-label" for="password">{{ __('Contraseña') }}</label>
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <!-- Confirmación de Contraseña -->
+                        <label class="form-label" for="password_confirmation">{{ __('Confirmar Contraseña') }}</label>
+                        <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">{{ __('Registrarse') }}</button>
+                    </div>
+
+                    <div class="my-3">
+                        <span>¿Ya tienes una cuenta? <a href="{{ route('login') }}">Inicia Sesión</a></span>
+                    </div>
+                </form>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <a href="/" class="float-end"> Menu principal</a>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-        </form>
-    </x-authentication-card>
+        </div>
+    </div>
 </x-guest-layout>

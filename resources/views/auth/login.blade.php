@@ -6,14 +6,14 @@
             background: linear-gradient(to right, #eafafe, #bdd3d6)
         }
     </style>
-        <!--Verificacion de la validacion de inicio de sesion-->
+        
 
         <!-- Comienzo del login-->
-        <div class="container w-65 bg-white mt-3 rounded shadow">
+        <div class="container w-40 bg-white mt-3 rounded shadow">
             <div class="row align-items-stretch">
 
                 <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded p-0">
-                    <img src="{{asset("images/portada.jpg")}}" alt="">
+                    <img src="{{asset("images/ports.jpeg")}}" alt="" class="img-fluid">
                 </div>
 
                 <div class="col bg-white p-5 rounded-end ">
@@ -21,7 +21,7 @@
                         <img src="{{asset('images/logo-prueba.jpg')}}" width="48" alt="">
                     </div>
                     <h2 class="fw-bold text-center py-3">Bienvenido</h2>
-
+                    <!--Verificacion de la validacion de inicio de sesion-->
                     <x-validation-errors class="mb-2" />
                     @if (session('status'))
                         <div class="mb-4 font-medium text-sm text-green-600">
@@ -68,6 +68,14 @@
 
                         <div class="my-3">
                             <span>No tienes cuenta? <a href="{{ route('register') }}">Registrate</a></span>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="/" class="float-end"> Menu principal</a>
+                                </div>
+                            </div>
                         </div>
 
                     </form>
