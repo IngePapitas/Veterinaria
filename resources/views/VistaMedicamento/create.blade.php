@@ -45,7 +45,7 @@
                         <div id="tablaDiv" class="absolute top-full left-0 bg-yellow-100 hidden">
                             <table id="tabla-laboratorios" class="table-auto w-full">
                                 <tbody>
-                                    
+                                    @include('_resultadoLaboratorios_MedicamentoCreate')
                                     <!--Error en esta linea de codigo-->
                                 </tbody>
                             </table>
@@ -54,13 +54,13 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="categoria_medicamento" class="block text-gray-700 text-sm font-bold mb-2">Categoría de Medicamento:</label>
+                    <label for="categoriaMedicamento" class="block text-gray-700 text-sm font-bold mb-2">Categoría de Medicamento:</label>
                     <div class="mr-4 flex items-center relative">
-                        <input type="text" name="categoria_medicamento" id="categoria_medicamento" class="w-full border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <input type="text" name="categoriaMedicamento" id="categoriaMedicamento" class="w-full border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                         <div id="tablaDiv" class="absolute top-full left-0 bg-yellow-100 hidden">
                             <table id="tabla-categoria-medicamento" class="table-auto w-full">
                                 <tbody>
-                                    
+                                    @include('_resultadoCategorias_MedicamentoCreate')
                                 </tbody>
                             </table>
                         </div>

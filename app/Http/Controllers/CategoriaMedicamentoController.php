@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\CategoriaMedicamento;
 use Illuminate\Http\Request;
 
 class CategoriaMedicamentoController extends Controller
@@ -60,5 +61,10 @@ class CategoriaMedicamentoController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function buscarCategoriaMedicamento(Request $request){
+        $texto = $request->input('texto');
+        $categoriamedicamentos = CategoriaMedicamento::where('nombre','LIKE', "%$texto%")->get();
+        return view('_resultadoCategorias_MedicamentoCreate', compact('CategoriaMedicamento'));
     }
 }

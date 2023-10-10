@@ -105,7 +105,7 @@ class PacienteController extends Controller
         ->where(function ($query) use ($texto) {
             $query->where('personals.nombre', 'LIKE', "%$texto%")
                 ->orWhere('razas.nombre', 'LIKE', "%$texto%")
-                  ->orWhere('paciente.nombre', 'LIKE', "%$texto%");
+                ->orWhere('paciente.nombre', 'LIKE', "%$texto%");
         })
         ->orderBy($ordenarPor === 'nombre' ? 'nombre' : 'id')
         ->get();

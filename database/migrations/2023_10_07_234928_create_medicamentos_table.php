@@ -14,18 +14,17 @@ return new class extends Migration
         Schema::create('medicamentos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->text('descripcion')->nullable();
-            $table->string('forma_farmaceutica')->nullable();
-            $table->decimal('dosis', 10, 2)->nullable();
-            $table->decimal('precio', 10, 2)->nullable();
-            $table->integer('stock')->nullable();
+            $table->text('descripcion');
+            $table->string('forma_farmaceutica');
+            $table->string('dosis');
+            $table->decimal('precio', 10, 2);
+            $table->integer('stock');
             $table->unsignedBigInteger('id_laboratorio');
             $table->unsignedBigInteger('id_categoriamedicamento');
             $table->timestamps();
             // llaves foráneas
             $table->foreign('id_laboratorio')->references('id')->on('laboratorios');
             $table->foreign('id_categoriamedicamento')->references('id')->on('categoria_medicamentos');
-            $table->timestamps();
         });
     }
 

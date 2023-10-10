@@ -9,6 +9,16 @@
         </a>
     </div>
 
+    <div class="mb-4">
+        <label for="ordenar" class="block text-gray-700">Ordenar por:</label>
+        <select id="ordenar" class="form-select mt-1 block w-full">
+            <option value="id">ID (por defecto)</option>
+            <option value="forma_farmaceutica">Forma Farmaceutica</option> 
+            <option value="categoria">Categoria</option>
+            <option value="laboratorio">Laboratorio</option>
+        </select>
+    </div>
+
     <table id="tabla-muestra" class="table-auto w-full">
         <thead>
             <tr>
@@ -24,39 +34,48 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($medicamentos as $medicamento)
-                <td class="border px-4 py-2 ">{{ $medicamento->id }}</td>
-                <td class="border px-4 py-2 ">{{ $medicamento->nombre }}</td>
-                <td class="border px-4 py-2 ">{{ $medicamento->forma_farmaceutica }}</td>
-                <td class="border px-4 py-2 ">{{ $medicamento->dosis }}</td>
-                <td class="border px-4 py-2 ">{{ $medicamento->stock }}</td>
-                <td class="border px-2 py-2">
-                    @php
-                    $categoriaMedicamento = $medicamento->categoriaMedicamento;
-                    @endphp
-                    {{ $categoriaMedicamento ? $categoriaMedicamento->nombre : 'Sin Categoria' }}
-                </td>
-                <td class="border px-2 py-2">
-                    @php
-                    $laboratorio = $medicamento->laboratorio;
-                    @endphp
-                    {{ $laboratorio ? $laboratorio->nombre : 'Sin laboratorio' }}
-                </td>
-                <td class="border px-4 py-2">
-                    <a href="{{ route('Medicamento.edit', $medicamentos->id) }}" class="text-blue-600 hover:text-gray-800">
-                        Editar
-                    </a>
-                    <form action="{{ route('Medicamento.destroy', $medicamentos->id) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600 hover:text-red-800">
-                            Eliminar
-                        </button>
-                    </form>
-                </td>
-            @endforeach
+            @include('_resultadoMedicamento')
         </tbody>
     </table>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ordenarSelect = document.getElementById('ordenar');
+        const tablaMuestra = document.getElementById('tabla-muestra').querySelector('tbody');
+        
+        ordenarSelect.addEventListener('change', () => {
+            const valorSeleccionado = ordenarSelect.value;
+            ordenarTabla(valorSeleccionado);
+        });
 
+        function ordenarTabla(campo) {
+            const filas = Array.from(tablaMuestra.querySelectorAll('tr'));
+
+            filas.sort((a, b) => {
+                const valorA = obtenerValorCampo(a, campo);
+                const valorB = obtenerValorCampo(b, campo);
+
+                if (campo === 'id') {
+                    return parseInt(valorA) - parseInt(valorB);
+                } else {
+                    return valorA.localeCompare(valorB);
+                }
+            });
+
+            limpiarTabla();
+            filas.forEach(fila => tablaMuestra.appendChild(fila));
+        }
+
+        function obtenerValorCampo(fila, campo) {
+            const cell = fila.querySelector(`.border-px-4-py-2-${campo}`);
+            return cell.textContent.trim();
+        }
+
+        function limpiarTabla() {
+            while (tablaMuestra.firstChild) {
+                tablaMuestra.removeChild(tablaMuestra.firstChild);
+            }
+        }
+    });
+</script>
 @endsection

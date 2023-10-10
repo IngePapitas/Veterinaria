@@ -62,16 +62,13 @@
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Personal.index')}}">
                     <i class="fas fa-users mr-2"></i>Personal
                 </a>
-<<<<<<< Updated upstream
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Especie.index')}}">
                 <i class="fa-solid fa-paw mr-2"></i>Especies/Razas
                 </a>
-=======
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Medicamento.index')}}">
                     <i class="fas fa-pills mr-2"></i>Medicamentos
                 </a>
 
->>>>>>> Stashed changes
             </nav>
 
             <!-- Ítem de Cerrar Sesión -->

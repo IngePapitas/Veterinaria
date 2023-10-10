@@ -18,8 +18,9 @@ class MedicamentoController extends Controller
 
     public function create()
     {
-        $laboratorio = [];
-        return view('VistaMedicamento.create', compact('laboratorio'));
+        $laboratorios = [];
+        $categoriamedicamentos = [];
+        return view('VistaMedicamento.create', compact('laboratorios','categoriamedicamentos'));
     }
 
     public function store(Request $request)
@@ -64,15 +65,15 @@ class MedicamentoController extends Controller
     public function edit(string $id)
     {
         $medicamento = Medicamento::findOrFail($id);
-        $categoriaMedicamento = CategoriaMedicamento::all();
-        $laboratorio = Laboratorio::all();
-        return view('medicamentos.edit', compact('medicamento','categoriaMedicamento','laboratorio'));
+        $categoriamedicamentos = CategoriaMedicamento::all();
+        $laboratorios = Laboratorio::all();
+        return view('VistaMedicamento.edit', compact('medicamento','categoriamedicamentos','laboratorios'));
     }
 
     public function update(Request $request, $id)
     {
         // Obtener el registro existente del medicamento
-        $medicamento = Medicamento::finOrFail($id);
+        $medicamento = Medicamento::findOrFail($id);
 
         //Actualizar los campos
         $medicamento->nombre = $request->nombre;
@@ -101,7 +102,10 @@ class MedicamentoController extends Controller
         $medicamento->id_laboratorio = $laboratorio->id;
 
         $medicamento->save();
-        $medicamentos=Medicamento::all();
+        $medicamentos=Medicamento::all(); 
+        $medicamentos = Medicamento::with('laboratorio')->get();
+        $medicamentos = Medicamento::with('categoriaMedicamento')->get();
+
         return redirect()->route('Medicamento.index',compact('medicamentos'));
     }
 
@@ -117,4 +121,23 @@ class MedicamentoController extends Controller
             return redirect()->route('Medicamento.index')->with('error', 'No se pudo eliminar el Medicamento');
         }
     }
+
+    public function buscarMedicamento(Request $request){
+        $texto = $request->input('texto');
+        $ordenarPor = $request->input('ordenar', 'id');
+        
+        $medicamentos = Medicamento::select('medicamentos.*')
+            ->join('categoria_medicamentos', 'medicamentos.id_categoriamedicamento', '=', 'categoria_medicamentos.id')
+            ->join('laboratorios', 'medicamentos.id_laboratorio', '=', 'laboratorios.id')
+            ->where(function ($query) use ($texto) {
+                $query->where('medicamentos.nombre', 'LIKE', "%$texto%")
+                    ->orWhere('categoria_medicamentos.nombre', 'LIKE', "%$texto%")
+                    ->orWhere('laboratorios.nombre', 'LIKE', "%$texto%");
+            })
+            ->orderBy($ordenarPor === 'precio-desc' ? 'precio' : 'id', $ordenarPor === 'precio-asc' ? 'asc' : 'desc')
+            ->get();
+        
+        return view('_resultadoMedicamento', compact('medicamentos'));
+    }
+
 }
