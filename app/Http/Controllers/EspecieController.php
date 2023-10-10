@@ -58,9 +58,25 @@ class EspecieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:255',
+            'imagen' => 'image|mimes:jpeg,png,jpg,gif|max:2048', 
+        ]);
+        $especie = Especie::findOrFail($id);
+
+        $especie->nombre = $request->input('nombre');
+
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('ruta_de_almacenamiento'); 
+            $especie->imagen_path = $imagenPath;
+        }
+
+        $especie->save();
+
+        return redirect()->route('Especie.index')->with('success', 'Especie actualizada exitosamente');
     }
 
     /**
