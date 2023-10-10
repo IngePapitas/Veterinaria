@@ -33,8 +33,10 @@ class EspecieController extends Controller
         $especie->nombre = $request->nombre;
         if ($request->hasFile('imagen')) {
             $imagenPath = $request->file('imagen')->store('public/AvataresPacientes');
-            $especie->imagen_path = $imagenPath;
+            $rutaRelativa = str_replace('public/', '', $imagenPath);
+            $especie->imagen_path = $rutaRelativa;
         }
+        
         $especie->save();
         return redirect()->route('Especie.index');
     }
@@ -52,7 +54,8 @@ class EspecieController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $especie = Especie::findOrFail($id);
+        return view('VistaEspecie.edit', compact('especie'));
     }
 
     /**

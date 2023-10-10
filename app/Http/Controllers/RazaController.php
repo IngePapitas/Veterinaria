@@ -68,9 +68,15 @@ class RazaController extends Controller
         $texto = $request->input('texto');
         $especie = $request->input('especie');
         $especieencontrada = Especie::where('nombre', $especie)->first();
+        if($especieencontrada){
         $razas = Raza::where('nombre', 'LIKE', "%$texto%")
             ->where('id_especie', $especieencontrada->id)
             ->get();
+        
+        }
+        else{
+            $razas = [];
+        }
         return view('_resultadoRaza_PacienteCreate', compact('razas'));
     }
     

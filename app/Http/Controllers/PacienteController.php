@@ -46,7 +46,7 @@ class PacienteController extends Controller
         if(!$raza){
             $raza = new Raza();
             $raza->nombre = $request->raza;
-            $raza->id_especie = $raza->id_especie;
+            $raza->id_especie = $especie->id;
             $raza->save();
         }
 
@@ -77,7 +77,8 @@ class PacienteController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $paciente = Paciente::findORFail($id);
+        return view('VistaPaciente.edit', compact('paciente'));
     }
 
     /**
