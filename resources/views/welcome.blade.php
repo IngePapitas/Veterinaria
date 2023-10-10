@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veterinaria ...</title>
+    <title>Vetlink</title>
     <link rel="icon" href="{{asset('images/logo-prueba.jpg')}}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <!--Estilos para la pagina principal -->
@@ -64,7 +64,7 @@
         <nav class="navbar navbar-expand-lg ">
             <div class="container">
                 <img src="{{asset('images/logo-prueba.jpg')}}" width="48" alt="">
-                <a class="navbar-brand" href="#">Veterinaria</a>
+                <a class="navbar-brand" href="#">Vetlink</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -92,7 +92,7 @@
     <!-- Sección de Bienvenida -->
     <section class="jumbotron text-center">
         <div class="container">
-            <h1 class="display-4">Bienvenido a la Veterinaria .....</h1>
+            <h1 class="display-4">Bienvenido a Vetlink</h1>
             <p class="lead">Cuidamos y amamos a tus mascotas.</p>
         </div>
     </section>
