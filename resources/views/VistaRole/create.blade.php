@@ -37,8 +37,8 @@
                 </div>
                 <div class="mb-2">
                     <label class="inline-flex items-center">
-                        <input type="checkbox" name="permissions[]" value="Guardar Paciente" class="form-checkbox">
-                        <span class="ml-2">Guardar Paciente</span>
+                        <input type="checkbox" name="permissions[]" value="Registrar Paciente" class="form-checkbox">
+                        <span class="ml-2">Registrar Paciente</span>
                     </label>
                 </div>
             </div>

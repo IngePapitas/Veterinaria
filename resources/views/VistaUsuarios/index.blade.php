@@ -16,11 +16,6 @@
     @endcan
 
 
-    <div class="mb-4">
-        <label for="buscar" class="block text-gray-700">Buscar por nombre:</label>
-        <input type="text" id="buscar" class="form-input mt-1 block w-full" placeholder="Escribe para buscar...">
-    </div>
-
 
     <table id="tabla-usuario" class="table-auto w-full">
         <thead>
@@ -29,6 +24,7 @@
                 <th class="px-4 py-2">Foto</th>
                 <th class="px-4 py-2">Nombre</th>
                 <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Rol</th>
                 @can('Editar Usuario')
                 <th class="px-4 py-2">Acciones</th>
                 @endcan

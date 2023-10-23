@@ -23,7 +23,7 @@
 
             <div class="mb-4">
                 <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" class="w-full border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required value="{{ $usuario->nombre }}">
+                <input type="text" name="name" id="name" class="w-full border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required value="{{ $usuario->name }}">
             </div>
 
             
@@ -79,7 +79,6 @@
         function actualizarAvatar() {
             console.log("Avatar ACtualizado");
     
-            console.log(sexoSeleccionado);
             if (!imagenCargada) {
                 console.log("entro");
                 

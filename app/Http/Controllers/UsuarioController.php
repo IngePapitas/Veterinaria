@@ -90,7 +90,7 @@ class UsuarioController extends Controller
     {
         try {
             $user = User::findOrFail($id); 
-                $user->name = $request->nombre;
+                $user->name = $request->name;
                 $user->email = $request->correo;
                 $user->syncRoles([]);
                 $rol = Role::where('id', $request->rol)->first();
@@ -124,6 +124,7 @@ class UsuarioController extends Controller
     public function buscarUsuario(Request $request)
     {
         $texto = $request->input('texto');
+        
         $usuarios = User::buscarLike($texto);
 
         return view('_resultadoUsuario', compact('usuarios'));

@@ -21,6 +21,8 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasFactory, Notifiable, HasRoles; 
+    protected $guard = 'web';
+
 
     /**
      * The attributes that are mass assignable.
@@ -65,7 +67,7 @@ class User extends Authenticatable
     public static function obtenerUsuarioRol()
 {
     $results = DB::table('users')
-        ->select('users.id','users.name','users.email', 'users.profile_photo_path as imagen_path', 'roles.name', 'model_has_roles.model_id as id_user_role')
+        ->select('users.id','users.name','users.email', 'users.profile_photo_path as imagen_path', 'roles.name as rol_name', 'roles.id AS id_rol','model_has_roles.model_id as id_user_role')
         ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
         ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
         ->orderBy('users.id') 
@@ -75,25 +77,26 @@ class User extends Authenticatable
 public static function obtenerUsuarioRolId($id)
 {
     $results = DB::table('users')
-        ->select('users.id','users.name','users.email',  'users.profile_photo_path as imagen_path', 'roles.name', 'model_has_roles.model_id as id_user_role')
+        ->select('users.id','users.name','users.email',  'users.profile_photo_path as imagen_path', 'roles.name as rol_name','roles.id AS id_rol', 'model_has_roles.model_id as id_user_role')
         ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
         ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
         ->orderBy('users.id') 
         ->where('users.id','=', $id)
-        ->get();
+        ->first();
     return $results;
 }
 
 public static function buscarLike($texto)
 {
     $results = DB::table('users')
-        ->select('users.id','users.name','users.email',  'users.profile_photo_path as imagen_path', 'roles.name', 'model_has_roles.model_id as id_user_role')
+        ->select('users.id','users.name','users.email',  'users.profile_photo_path as imagen_path', 'roles.id AS id_rol','roles.name as rol_name', 'model_has_roles.model_id as id_user_role')
         ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
         ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
         ->orderBy('users.id') 
         ->where('users.name','LIKE', "%$texto%")
         ->orwhere('roles.name','LIKE', "%$texto%")
-        ->orwhere('isers.id','LIKE', "%$texto%")
+        ->orwhere('users.id','LIKE', "%$texto%")
+        ->orwhere('users.email','LIKE', "%$texto%")
         ->get();
     return $results;
 }

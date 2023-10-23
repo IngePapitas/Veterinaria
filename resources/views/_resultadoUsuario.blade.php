@@ -3,7 +3,7 @@
     <td class="border px-4 py-2">{{ $usuario->id }}</td>
     <td class="border px-4 py-2 ">
         @if($usuario->imagen_path)
-        <img src="{{ Storage::url($usuario->imagen_path) }}" alt="{{ $usuario->nombre }}" class="h-20 w-20 object-cover rounded-full">
+        <img src="{{ Storage::url($usuario->imagen_path) }}" alt="{{ $usuario->name }}" class="h-20 w-20 object-cover rounded-full">
         @else
             
                 <img src="{{ Storage::url('Avatares/Hombre.jpg') }}" alt="Avatar Mujer" class="h-20 w-20 object-cover rounded-full">
@@ -12,6 +12,7 @@
     </td>
     <td class="border px-4 py-2">{{ $usuario->name }}</td>
     <td class="border px-4 py-2">{{ $usuario->email }}</td>
+    <td class="border px-4 py-2">{{ $usuario->rol_name }}</td>
     @can('Editar Usuario')
     <td class="border px-4 py-2">
         <a href="{{ route('Usuario.edit', $usuario->id) }}" class="text-blue-600 hover:text-gray-800">

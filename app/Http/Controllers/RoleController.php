@@ -22,26 +22,26 @@ class RoleController extends Controller
     public function create()
     {
         $permisos = Permission::all();
-        return view('VistaRole.create',compact('permisos'));
+        return view('VistaRole.create', compact('permisos'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255|unique:roles',
-        'permissions' => 'array', 
-    ]);
-    $role = Role::create(['name' => $request->name]);
-    
-    if ($request->permissions) {
-        $role->givePermissionTo($request->permissions);
-    }
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:roles',
+            'permissions' => 'array',
+        ]);
+        $role = Role::create(['name' => $request->name]);
 
-    return redirect()->route('Usuario.index');
-}
+        if ($request->permissions) {
+            $role->givePermissionTo($request->permissions);
+        }
+
+        return redirect()->route('Usuario.index');
+    }
 
     /**
      * Display the specified resource.
@@ -64,30 +64,43 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Role $role)
-{
-    $request->validate([
-        'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
-        'permissions' => 'array',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
+            'permissions' => 'array',
+        ]);
 
-    $role->name = $request->name;
-    $role->save();
+        $role->name = $request->name;
+        $role->save();
 
-    if ($request->permissions) {
-        $role->syncPermissions($request->permissions);
-    } else {
-        $role->syncPermissions([]); // Si no se seleccionan permisos, elimina todos los permisos asociados.
+        if ($request->permissions) {
+            $role->syncPermissions($request->permissions);
+        } else {
+            $role->syncPermissions([]); // Si no se seleccionan permisos, elimina todos los permisos asociados.
+        }
+
+        return redirect()->route('Usuario.index')
+            ->with('success', 'Rol actualizado exitosamente');
     }
-
-    return redirect()->route('Usuario.index')
-        ->with('success', 'Rol actualizado exitosamente');
-}
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $role = Role::findById($id);
+
+        if (!$role) {
+            return redirect()->route('Usuario.index')
+                ->with('error', 'El rol no existe.');
+        }
+        if ($role->users->count() > 0) {
+            return redirect()->route('Usuario.index')
+                ->with('error', 'No puedes eliminar un rol con usuarios asignados.');
+        }
+        $role->delete();
+
+        return redirect()->route('Usuario.index')
+            ->with('success', 'El rol se ha eliminado correctamente.');
     }
 }

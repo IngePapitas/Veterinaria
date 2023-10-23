@@ -6,9 +6,7 @@
         ROLES
     </h2>
 </div>
-@endsection
 
-@section('PanzaAbajo')
 <div class="container mx-auto p-4">
     <h1 class="text-2xl font-semibold mb-4">Editar Rol</h1>
     <form method="POST" action="{{ route('Role.update', $role) }}" class="bg-white p-6 rounded-lg shadow-md">
@@ -34,7 +32,7 @@
 
                 <div class="mb-2">
                     <label class="inline-flex items-center">
-                        <input type="checkbox" name="permissions[]" value="Registrar Paciente" class="form-checkbox" @if($role->hasPermissionTo('Registrat Paciente')) checked @endif>
+                        <input type="checkbox" name="permissions[]" value="Registrar Paciente" class="form-checkbox" @if($role->hasPermissionTo('Registrar Paciente')) checked @endif>
                         <span class="ml-2">Registrar Paciente</span>
                     </label>
                 </div>
