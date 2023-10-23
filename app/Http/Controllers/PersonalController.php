@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Personal;
 use App\Models\Especialidad;
+use Spatie\Permission\Models\Role;
 
 class PersonalController extends Controller
 {
@@ -23,7 +24,8 @@ class PersonalController extends Controller
     public function create()
     {
         $especialidades = [];
-        return view('VistaPersonal.create', compact('especialidades'));
+        $roles = Role::all();
+        return view('VistaPersonal.create', compact('especialidades','roles'));
     }
 
     /**

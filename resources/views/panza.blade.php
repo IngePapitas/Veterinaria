@@ -57,7 +57,7 @@
                     <i class="fas fa-home mr-2"></i>Inicio
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Paciente.index')}}">
-                    <i class="fa-solid fa-dog mr-2"></i>Pacientes
+                <i class="fa-solid fa-dog mr-2"></i>Pacientes
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Personal.index')}}">
                     <i class="fas fa-users mr-2"></i>Personal
@@ -67,6 +67,9 @@
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Medicamento.index')}}">
                     <i class="fas fa-pills mr-2"></i>Medicamentos
+                </a>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Usuario.index')}}">
+                    <i class="fas fa-pills mr-2"></i>Usuarios/Roles
                 </a>
 
             </nav>

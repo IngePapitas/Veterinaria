@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\DB;
+
 
 class User extends Authenticatable
 {
@@ -17,6 +20,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasFactory, Notifiable, HasRoles; 
 
     /**
      * The attributes that are mass assignable.
@@ -58,4 +62,39 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+    public static function obtenerUsuarioRol()
+{
+    $results = DB::table('users')
+        ->select('users.id','users.name','users.email', 'users.profile_photo_path as imagen_path', 'roles.name', 'model_has_roles.model_id as id_user_role')
+        ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+        ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+        ->orderBy('users.id') 
+        ->get();
+    return $results;
+}
+public static function obtenerUsuarioRolId($id)
+{
+    $results = DB::table('users')
+        ->select('users.id','users.name','users.email',  'users.profile_photo_path as imagen_path', 'roles.name', 'model_has_roles.model_id as id_user_role')
+        ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+        ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+        ->orderBy('users.id') 
+        ->where('users.id','=', $id)
+        ->get();
+    return $results;
+}
+
+public static function buscarLike($texto)
+{
+    $results = DB::table('users')
+        ->select('users.id','users.name','users.email',  'users.profile_photo_path as imagen_path', 'roles.name', 'model_has_roles.model_id as id_user_role')
+        ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+        ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+        ->orderBy('users.id') 
+        ->where('users.name','LIKE', "%$texto%")
+        ->orwhere('roles.name','LIKE', "%$texto%")
+        ->orwhere('isers.id','LIKE', "%$texto%")
+        ->get();
+    return $results;
+}
 }

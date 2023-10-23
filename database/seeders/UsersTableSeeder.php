@@ -5,6 +5,11 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\Models\User;
+
 
 class UsersTableSeeder extends Seeder
 {
@@ -16,15 +21,15 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // Crea un usuario de ejemplo
-        DB::table('users')->insert([
-            'name' => 'Elio Osinaga',
-            'email' => 'osinagax10@gmail.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('12345678e'),
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        
+
+        $u = new User();
+        $u->id = 100;
+        $u->name = 'Elio Andres Osinaga Vargas';
+        $u->email = 'osinagax10@gmail.com';
+        $u->password = bcrypt('12345678e');
+        $u->assignRole(['Admin']);
+        $u->save();
 
         
     }
