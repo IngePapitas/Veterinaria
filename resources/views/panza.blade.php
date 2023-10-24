@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Vetlink</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -69,7 +69,7 @@
                     <i class="fas fa-pills mr-2"></i>Medicamentos
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Usuario.index')}}">
-                    <i class="fas fa-pills mr-2"></i>Usuarios/Roles
+                    <i class="fas fa-users-gear mr-2"></i>Usuarios/Roles
                 </a>
 
             </nav>
