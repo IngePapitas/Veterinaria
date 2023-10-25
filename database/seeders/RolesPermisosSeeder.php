@@ -39,6 +39,10 @@ class RolesPermisosSeeder extends Seeder
             Permission::create(['name' => 'Ver Medicamento'])->syncRoles([$Admin]);
             Permission::create(['name' => 'Crear Medicamento'])->syncRoles([$Admin]);
             Permission::create(['name' => 'Editar Medicamento'])->syncRoles([$Admin]);
+
+            Permission::create(['name' => 'Ver Cliente'])->syncRoles([$Admin]);
+            Permission::create(['name' => 'Crear Cliente'])->syncRoles([$Admin]);
+            Permission::create(['name' => 'Editar Cliente'])->syncRoles([$Admin]);
        
     }
 }

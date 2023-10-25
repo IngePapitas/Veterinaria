@@ -73,6 +73,136 @@
 </form>
 
 <script>
-    // El JavaScript necesario que tenías en la vista original
+    document.addEventListener('DOMContentLoaded', () => {
+        const raza = document.getElementById('raza');
+        const especie = document.getElementById('especie');
+        const tablaEspeciesDiv = document.getElementById('tablaEspeciesDiv');
+        const tablaRazaDiv = document.getElementById('tablaRazasDiv');
+        const tablaEspecies = document.getElementById('tabla-especies');
+        const tablaRaza = document.getElementById('tabla-razas');
+        const avatarContainer = document.getElementById('avatar-container');
+        const cargarImagenInput = document.getElementById('cargarImagen');
+        let imagenCargada = false;
+
+        actualizarAvatar();
+
+
+        cargarImagenInput.addEventListener('change', (event) => {
+            const imagenSeleccionada = event.target.files[0]; // Obtener la imagen seleccionada
+            if (imagenSeleccionada) {
+                const imageUrl = URL.createObjectURL(imagenSeleccionada); // Crear una URL para la imagen seleccionada
+                avatarContainer.style.backgroundImage = `url('${imageUrl}')`; // Establecer la imagen como fondo   
+                imagenCargada = true;
+                eliminarImagenBtn.classList.remove('hidden');
+            }
+        });
+
+        especie.addEventListener('input', () => {
+            const texto = especie.value.trim().toLowerCase();
+            if (texto === '') {
+                tablaEspeciesDiv.classList.add('hidden');
+                cargarEspecies('');
+            } else {
+                tablaEspeciesDiv.classList.remove('hidden');
+                cargarEspecies(texto);
+            }
+        });
+
+        function cargarEspecies(texto) {
+            fetch(`/buscar-especies-create?texto=${texto}`)
+                .then(response => response.text())
+                .then(data => {
+                    tablaEspecies.querySelector('tbody').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error al cargar los resultados:', error);
+                });
+        }
+
+        tablaEspecies.addEventListener('click', (event) => {
+            if (event.target.tagName === 'BUTTON') {
+                const especieValue = event.target.value;
+                console.log('Valor del botón de especialidad:', especieValue);
+                const especieInput = document.getElementById('especie');
+                especieInput.value = especieValue;
+                actualizarAvatar();
+                tablaEspeciesDiv.classList.add('hidden');
+            }
+
+        });
+
+        raza.addEventListener('input', () => {
+            const texto = raza.value.trim().toLowerCase();
+            if (texto === '') {
+                tablaRazaDiv.classList.add('hidden');
+                cargarRazas('');
+            } else {
+                tablaRazaDiv.classList.remove('hidden');
+                cargarRazas(texto);
+            }
+        });
+
+        function cargarRazas(texto) {
+            const especietext = especie.value.trim().toLowerCase();
+            fetch(`/buscar-razas-create?texto=${texto}&especie=${especietext}`)
+                .then(response => response.text())
+                .then(data => {
+                    tablaRaza.querySelector('tbody').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error al cargar los resultados razas:', error);
+                });
+        }
+
+        tablaRaza.addEventListener('click', (event) => {
+            if (event.target.tagName === 'BUTTON') {
+                const razaValue = event.target.value;
+                console.log('Valor del botón de especialidad:', razaValue);
+                const razaInput = document.getElementById('raza');
+                razaInput.value = razaValue;
+                tablaRazaDiv.classList.add('hidden');
+            }
+
+        });
+        //actualizarAvatar();
+
+        console.log("Avatar ACtualizado");
+
+        function actualizarAvatar() {
+            console.log("Avatar Actualizado");
+            if (!imagenCargada) {
+                const texto = especie.value.trim().toLowerCase();
+                console.log("enviando a la funcion", texto);
+                fetch(`/buscar-especie-imagen?texto=${texto}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Valor de imagenUrl:", data.imagenUrl);
+                        const imagenUrl = data.imagenUrl;
+                        const avatarUrl = `{{ asset('storage/${imagenUrl}') }}`; // Corregido aquí
+                        console.log(imagenUrl);
+                        avatarContainer.style.backgroundImage = `url('${avatarUrl}')`; // Usamos la variable avatarUrl
+                        avatarContainer.style.backgroundSize = '100% 100%';
+
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar los imagen:', error);
+                    });
+
+
+            }
+
+        }
+
+
+        eliminarImagenBtn.addEventListener('click', () => {
+            cargarImagenInput.value = ''; // Borrar la selección de imagen
+            eliminarImagenBtn.classList.add('hidden'); // Ocultar el botón de eliminación
+            imagenCargada = false; // Marcar que no hay imagen cargada
+            actualizarAvatar();
+        });
+
+
+
+    });
 </script>
 @endsection

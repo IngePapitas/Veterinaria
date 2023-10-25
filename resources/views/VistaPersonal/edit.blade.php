@@ -119,7 +119,7 @@
 
         function verificarAvatar() {
             const imagenPath = "{{ Storage::url($personal->imagen_path) }}"; // Obtener la URL de la imagen desde Laravel
-            console.log(imagenPath);
+            console.log("imagenpath", imagenPath);
             if (imagenPath != "/storage/") {
                 avatarContainer.style.backgroundImage = `url('${imagenPath}')`; // Establecer la imagen como fondo
                 imagenCargada = true;

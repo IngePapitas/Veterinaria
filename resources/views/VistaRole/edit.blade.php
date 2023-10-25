@@ -134,6 +134,28 @@
                     </label>
                 </div>
             </div>
+            <!-- Category 6 -->
+            <div class="w-1/3 p-4">
+                <h3 class="text-base font-semibold mb-2">Clientes</h3>
+                <div class="mb-2">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="permissions[]" value="Ver Cliente" class="form-checkbox" @if($role->hasPermissionTo('Ver Cliente')) checked @endif>
+                        <span class="ml-2">Ver Cliente</span>
+                    </label>
+                </div>
+                <div class="mb-2">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="permissions[]" value="Crear Cliente" class="form-checkbox" @if($role->hasPermissionTo('Crear Cliente')) checked @endif>
+                        <span class="ml-2">Crear Cliente</span>
+                    </label>
+                </div>
+                <div class="mb-2">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="permissions[]" value="Editar Cliente" class="form-checkbox" @if($role->hasPermissionTo('Editar Cliente')) checked @endif>
+                        <span class="ml-2">Editar Cliente</span>
+                    </label>
+                </div>
+            </div>
 
             
 

@@ -12,7 +12,9 @@ use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RoleController;
-
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\NotaServicioController;
+use App\Http\Controllers\ServicioController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -90,4 +92,32 @@ Route::middleware('auth')->group(function () {
     Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->name('Usuario.update');
     Route::post('/usuarios', [UsuarioController::class, 'store'])->name('Usuario.store');
     Route::get('/buscar-usuario', [UsuarioController::class, 'buscarUsuario'])->name('Usuario.buscar');
+
+    //CLIENTES (ESTO LO HIZO UN TORCIDO)
+    Route::get('/clientes', [ClienteController::class, 'index'])->name('Cliente.index');
+    Route::get('/clientes/create', [ClienteController::class, 'create'])->name('Cliente.create');
+    Route::post('/clientes', [ClienteController::class, 'store'])->name('Cliente.store');
+    Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])->name('Cliente.edit');
+    Route::put('/clientes/{cliente}', [ClienteController::class, 'update'])->name('Cliente.update');
+    Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy'])->name('Cliente.destroy');
+    Route::get('/buscar-clientes', [ClienteController::class, 'buscarClientes'])->name('buscar.clientes');
+
+    //NOTAS SERVICIO POR TUMO
+    Route::get('/notasservicio', [NotaServicioController::class, 'index'])->name('NotaServicio.index');
+    Route::get('/notasservicio/create', [NotaServicioController::class, 'create'])->name('NotaServicio.create');
+    Route::post('/notasservicio', [NotaServicioController::class, 'store'])->name('NotaServicio.store');
+    Route::get('/notasservicio/{notasservicio}/edit', [NotaServicioController::class, 'edit'])->name('NotaServicio.edit');
+    Route::put('/notasservicio/{cliente}', [NotaServicioController::class, 'update'])->name('NotaServicio.update');
+    Route::delete('/notasservicio/{cliente}', [NotaServicioController::class, 'destroy'])->name('NotaServicio.destroy');
+    Route::get('/buscar-notasservicio', [NotaServicioController::class, 'buscarNotasServicio'])->name('NotaServicio.clientes');
+
+    //NOTAS SERVICIO YA TU SABE POR QUIEN
+    Route::get('/servicios', [ServicioController::class, 'index'])->name('Servicio.index');
+    Route::get('/servicios/create', [ServicioController::class, 'create'])->name('Servicio.create');
+    Route::post('/servicios', [ServicioController::class, 'store'])->name('Servicio.store');
+    Route::get('/servicios/{servicios}/edit', [ServicioController::class, 'edit'])->name('Servicio.edit');
+    Route::put('/servicios/{servicios}', [ServicioController::class, 'update'])->name('Servicio.update');
+    Route::delete('/servicios/{servicios}', [ServicioController::class, 'destroy'])->name('Servicio.destroy');
+    Route::get('/buscar-servicios', [ServicioController::class, 'buscarNotasServicio'])->name('Servicio.clientes');
+    Route::get('/buscar-servicios-create', [ServicioController::class, 'buscarServiciosCreate'])->name('Servicio.buscarServicio');
 }) ;

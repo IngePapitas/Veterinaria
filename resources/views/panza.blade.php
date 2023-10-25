@@ -57,21 +57,29 @@
                     <i class="fas fa-home mr-2"></i>Inicio
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Paciente.index')}}">
-                <i class="fa-solid fa-dog mr-2"></i>Pacientes
+                    <i class="fa-solid fa-dog mr-2"></i>Pacientes
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Personal.index')}}">
                     <i class="fas fa-users mr-2"></i>Personal
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Especie.index')}}">
-                <i class="fa-solid fa-paw mr-2"></i>Especies/Razas
+                    <i class="fa-solid fa-paw mr-2"></i>Especies/Razas
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Medicamento.index')}}">
                     <i class="fas fa-pills mr-2"></i>Medicamentos
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Usuario.index')}}">
-                    <i class="fas fa-pills mr-2"></i>Usuarios/Roles
+                    <i class="fa-solid fa-user mr-2"></i>Usuarios/Roles
                 </a>
-
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Cliente.index')}}">
+                    <i class="fa-solid fa-users mr-2"></i>Clientes
+                </a>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Servicio.index')}}">
+                <i class="fa-solid fa-stethoscope mr-2"></i>Servicios
+                </a>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('NotaServicio.index')}}">
+                <i class="fa-regular fa-note-sticky mr-2"></i>Notas de Servicio
+                </a>
             </nav>
 
             <!-- Ítem de Cerrar Sesión -->
@@ -96,7 +104,7 @@
                 <div class="absolute top-1 left-2 inline-flex items-center p-2">
                     <i class="fas fa-search text-gray-400"></i>
                 </div>
-                <input class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" id="buscar"type="search" placeholder="Buscar...">
+                <input class="w-full h-10 pl-10 pr-4 py-1 text-base placeholder-gray-500 border rounded-full focus:shadow-outline" id="buscar" type="search" placeholder="Buscar...">
             </div>
 
             <!-- Contenedor de Gráficas -->
@@ -104,7 +112,7 @@
                 <!-- Primer contenedor -->
                 <!-- Sección 1 - Gráfica de Usuarios -->
                 <div class="flex-1 bg-white p-4 shadow rounded-lg md:w-1/2">
-                @yield('Panza')
+                    @yield('Panza')
                 </div>
 
 
@@ -116,7 +124,7 @@
 
             <!-- Cuarto contenedor -->
             <!-- Sección 4 - Tabla de Transacciones -->
-            
+
         </div>
     </div>
 </div>
@@ -124,7 +132,7 @@
 <!-- Script para las gráficas -->
 <script>
     // Gráfica de Usuarios
-    
+
 
     // Agregar lógica para mostrar/ocultar la navegación lateral al hacer clic en el ícono de menú
     const menuBtn = document.getElementById('menuBtn');
