@@ -31,7 +31,7 @@
                         <span class="ml-2 text-sm font-medium text-gray-900 hidden md:inline dark:text-white dark:hover:text-gray-400">{{ Auth::user()->name }}</span>
                     </button>
                     <!-- Contenedor emergente para opciones de perfil y cerrar sesión -->
-                    <div id="user-menu-popup" class="hidden absolute right-0 mt-2 py-2 w-36 bg-white rounded-lg shadow-lg drak:text-white z-50">
+                    <div id="user-menu-popup" class="hidden absolute right-0 mt-2 py-2 w-36 bg-white rounded-lg shadow-lg z-50">
                         <button class="block text-gray-900 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700 hover:text-white mt-auto w-full" type="submit">
                             <a href="{{ route('profile.show') }}">Perfil</a>
                         </button>
@@ -43,13 +43,13 @@
                     </div>
                 </div>
             @else
-                <div>
-                    <button type="button" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <div class="wrap-2 flex">
+                    <button type="button" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <a href="{{ route('login') }}">
                             Iniciar Sesion
                         </a>
                     </button>
-                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover-bg-blue-700 dark:focus:ring-blue-800">
                         <a href="{{ route('register') }}">
                             Registrate
                         </a>
