@@ -19,6 +19,15 @@ class Personal extends Model
         return $this->belongsTo(Especialidad::class, 'id_especialidad');
     }
 
+    public static function getAllEspecialidad(){
+        $results = DB::table('personals')
+        ->select('personals.*','especialidads.descripcion as especialidad')
+        ->leftJoin('especialidads', 'especialidads.id', '=', 'personals.id_especialidad')
+        ->get();
+
+    return $results;
+    }
+
     
 
 }

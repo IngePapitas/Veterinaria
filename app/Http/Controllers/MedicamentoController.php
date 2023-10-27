@@ -140,4 +140,14 @@ class MedicamentoController extends Controller
         return view('_resultadoMedicamento', compact('medicamentos'));
     }
 
+    public function buscarMedicamentosCreate(Request $request){
+        try {
+            $texto = $request->input('texto');
+            $medicamentos = Medicamento::where('nombre', 'LIKE', "%$texto%")->get();
+            return view('_resultadoMedicamentos_CreateNS', compact('medicamentos'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 }

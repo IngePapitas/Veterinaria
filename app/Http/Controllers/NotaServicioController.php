@@ -6,6 +6,8 @@ use App\Models\Cliente;
 use App\Models\Especie;
 use App\Models\Medicamento;
 use App\Models\NotaServicio;
+use App\Models\NotaServicioMedicamento;
+use App\Models\NotaServicioServicio;
 use App\Models\Paciente;
 use App\Models\Personal;
 use App\Models\Raza;
@@ -32,7 +34,7 @@ class NotaServicioController extends Controller
         $razas = [];
         $pacientes = Paciente::all();
         $clientes = Cliente::all();
-        $personals = Personal::all();
+        $personals = Personal::getAllEspecialidad();
         $allRazas = Raza::all();
         $allEspecies = Especie::all();
         $allServicios = Servicio::all();
@@ -47,7 +49,89 @@ class NotaServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->codigo == null){
+            $paciente = new Paciente();
+            $paciente->nombre = $request->nombre;
+            $paciente->peso = $request->peso;
+            $paciente->tamano = $request->tamano;
+            $especie = Especie::where('nombre', $request->especie)->first();
+            if(!$especie){
+                $especie = new Especie();   
+                $especie->nombre = $request->especie;
+                $especie->save();
+            }
+            $paciente->id_especie = $especie->id;
+            $raza = Raza::where('nombre', $request->raza)
+            ->where('id_especie', $especie->id)->first();
+            if(!$raza){
+                $raza = new Raza();   
+                $raza->nombre = $request->especie;
+                $raza->id_especie = $especie->id;
+                $raza->save();
+            }
+            $paciente->id_raza = $raza->id;
+            if ($request->hasFile('imagen')) {
+                $imagenPath = $request->file('imagen')->store('public/imagenesPacientes');
+                $paciente->imagen_path = $imagenPath;
+            }
+            $paciente->save();
+        }else{
+            $paciente = Paciente::findOrFail($request->codigo);
+        }
+        $cliente = Cliente::where('ci', $request->ci_cliente)->first();
+        if(!$cliente){
+            $cliente = new Cliente();
+            $cliente->ci = $request->input('ci_cliente');
+            $cliente->nombre = $request->input('nombre_cliente');
+            $cliente->correo = $request->input('correo_cliente');
+            $cliente->telefono = $request->input('telefono_cliente');
+            $cliente->save();
+        }
+
+        $notaservicio = new NotaServicio();
+        $notaservicio->id_paciente = $paciente->id;
+        $notaservicio->id_cliente = $cliente->id;
+        $notaservicio->id_personal = $request->personal;
+        $notaservicio->descripcion = $request->descripcionServicio;
+        $notaservicio->total = 0;
+        $notaservicio->save();
+
+        $servicios = explode(',', $request->InputServicios);
+        $medicamentos = explode(',', $request->InputMedicamentos);
+        $cantidades = explode(',', $request->InputCantidades);
+
+        
+        
+        $total = 0;
+        $numeroServicios = count($servicios);
+        $numeromedicamentos = count($medicamentos);
+
+        for($i = 0; $i < $numeroServicios; $i++){
+            $servicio = Servicio::where('descripcion', $servicios[$i])->first();
+            $total += $servicio->precio;
+            $notaservicio_servicio = new NotaServicioServicio();
+            $notaservicio_servicio->id_notaservicio = $notaservicio->id;
+            $notaservicio_servicio->id_servicio = $servicio->id;
+            $notaservicio_servicio->save();
+
+        }
+
+        for($i = 0; $i < $numeromedicamentos; $i++){
+            $medicamento = Medicamento::where('nombre', $medicamentos[$i])->first();
+            $total += $medicamento->precio * $cantidades[$i];
+            $notaservicio_medicamento = new NotaServicioMedicamento();
+            $notaservicio_medicamento->id_notaservicio = $notaservicio->id;
+            $notaservicio_medicamento->id_medicamento = $medicamento->id;
+            $notaservicio_medicamento->cantidad = $cantidades[$i];
+            $notaservicio_medicamento->subtotal = $medicamento->precio * $cantidades[$i];
+            $notaservicio_medicamento->save();
+            $medicamento->stock -= $cantidades[$i];
+            $medicamento->save();
+        }
+        $notaservicio->total = $total;
+        $notaservicio->save();
+
+        return redirect()->route('NotaServicio.index');
     }
 
     /**

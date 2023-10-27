@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('total');
             $table->string('descripcion')->nullable();
+            $table->string('estado')->nullable();
             $table->unsignedBigInteger('id_paciente');
             $table->unsignedBigInteger('id_cliente');
             $table->unsignedBigInteger('id_personal');

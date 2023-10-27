@@ -111,7 +111,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/notasservicio/{cliente}', [NotaServicioController::class, 'destroy'])->name('NotaServicio.destroy');
     Route::get('/buscar-notasservicio', [NotaServicioController::class, 'buscarNotasServicio'])->name('NotaServicio.clientes');
 
-    //NOTAS SERVICIO YA TU SABE POR QUIEN
+    //SERVICIO YA TU SABE POR QUIEN
     Route::get('/servicios', [ServicioController::class, 'index'])->name('Servicio.index');
     Route::get('/servicios/create', [ServicioController::class, 'create'])->name('Servicio.create');
     Route::post('/servicios', [ServicioController::class, 'store'])->name('Servicio.store');
@@ -120,4 +120,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/servicios/{servicios}', [ServicioController::class, 'destroy'])->name('Servicio.destroy');
     Route::get('/buscar-servicios', [ServicioController::class, 'buscarNotasServicio'])->name('Servicio.clientes');
     Route::get('/buscar-servicios-create', [ServicioController::class, 'buscarServiciosCreate'])->name('Servicio.buscarServicio');
+
+    //BUSCADDOR DE MEDICAMENTO PARA CREATE NS
+    Route::get('/buscar-medicamentos-create', [MedicamentoController::class, 'buscarMedicamentosCreate'])->name('Medicamento.buscarMedicamento');
 }) ;
