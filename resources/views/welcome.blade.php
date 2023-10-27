@@ -1,161 +1,71 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vetlink</title>
-    <link rel="icon" href="{{asset('images/logo-prueba.jpg')}}" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <!--Estilos para la pagina principal -->
-    <style>
-        body {
-            background: #ffff;
-            background: linear-gradient(to right, #eafafe, #bdd3d6)
-        }
+@include('nav-welcome')
 
-        .jumbotron {
-            background-color: #007bff;
-            color: white;
-            padding: 100px 0;
-            margin-bottom: 0;
-        }
-
-        .jumbotron h1 {
-            font-size: 3rem;
-        }
-
-        .jumbotron p {
-            font-size: 1.5rem;
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .feature-title {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-        /* Estilos personalizados para el contenedor con imagen de fondo */
-        .jumbotron {
-            background-image: url('{{asset('images/fondo-principal.jpg')}}'); /* Ruta de tu imagen de fondo */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            color: white; /* Color del texto */
-        }
-
-        /* Estilos para el contenido dentro del contenedor */
-        .jumbotron .container {
-            background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente para hacer el texto más legible */
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .jumbotron h1, .jumbotron p {
-        font-weight: bold; /* Hace que el texto sea más grueso */
-        }
-
-    </style>
-</head>
-<body>
-    <!-- Encabezado (MEJORAR Y SECCIONES DE PRUEBA LUEGO VER QUE IMPLEMENTAR)-->
-    <header>
-        <nav class="navbar navbar-expand-lg ">
-            <div class="container">
-                <img src="{{asset('images/logo-prueba.jpg')}}" width="48" alt="">
-                <a class="navbar-brand" href="#">Vetlink</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Servicios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contacto</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar-nav ml-auto">
-                    <a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a>
-                    <a class="nav-link" href="{{ route('register') }}">Registrarse</a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Sección de Bienvenida -->
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1 class="display-4">Bienvenido a Vetlink</h1>
-            <p class="lead">Cuidamos y amamos a tus mascotas.</p>
-        </div>
-    </section>
-
-    <!-- Sección de Características (COMPLETAR MEJOR SOLO VISTA DE PRUEBA)-->
-    <section class="container mt-5">
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <i class="feature-icon fas fa-paw"></i>
-                <h2 class="feature-title">Atención Personalizada</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-            <div class="col-md-4 text-center">
-                <i class="feature-icon fas fa-stethoscope"></i>
-                <h2 class="feature-title">Profesionales Veterinarios</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-            <div class="col-md-4 text-center">
-                <i class="feature-icon fas fa-heart"></i>
-                <h2 class="feature-title">Amor por los Animales</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<!--Seccion hero (vista principal)-->
+<div class="relative flex flex-col-reverse py-16 lg:pt-0 lg:flex-col lg:pb-0">
+    <div class="inset-y-0 top-0 right-0 z-0 w-full max-w-xl px-4 mx-auto md:px-0 lg:pr-0 lg:mb-0 lg:mx-0 lg:w-7/12 lg:max-w-full lg:absolute xl:px-0">
+        <svg class="absolute left-0 hidden h-full text-white transform -translate-x-1/2 lg:block" viewBox="0 0 100 100" fill="currentColor" preserveAspectRatio="none slice">
+            <path d="M50 0H100L50 100H0L50 0Z"></path>
+        </svg>
+        <img
+            class="object-cover w-full h-56 rounded shadow-lg lg:rounded-none lg:shadow-none md:h-96 lg:h-full"
+            src="{{asset('images/portada2.jpeg')}}"
+            alt="Vetlink"/>
+    </div>
+    <div class="relative flex flex-col items-start w-full max-w-xl px-4 mx-auto md:px-0 lg:px-8 lg:max-w-screen-xl">
+        <div class="mb-16 lg:my-40 lg:max-w-lg lg:pr-5">
+            <p class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400">
+                Vetlink
+            </p>
+            <h2 class="mb-5 font-sans text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-none">
+                Dedicados al bienestar<br class="hidden md:block" />
+                de tus
+                <span class="inline-block text-deep-purple-accent-400">mascotas</span>
+            </h2>
+            <p class="pr-5 mb-5 text-base text-gray-700 md:text-lg">
+                Ofrecemos una amplia gama de servicios, desde consultas médicas hasta cirugías, y estamos disponibles para emergencias las 24 horas del día.            
+            </p>
+            <div class="flex items-center">
+                <a href="#informacion" class="inline-flex items-center justify-center h-12 px-6 mr-6 font-medium tracking-wide text-black transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none">Mas informacion</a>
+                <a href="/" aria-label="" class="inline-flex items-center font-semibold text-gray-800 transition-colors duration-200 hover:text-deep-purple-accent-700"></a>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 
-    <!-- Sección de Productos (si se hace OPCIONAL DE PRUEBA) -->
-    <section class="container mt-5">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="product-container">
-                    <!-- Aquí agregar los campos de productos y llamar al controlador -->
-                    <h2 class="text-center">Nuestros Productos</h2>
-                    <!-- Ejemplo de un enlace para ver más productos -->
-                    <p class="text-center"><a href="" class="btn btn-primary">Ver Más Productos</a></p>
+<!--Seccion de informacion-->
+<section class="text-gray-600" id="informacion">
+    <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-wrap -m-4">
+            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
+                <div class="h-full text-center">
+                    <img alt="testimonial" class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="{{asset('images/ports.jpeg')}}">
+                    <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">SERVICIOS VETERINARIOS</h2><br>
+                    <p class="pr-2 mb-2 text-base text-gray-700">¡Descubre un Mundo de Servicios para Mascotas! En nuestra clínica veterinaria, nos apasiona brindar atención excepcional a tus queridos compañeros peludos. Desde tratamientos de belleza de primer nivel hasta cirugías salvavidas, ofrecemos todo lo que tus mascotas necesitan para una vida saludable y feliz.</p>
+                    <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+                    <p class="text-gray-500"></p>
+                </div>
+            </div>
+            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
+                <div class="h-full text-center">
+                    <img alt="testimonial" class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="{{asset('images/especies.webp')}}">
+                    <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">ATENCION A VARIEDAD DE ESPECIES</h2><br>
+                    <p class="pr-2 mb-2 text-base text-gray-700">¡Cuidamos a Todos los Amigos de Cuatro Patas! En Vetlink, no hay límites para la variedad de animales que atendemos. Desde adorables perros y gatos hasta majestuosas aves, loros, y demas. Somos tu destino de confianza para todas las especies. ¡El reino animal es nuestro territorio!</p>
+                    <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+                    <p class="text-gray-500"></p>
+                </div>
+            </div>
+            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
+                <div class="h-full text-center">
+                    <img alt="testimonial" class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="{{asset('images/compromiso.jpg')}}">
+                    <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">NUESTRO COMPROMISO</h2><br>
+                    <p class="pr-2 mb-2 text-base text-gray-700">En Vetlink, más que una clínica veterinaria, somos amantes apasionados de las mascotas. Nuestra misión es garantizar que cada animal, desde un encantador gatito hasta un leal compañero canino, obtenga el cuidado más excepcional. Estamos aquí para marcar la diferencia en la vida de tus mascotas.</p>
+                    <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+                    <p class="text-gray-500"></p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Sección de Contacto (DUDA SI APARTE O EN EL PIE DE PAGINA)-->
-    <section class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Contacto</h2>
-                <p>Estamos aquí para ayudarte con el cuidado de tus mascotas. Contáctanos para obtener más información.</p>
-                <ul>
-                    <li><i class="fas fa-phone"></i> Teléfono: (+591) 0000-0000</li>
-                    <li><i class="fas fa-envelope"></i> Correo Electrónico: info@veterinaria.com</li>
-                    <li><i class="fas fa-envelope"></i> Dirección: Santa Cruz.........</li>
-
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <img src="https://via.placeholder.com/400" alt="Imagen de contacto" class="img-fluid">
-            </div>
-        </div>
-    </section>
-
-    <!-- Pie de Página -->
-    <footer class="text-center py-3">
-        <div class="container">
-            <p>&copy; 2023 Veterinaria .... . Todos los derechos reservados.</p>
-        </div>
-    </footer>
-</body>
-</html>
+<!--Pie de pagina-->
+@include('footer')
