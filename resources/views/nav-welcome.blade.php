@@ -28,10 +28,10 @@
                 <div class="relative group">
                     <button class="flex items-center" id="user-menu-button">
                         <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}">
-                        <span class="ml-2 text-sm font-medium text-gray-900 hidden md:inline">{{ Auth::user()->name }}</span>
+                        <span class="ml-2 text-sm font-medium text-gray-900 hidden md:inline dark:text-white dark:hover:text-gray-400">{{ Auth::user()->name }}</span>
                     </button>
                     <!-- Contenedor emergente para opciones de perfil y cerrar sesión -->
-                    <div id="user-menu-popup" class="hidden absolute right-0 mt-2 py-2 w-36 bg-white rounded-lg shadow-lg z-50">
+                    <div id="user-menu-popup" class="hidden absolute right-0 mt-2 py-2 w-36 bg-white rounded-lg shadow-lg drak:text-white z-50">
                         <button class="block text-gray-900 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700 hover:text-white mt-auto w-full" type="submit">
                             <a href="{{ route('profile.show') }}">Perfil</a>
                         </button>
