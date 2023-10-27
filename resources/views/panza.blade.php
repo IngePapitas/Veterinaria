@@ -44,6 +44,7 @@
             <!-- Botón de Perfil -->
             <button>
                 <i class="fas fa-user text-gray-500 text-lg"></i>
+                <span class="text-gray-500 hidden md:inline">{{ Auth::user()->name }}</span>
             </button>
         </div>
     </div>

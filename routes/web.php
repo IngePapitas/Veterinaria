@@ -26,9 +26,23 @@ use App\Http\Controllers\ServicioController;
 |
 */
 
+//Vistas del encabezado de la pagina
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
+Route::get('/servicios-ofrecidos', function () {
+    return view('VistaWelcome.servicios');
+})->name('servicios-ofrecidos');
+Route::get('/productos', function () {
+    return view('VistaWelcome.productos');
+})->name('productos');
+Route::get('/contacto', function () {
+    return view('VistaWelcome.contacto');
+})->name('contacto');
+Route::get('/nuestro-equipo', function () {
+    return view('VistaWelcome.equipo');
+})->name('equipo');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('Dashboard');
