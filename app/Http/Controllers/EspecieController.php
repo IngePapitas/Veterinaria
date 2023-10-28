@@ -89,7 +89,17 @@ class EspecieController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $especie = Especie::findOrFail($id);
+
+        if (!$especie) {
+            return redirect()->route('Usuario.index')
+                ->with('error', 'El rol no existe.');
+        }
+        
+        $especie->delete();
+
+        return redirect()->route('Especie.index')
+            ->with('success', 'El rol se ha eliminado correctamente.');
     }
 
     public function buscarEspecieIndex(Request $request){

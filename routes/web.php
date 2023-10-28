@@ -65,6 +65,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/paciente/{paciente}/edit', [PacienteController::class, 'edit'])->name('Paciente.edit');
     Route::put('/paciente/{paciente}', [PacienteController::class, 'update'])->name('Paciente.update');
     Route::get('/buscar-paciente', [PacienteController::class, 'buscarPaciente'])->name('Paciente.buscarPaciente');
+    Route::get('/paciente/{paciente}/show', [PacienteController::class, 'show'])->name('Paciente.show');
+    Route::delete('/paciente/', [PacienteController::class, 'destroy'])->name('Paciente.destroy');
 
     //BUSCADORES DE ESPECIES, CREADOR DE PACIENTES
     Route::get('/buscar-especie-imagen', [EspecieController::class, 'buscarEspecieImagen'])->name('Especie.buscarImagen');
