@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Paciente;
 use App\Models\Especie;
+use App\Models\NotaServicio;
 use App\Models\Raza;
 
 class PacienteController extends Controller
@@ -69,7 +70,8 @@ class PacienteController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $paciente = Paciente::findOrFail($id);
+        $historial = Paciente::getNotasServicio($id);
     }
 
     /**
@@ -78,7 +80,9 @@ class PacienteController extends Controller
     public function edit(string $id)
     {
         $paciente = Paciente::findORFail($id);
-        return view('VistaPaciente.edit', compact('paciente'));
+        $especies = [];
+        $razas = [];
+        return view('VistaPaciente.edit', compact('paciente','especies','razas'));
     }
 
     /**
