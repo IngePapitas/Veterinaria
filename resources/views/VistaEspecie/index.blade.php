@@ -3,10 +3,17 @@
 @section('Panza')
 <div class="container mx-auto px-4 py-8">
 
-    <div class="mb-4">
-        <a href="{{ route('Especie.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-            Registrar Especie
-        </a>
+    <div class="wrap-2 flex">
+        <div class="mb-4 pr-2">
+            <a href="{{ route('Especie.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                Registrar Especie
+            </a>
+        </div>
+        <div class="mb-4 ml-auto">
+            <a href="{{ route('Raza.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                Ir a Razas
+            </a>
+        </div>
     </div>
 
     <div class="mb-4">
@@ -24,6 +31,7 @@
                 <th class="px-4 py-2">ID</th>
                 <th class="px-4 py-2">Imagen</th>
                 <th class="px-4 py-2">Nombre</th>
+                <th class="px-4 py-2">Razas</th>
                 <th class="px-4 py-2">Acciones</th>
             </tr>
         </thead>

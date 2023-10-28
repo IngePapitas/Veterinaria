@@ -1,4 +1,6 @@
-            @foreach ($medicamentos as $medicamento)
+        
+        @foreach ($medicamentos as $medicamento)
+            <tr>
                 <td class="border px-4 py-2 ">{{ $medicamento->id }}</td>
                 <td class="border px-4 py-2 ">{{ $medicamento->nombre }}</td>
                 <td class="border px-4 py-2 ">{{ $medicamento->forma_farmaceutica }}</td>
@@ -28,4 +30,6 @@
                         </button>
                     </form>
                 </td>
-            @endforeach
+            </tr>
+        @endforeach
+        

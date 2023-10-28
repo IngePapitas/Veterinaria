@@ -81,7 +81,14 @@ Route::middleware('auth')->group(function () {
     Route::put('/especie/{especie}', [EspecieController::class, 'update'])->name('Especie.update');
     Route::get('/buscar-especie', [EspecieController::class, 'buscarEspecieIndex'])->name('Especie.buscarEspecie');
     Route::delete('/especie/{especie}', [EspecieController::class, 'destroy'])->name('Especie.destroy');
+    
+    //RAZA
+    Route::get('/razas',[RazaController::class, 'index'])->name('Raza.index');
+    Route::get('/razas/create',[RazaController::class, 'create'])->name('Raza.create');    
+    Route::get('/razas/edit/{nombre}',[RazaController::class, 'edit'])->name('Raza.edit');
+    Route::delete('/razas/{raza}',[RazaController::class, 'destroy'])->name('Raza.destroy');
 
+    //MEDICAMENTO
     Route::get('/medicamento', [MedicamentoController::class, 'index'])->name('Medicamento.index');
     Route::get('/medicamento/create', [MedicamentoController::class, 'create'])->name('Medicamento.create');
     Route::post('/medicamento', [MedicamentoController::class, 'store'])->name('Medicamento.store');

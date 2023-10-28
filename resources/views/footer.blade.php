@@ -31,9 +31,9 @@
                 <p class="font-semibold text-gray-800 dark:text-white">Redes Sociales</p>
 
                 <div class="flex flex-col items-start mt-5 space-y-2">
-                    <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Facebook</a>
-                    <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Instagram</a>
-                    <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">WhatsApp</a>
+                    <a href="https://www.facebook.com/" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Facebook</a>
+                    <a href="https://www.instagram.com/" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Instagram</a>
+                    <a href="https://www.whatsapp.com/" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">WhatsApp</a>
                 </div>
             </div>
         </div>

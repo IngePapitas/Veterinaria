@@ -14,6 +14,9 @@ class RazaController extends Controller
     public function index()
     {
         //
+        $raza = Raza::all();
+        $especie = Especie::all();
+        return view('VistaEspecie.indexraza',compact('raza','especie'));
     }
 
     /**
@@ -22,6 +25,9 @@ class RazaController extends Controller
     public function create()
     {
         //
+        $especie = Especie::all();
+        return view('VistaEspecie.createraza',compact('especie'));
+        
     }
 
     /**
@@ -43,9 +49,11 @@ class RazaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         //
+        $r = Raza::find($id);
+        return view('VistaEspecie.editraza', compact('r'));
     }
 
     /**
@@ -59,9 +67,13 @@ class RazaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         //
+        $raza = Raza::find($id);
+        $raza->delete();
+
+        return redirect()->route('Raza.index')->with('success', 'Raza eliminada correctamente');
     }
 
     public function buscarRaza(Request $request) {

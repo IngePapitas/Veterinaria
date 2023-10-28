@@ -14,6 +14,15 @@
         {{ $especie->nombre }}
     </td>
     <td class="border px-4 py-2">
+        <ul>
+            @foreach($raza as $r)
+                @if($r->id_especie === $especie->id)
+                    <li>{{ $r->nombre }}</li>
+                @endif
+            @endforeach
+        </ul>
+    </td>
+    <td class="border px-4 py-2">
         <a href="{{ route('Especie.edit', $especie->id) }}" class="text-blue-600 hover:text-gray-800">
             Editar
         </a>
