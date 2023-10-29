@@ -92,8 +92,8 @@ class EspecieController extends Controller
         $especie = Especie::findOrFail($id);
 
         if (!$especie) {
-            return redirect()->route('Usuario.index')
-                ->with('error', 'El rol no existe.');
+            return redirect()->route('Especie.index')
+                ->with('error', 'La especie no existe.');
         }
         
         $especie->delete();

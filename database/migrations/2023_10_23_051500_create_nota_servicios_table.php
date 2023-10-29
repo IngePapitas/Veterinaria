@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('total');
             $table->string('descripcion')->nullable();
-            $table->string('estado')->nullable();
+            $table->unsignedBigInteger('id_estado')->nullable();
             $table->unsignedBigInteger('id_paciente');
             $table->unsignedBigInteger('id_cliente');
             $table->unsignedBigInteger('id_personal');
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreign('id_paciente')->references('id')->on('pacientes')->onDelete('cascade');
             $table->foreign('id_cliente')->references('id')->on('clientes')->onDelete('cascade');
             $table->foreign('id_personal')->references('id')->on('personals')->onDelete('cascade');
+            $table->foreign('id_estado')->references('id')->on('estado_pacientes')->onDelete('cascade');
         });
     }
 

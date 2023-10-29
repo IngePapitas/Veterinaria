@@ -70,8 +70,13 @@ class PacienteController extends Controller
      */
     public function show(string $id)
     {
-        $paciente = Paciente::findOrFail($id);
+        $paciente = Paciente::getDatos($id);
         $historial = Paciente::getNotasServicio($id);
+        $allNotasServicio = NotaServicio::allData();
+        $duenos = NotaServicio::allDuenos();
+
+        return view ('VistaPaciente.show',compact('paciente','historial','allNotasServicio','duenos'));
+        
     }
 
     /**
@@ -82,6 +87,7 @@ class PacienteController extends Controller
         $paciente = Paciente::findORFail($id);
         $especies = [];
         $razas = [];
+        
         return view('VistaPaciente.edit', compact('paciente','especies','razas'));
     }
 
@@ -103,19 +109,37 @@ class PacienteController extends Controller
 
     public function buscarPaciente(Request $request){
         $texto = $request->input('texto');
-        $ordenarPor = $request->input('ordenar', 'id');
-        $pacientes = Paciente::select('pacientes.*')
-        ->join('especies', 'pacientes.id_especie', '=', 'especies.id')
-        ->join('razas', 'razas.id_especie', '=', 'especies.id')
+        $ordenarPor = $request->input('ordenar');
+        $pacientes = Paciente::select('pacientes.*','razas.nombre as raza','especies.nombre as especie','especies.imagen_path as especie_imagen')
+        ->join('especies', 'razas.id_especie', '=', 'especies.id')
+        ->join('razas', 'razas.id', '=', 'pacientes.id_raza')
         ->where(function ($query) use ($texto) {
-            $query->where('personals.nombre', 'LIKE', "%$texto%")
+            $query->where('especies.nombre', 'LIKE', "%$texto%")
                 ->orWhere('razas.nombre', 'LIKE', "%$texto%")
-                ->orWhere('paciente.nombre', 'LIKE', "%$texto%");
+                ->orWhere('pacientes.nombre', 'LIKE', "%$texto%");
         })
-        ->orderBy($ordenarPor === 'nombre' ? 'nombre' : 'id')
+        ->orderBy($ordenarPor === 'nombre' ? 'pacientes.nombre' : 'pacientes.id')
         ->get();
     
-
     return view('_resultadoPaciente', compact('pacientes'));
     }
+
+    public function buscarServiciosShow(Request $request) {
+        try {
+            $servicios_ns = NotaServicio::getServicios($request->input('id'));
+            return response()->json($servicios_ns);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function buscarMedicamentosShow(Request $request) {
+        try {
+            $medicamentos_ns = NotaServicio::getMedicamentos($request->input('id'));
+            return response()->json($medicamentos_ns);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    
 }

@@ -22,9 +22,7 @@
             <thead>
                 <tr>
                     <th class="px-4 py-2">ID</th>
-
                     <th class="px-4 py-2">Descripcion</th>
-                    <!-- <th class="px-4 py-2">Descripción</th> -->
                     <th class="px-4 py-2">Precio</th>
                     <th class="px-4 py-2">Acciones</th>
 

@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EspeciesTableSeeder::class);
         $this->call(RazasTableSeeder::class);
         $this->cargarUsuarios();
+        $this->call(EstadoPacientesSeeder::class);
     }
 
     public function cargarUsuarios(){

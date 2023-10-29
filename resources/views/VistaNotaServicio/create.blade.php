@@ -125,7 +125,16 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mt-32 ">
+                    <div class="mb-4">
+                        <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">Estado del paciente:</label>
+                        <select name="estado" id="estado" class="w-1/2 border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <option value="" disabled selected>Seleccione..</option>    
+                        @foreach($estados as $estado)
+                            <option value="{{ $estado->id }}">{{ $estado->descripcion }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mt-16 ">
                         <div class="text-green-500 text-4xl font-bold" id="divTotal">Total: <span class="text-green-500 text-4xl font-bold" id="spanTotal"></span></div>
                     </div>
                 </div>
@@ -188,7 +197,7 @@
 
                     <div class="mb-4">
                         <label for="codigo" class="block text-gray-700 text-sm font-bold mb-2">Codigo:</label>
-                        <input type="text" name="codigo" id="codigo" class="w-full border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <input type="text" name="codigo" id="codigo" class="w-full border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
 
                     <div class="mb-4">

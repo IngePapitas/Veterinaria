@@ -40,20 +40,43 @@ class Paciente extends Model
 
         return $results;
     }
+    public static function getDatos($id)
+    {
+        $results = DB::table('pacientes')
+            ->select(
+                'pacientes.id',
+                'pacientes.nombre',
+                'pacientes.peso',
+                'pacientes.tamano',
+                'pacientes.imagen_path',
+                'razas.nombre as raza',
+                'especies.nombre as especie',
+                'especies.imagen_path as especie_imagen'
+            )
+            ->leftJoin('razas', 'razas.id', '=', 'pacientes.id_raza')
+            ->leftJoin('especies', 'razas.id_especie', '=', 'especies.id')
+            ->where('pacientes.id',$id)
+            ->first();
+
+        return $results;
+    }
     public static function getNotasServicio($id){
         $results = DB::table('nota_servicios')
             ->select(
+                'nota_servicios.id',
                 'personals.nombre as personalNombre',
                 'nota_servicios.id as id_notaservicio',
-                'nota_servicios.descripcion',
-                'nota_servicios.estado',
+                'nota_servicios.descripcion as nota_descripcion',
+                'estado_pacientes.descripcion as estado',
+                'estado_pacientes.id as id_estado',
                 'nota_servicios.total',
-                'clientes.nombre as cliente.',
-                ''
+                'nota_servicios.created_at',
+                'clientes.nombre as cliente',
             )
-            ->leftJoin('especies', 'especies.id', '=', 'pacientes.id_especie')
-            ->leftJoin('razas', 'razas.id_especie', '=', 'especies.id')
-            ->orderBy('pacientes.nombre')
+            ->leftJoin('clientes', 'clientes.id', '=', 'nota_servicios.id_cliente')
+            ->leftJoin('personals', 'personals.id', '=', 'nota_servicios.id_personal')
+            ->leftJoin('estado_pacientes', 'estado_pacientes.id', '=', 'nota_servicios.id_estado')
+            ->where('nota_servicios.id_paciente', $id)
             ->get();
 
         return $results;
