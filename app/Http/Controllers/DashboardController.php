@@ -128,7 +128,7 @@ class DashboardController extends Controller
                     $mailer->send($message);
                 }
                 Storage::delete($rutaTemporal);
-                return response()->json(['mensaje' => 'Archivo recibido con éxito']);
+                return response()->json(['mensaje' => 'Archivo enviado con éxito']);
             }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

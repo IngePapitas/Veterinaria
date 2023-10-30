@@ -68,6 +68,7 @@
 
         <select id="servicioSelect" class="p-2 border rounded">
             <option value="" disabled selected>Serivico..</option>
+            <option value="">Todos los servicios</option>
             @foreach ($servicios as $servicio)
             <option value="{{ $servicio->id }}">{{ $servicio->descripcion }}</option>
             @endforeach
@@ -75,6 +76,7 @@
 
         <select id="medicamentoSelect" class="p-2 border rounded">
             <option value="" disabled selected>Medicamento..</option>
+            <option value="">Todos los medicamentos</option>
             @foreach ($medicamentos as $medicamento)
             <option value="{{ $medicamento->id }}">{{ $medicamento->nombre }}</option>
             @endforeach
@@ -228,6 +230,7 @@
             fechaIni = document.getElementById('mesAnioInicioSelect').value;
             fechaFin = document.getElementById('mesAnioFinalSelect').value;
             servicioSel = document.getElementById('servicioSelect').value;
+            medicamentoSel = document.getElementById('medicamentoSelect').value;
             getDatosServicios(fechaIni, fechaFin, servicioSel);
             getDatosMedicamentos(fechaIni, fechaFin, medicamentoSel);
             getDatosServiciosRequeridos(fechaIni, fechaFin)
@@ -386,12 +389,12 @@
         }
 
         function enviarAdministradores(archivo, nombreArchivo) {
-            console.log("ARCHIVO: ", archivo);
-            console.log("NOMBRE ARCHIVO: ", nombreArchivo);
+            //console.log("ARCHIVO: ", archivo);
+            //console.log("NOMBRE ARCHIVO: ", nombreArchivo);
             const formData = new FormData();
             const archivoAdjunto = new File([archivo], nombreArchivo, { type: archivo.type });
             formData.append('archivo', archivoAdjunto);
-            console.log(archivoAdjunto);
+            //console.log(archivoAdjunto);
             fetch('/enviar-administradores', {
                     method: 'POST',
                     headers: {

@@ -121,7 +121,7 @@ class NotaServicio extends Model
         }
 
         if ($medicamento != "") {
-            $filter['nota_servicio_servicios.id_mediamento'] = $medicamento;
+            $filter['nota_servicio_medicamentos.id_medicamento'] = $medicamento;
         }
 
         $results = DB::table('nota_servicios')
