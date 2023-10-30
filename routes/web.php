@@ -15,6 +15,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\NotaServicioController;
 use App\Http\Controllers\ServicioController;
+use App\Models\NotaServicio;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -154,4 +156,5 @@ Route::middleware('auth')->group(function () {
     //FILTROS DE INGRESOS PARA CONSULTAS
     Route::get('/obtener-ingresos-servicios', [ServicioController::class, 'obtenerIngresosServicios'])->name('Servicio.obtenerIngresosServicios');
     Route::get('/obtener-ingresos-medicamentos', [MedicamentoController::class, 'obtenerIngresosMedicamentos'])->name('Medicamentos.obtenerIngresosMedicamentos');
+    Route::get('/obtener-servicios-requeridos', [NotaServicioController::class, 'obtenerServiciosRequeridos'])->name('NotaServicio.obtenerServiciosRequeridos');
 }) ;

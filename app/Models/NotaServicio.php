@@ -134,4 +134,29 @@ class NotaServicio extends Model
             ->get();
         return $results;
     }
+
+    public static function obtenerServiciosRequeridos($fechaIni, $fechaFin)
+    {
+        $filter = [];
+        if ($fechaIni != "") {
+            $filter[] = [
+                'nota_servicio_servicios.created_at', '>=', $fechaIni . '-01',
+            ];
+        }
+        if ($fechaFin != "") {
+            $filter[] = [
+                'nota_servicio_servicios.created_at', '<=', $fechaFin . '-31',
+            ];
+        }
+
+        $results = DB::table('nota_servicio_servicios')
+            ->select(
+                    'servicios.descripcion as servicio',DB::raw('COUNT(nota_servicio_servicios.id) as cantidad'))
+            ->leftJoin('servicios', 'servicios.id', '=', 'nota_servicio_servicios.id_servicio')
+            ->where($filter)
+            ->groupBy('servicio') 
+            ->orderBy('servicio')
+            ->get();
+        return $results;
+    }
 }
