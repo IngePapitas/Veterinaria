@@ -39,7 +39,7 @@ class ServicioController extends Controller
         
         activity()
                 ->causedBy(auth()->user())//usuario responsable de actividad
-                ->log('Creo un nuevo Servicio: '. $servicio->nombre);
+                ->log('Creo un nuevo Servicio: '. $servicio->descripcion);
 
         $servicio->save();
 

@@ -48,7 +48,10 @@ Route::get('/nuestro-equipo', function () {
 
 
 Route::middleware('auth')->group(function () {
+    //DASHBOARD Y SUS FUNCIONES
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('Dashboard');
+    Route::post('/generar-excel', [DashboardController::class, 'generarExcel'])->name('Dashboard.generarExcel');
+    Route::post('/enviar-administradores', [DashboardController::class, 'enviarAdministradores'])->name('Dashboard.enviarAdministradores');
 
     //PERSONAL HECHO POR ELIO 
     Route::get('/personal', [PersonalController::class, 'index'])->name('Personal.index');
@@ -161,4 +164,6 @@ Route::middleware('auth')->group(function () {
 
     //BITACORA
     Route::get('/bitacora', [BitacoraController::class, 'index'])->name('Bitacora.index');
+
+    
 }) ;

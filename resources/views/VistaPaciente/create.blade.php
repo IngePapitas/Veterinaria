@@ -92,7 +92,8 @@
 
 
         cargarImagenInput.addEventListener('change', (event) => {
-            const imagenSeleccionada = event.target.files[0]; // Obtener la imagen seleccionada
+            const imagenSeleccionada = event.target.files[0];
+            console.log(imagenSeleccionada); // Obtener la imagen seleccionada
             if (imagenSeleccionada) {
                 const imageUrl = URL.createObjectURL(imagenSeleccionada); // Crear una URL para la imagen seleccionada
                 avatarContainer.style.backgroundImage = `url('${imageUrl}')`; // Establecer la imagen como fondo   
