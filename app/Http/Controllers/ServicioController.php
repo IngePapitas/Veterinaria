@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NotaServicio;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class ServicioController extends Controller
     public function index()
     {
         $servicios = Servicio::all();
-        return view('VistaServicio.index',compact('servicios'));
+        return view('VistaServicio.index', compact('servicios'));
     }
 
     /**
@@ -86,17 +87,31 @@ class ServicioController extends Controller
 
         return view('_resultadosServicios', compact('servicios'));
     }
-    
-    public function buscarServiciosCreate(Request $request)
-{
-    try {
-        $texto = $request->input('texto');
-        $servicios = Servicio::where('descripcion', 'LIKE', "%$texto%")->get();
-        return view('_resultadoServicios_CreateNS', compact('servicios'));
-    } catch (\Exception $e) {
-        // Captura cualquier excepción y muestra el mensaje de error
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
-}
 
+    public function buscarServiciosCreate(Request $request)
+    {
+        try {
+            $texto = $request->input('texto');
+            $servicios = Servicio::where('descripcion', 'LIKE', "%$texto%")->get();
+            return view('_resultadoServicios_CreateNS', compact('servicios'));
+        } catch (\Exception $e) {
+            // Captura cualquier excepción y muestra el mensaje de error
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function obtenerIngresosServicios(Request $request)
+    {
+        try {
+            $fechaIni = !empty($request->input('fechaIni')) ? $request->input('fechaIni'): '';
+            $fechaFin = !empty($request->input('fechaFin'))? $request->input('fechaFin'): '';
+            $servicio = !empty($request->input('servicio'))? $request->input('servicio'): '';
+
+            $consulta = NotaServicio::obtenerIngresosServicios($fechaIni, $fechaFin, $servicio);
+
+            return response()->json($consulta);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }

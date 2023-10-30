@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CategoriaMedicamento;
 use App\Models\Medicamento;
 use App\Models\Laboratorio;
+use App\Models\NotaServicio;
 
 class MedicamentoController extends Controller
 {
@@ -145,6 +146,21 @@ class MedicamentoController extends Controller
             $texto = $request->input('texto');
             $medicamentos = Medicamento::where('nombre', 'LIKE', "%$texto%")->get();
             return view('_resultadoMedicamentos_CreateNS', compact('medicamentos'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function obtenerIngresosMedicamentos(Request $request)
+    {
+        try {
+            $fechaIni = !empty($request->input('fechaIni')) ? $request->input('fechaIni'): '';
+            $fechaFin = !empty($request->input('fechaFin'))? $request->input('fechaFin'): '';
+            $medicamento = !empty($request->input('medicamento'))? $request->input('medicamento'): '';
+
+            $consulta = NotaServicio::obtenerIngresosMedicamentos($fechaIni, $fechaFin, $medicamento);
+
+            return response()->json($consulta);
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

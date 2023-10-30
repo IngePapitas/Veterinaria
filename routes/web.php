@@ -150,4 +150,8 @@ Route::middleware('auth')->group(function () {
     //BUSCADORES PARA PACIENTES.SHOW
     Route::get('/buscar-servicios-pacienteshow', [PacienteController::class, 'buscarServiciosShow'])->name('Paciente.buscarServiciosShow');
     Route::get('/buscar-medicamentos-pacienteshow', [PacienteController::class, 'buscarMedicamentosShow'])->name('Paciente.buscarMedicamentosShow');
+
+    //FILTROS DE INGRESOS PARA CONSULTAS
+    Route::get('/obtener-ingresos-servicios', [ServicioController::class, 'obtenerIngresosServicios'])->name('Servicio.obtenerIngresosServicios');
+    Route::get('/obtener-ingresos-medicamentos', [MedicamentoController::class, 'obtenerIngresosMedicamentos'])->name('Medicamentos.obtenerIngresosMedicamentos');
 }) ;

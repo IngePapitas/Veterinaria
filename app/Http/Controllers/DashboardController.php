@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Medicamento;
+use App\Models\Servicio;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,7 +13,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('VistaDashboard.index');
+        $medicamentos = Medicamento::all();
+        $servicios = Servicio::all();
+        return view('VistaDashboard.index', compact('servicios','medicamentos'));
     }
 
     /**
