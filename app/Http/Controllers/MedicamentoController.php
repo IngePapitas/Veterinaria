@@ -60,7 +60,7 @@ class MedicamentoController extends Controller
         ->causedBy(auth()->user())//usuario responsable de actividad
         ->log('Creo el medicamento: '. $medicamento->nombre);
 
-        return redirect()->route('Medicamento.index');
+        return redirect()->route('Medicamento.index')->with('success', 'Medicamento creado correctamente');
     }
 
     public function show(Medicamento $medicamento)
