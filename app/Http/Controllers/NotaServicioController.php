@@ -134,6 +134,10 @@ class NotaServicioController extends Controller
         $notaservicio->total = $total;
         $notaservicio->save();
 
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Creo la nota de servicio para el paciente: '. $paciente->nombre);
+
         return redirect()->route('NotaServicio.index');
     }
 

@@ -40,6 +40,11 @@ class EspecieController extends Controller
         }
         
         $especie->save();
+
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Creo una nueva especie: '. $especie->nombre);
+
         return redirect()->route('Especie.index');
     }
 
@@ -81,6 +86,10 @@ class EspecieController extends Controller
 
         $especie->save();
 
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Edito una especie: '. $especie->nombre);
+
         return redirect()->route('Especie.index')->with('success', 'Especie actualizada exitosamente');
     }
 
@@ -95,11 +104,14 @@ class EspecieController extends Controller
             return redirect()->route('Especie.index')
                 ->with('error', 'La especie no existe.');
         }
-        
-        $especie->delete();
 
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Elimino una especie: '. $especie->nombre);
+
+        $especie->delete();
         return redirect()->route('Especie.index')
-            ->with('success', 'El rol se ha eliminado correctamente.');
+            ->with('success', 'La especie se ha eliminado correctamente.');
     }
 
     public function buscarEspecieIndex(Request $request){

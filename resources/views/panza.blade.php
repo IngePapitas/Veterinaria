@@ -82,6 +82,9 @@
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('NotaServicio.index')}}">
                 <i class="fa-regular fa-note-sticky mr-2"></i>Notas de Servicio
                 </a>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Bitacora.index')}}">
+                <i class="fa-regular fa-clipboard mr-2"></i>Bitacora
+                </a>
             </nav>
 
             <!-- Ítem de Cerrar Sesión -->

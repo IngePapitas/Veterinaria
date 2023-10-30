@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\CategoriaMedicamentoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonalController;
@@ -154,4 +155,7 @@ Route::middleware('auth')->group(function () {
     //FILTROS DE INGRESOS PARA CONSULTAS
     Route::get('/obtener-ingresos-servicios', [ServicioController::class, 'obtenerIngresosServicios'])->name('Servicio.obtenerIngresosServicios');
     Route::get('/obtener-ingresos-medicamentos', [MedicamentoController::class, 'obtenerIngresosMedicamentos'])->name('Medicamentos.obtenerIngresosMedicamentos');
+
+    //BITACORA
+    Route::get('/bitacora', [BitacoraController::class, 'index'])->name('Bitacora.index');
 }) ;

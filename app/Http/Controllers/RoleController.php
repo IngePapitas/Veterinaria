@@ -40,6 +40,10 @@ class RoleController extends Controller
             $role->givePermissionTo($request->permissions);
         }
 
+        activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Creo un nuevo Rol: '. $role->nombre);
+
         return redirect()->route('Usuario.index');
     }
 
@@ -79,6 +83,10 @@ class RoleController extends Controller
             $role->syncPermissions([]); // Si no se seleccionan permisos, elimina todos los permisos asociados.
         }
 
+        activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Actualizo el Rol: '. $role->nombre);
+
         return redirect()->route('Usuario.index')
             ->with('success', 'Rol actualizado exitosamente');
     }
@@ -98,6 +106,11 @@ class RoleController extends Controller
             return redirect()->route('Usuario.index')
                 ->with('error', 'No puedes eliminar un rol con usuarios asignados.');
         }
+
+        activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Elimino el Rol: '. $role->nombre);
+
         $role->delete();
 
         return redirect()->route('Usuario.index')

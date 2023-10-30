@@ -36,6 +36,11 @@ class ServicioController extends Controller
         $servicio = new Servicio();
         $servicio->descripcion = $request->input('descripcion');
         $servicio->precio = $request->input('precio');
+        
+        activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Creo un nuevo Servicio: '. $servicio->nombre);
+
         $servicio->save();
 
         return redirect()->route('Servicio.index')->with('success', 'Servicio creado correctamente.');
@@ -69,6 +74,10 @@ class ServicioController extends Controller
         $servicio->descripcion = $request->input('descripcion');
         $servicio->precio = $request->input('precio');
         $servicio->save();
+        
+        activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Actualizo el Servicio: '. $servicio->nombre);
 
         return redirect()->route('Servicio.index')->with('success', 'Servicio actualizado correctamente.');
     }
@@ -79,6 +88,12 @@ class ServicioController extends Controller
     public function destroy(string $id)
     {
         //
+        $servicio = Servicio::find($id);
+        
+        activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Elimino el Servicio: '. $servicio->nombre);
+
     }
     public function buscarServicios(Request $request)
     {

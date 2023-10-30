@@ -53,6 +53,12 @@ class RazaController extends Controller
     {
         //
         $r = Raza::find($id);
+
+        
+        activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Actualizo la raza: '. $r->nombre);
+
         return view('VistaEspecie.editraza', compact('r'));
     }
 
@@ -71,6 +77,11 @@ class RazaController extends Controller
     {
         //
         $raza = Raza::find($id);
+
+        activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Elimino la raza: '. $raza->nombre);
+
         $raza->delete();
 
         return redirect()->route('Raza.index')->with('success', 'Raza eliminada correctamente');

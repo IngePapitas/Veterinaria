@@ -62,6 +62,11 @@ class PacienteController extends Controller
             $paciente->imagen_path = $imagenPath;
         }
         $paciente->save();
+
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Registro al paciente: '. $paciente->nombre);
+
         return redirect()->route('Paciente.index');
     }
 

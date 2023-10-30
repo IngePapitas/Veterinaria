@@ -55,6 +55,11 @@ class MedicamentoController extends Controller
 
         // Guarda el medicamento en la base de datos
         $medicamento->save();
+
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Creo el medicamento: '. $medicamento->nombre);
+
         return redirect()->route('Medicamento.index');
     }
 
@@ -107,6 +112,10 @@ class MedicamentoController extends Controller
         $medicamentos = Medicamento::with('laboratorio')->get();
         $medicamentos = Medicamento::with('categoriaMedicamento')->get();
 
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Edito el medicamento: '. $medicamento->nombre);
+
         return redirect()->route('Medicamento.index',compact('medicamentos'));
     }
 
@@ -115,6 +124,11 @@ class MedicamentoController extends Controller
         // Elimina el medicamento de la base de datos
         try{
             $medicamento = Medicamento::findOrFail($id);
+
+            activity()
+            ->causedBy(auth()->user())//usuario responsable de actividad
+            ->log('Elimino el medicamento: '. $medicamento->nombre);
+
             $medicamento->delete(); //elimina el registro del medicamento
 
             return redirect()->route('Medicamento.index')->with('success', 'Medicamento eliminado correctamente');

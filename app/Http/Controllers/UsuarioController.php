@@ -57,6 +57,11 @@ class UsuarioController extends Controller
                     $user->profile_photo_path = $imagenPath; 
                 }
                 $user->save();
+
+                activity()
+                    ->causedBy(auth()->user())//usuario responsable de actividad
+                    ->log('Creo un usuario con email: '. $user->correo);
+
             toastr()->addSuccess('Usuario creado existosamente.');
             return redirect()->route('Usuario.index');
             
@@ -106,6 +111,11 @@ class UsuarioController extends Controller
                     $user->profile_photo_path = null; 
                 }
                 $user->save();
+
+                activity()
+                    ->causedBy(auth()->user())//usuario responsable de actividad
+                    ->log('Actualizo al usuario con email: '. $user->correo);
+
             toastr()->addSuccess('Usuario actualizado existosamente.');
             return redirect()->route('Usuario.index');
             

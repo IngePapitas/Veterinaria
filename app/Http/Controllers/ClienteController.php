@@ -37,6 +37,10 @@ class ClienteController extends Controller
         $cliente->telefono = $request->input('telefono');
         $cliente->save();
 
+        activity()
+            ->causedBy(auth()->user())//usuario responsable de actividad
+            ->log('Registro al nuevo cliente: '. $cliente->nombre);
+        
         return redirect()->route('Cliente.index')->with('success', 'Cliente creado exitosamente');
     }
 
@@ -69,6 +73,10 @@ class ClienteController extends Controller
         $cliente->telefono = $request->input('telefono');
         $cliente->save();
 
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Edito a informacion de un cliente: '. $cliente->nombre);
+
         return redirect()->route('Cliente.index')->with('success', 'Cliente actualizado exitosamente');
     }
 
@@ -83,10 +91,16 @@ class ClienteController extends Controller
 
         foreach ($notasVentasRelacionadas as $notaVenta) {
 
-        $notaVenta->id_cliente = null;
-        $notaVenta->save();
-    }
+            $notaVenta->id_cliente = null;
+            $notaVenta->save();
+        }
+
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Elimino al cliente: '. $cliente->cliente);
+
         $cliente->delete();
+
         return redirect()->route('Cliente.index');
     }
 

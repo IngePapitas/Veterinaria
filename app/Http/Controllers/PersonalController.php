@@ -63,6 +63,11 @@ class PersonalController extends Controller
         
         $personal->id_especialidad = $especialidad->id; 
         $personal->save();
+
+        activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Registro al nuevo personal: '. $personal->nombre);
+
         return redirect()->route('Personal.index');
     }
 
@@ -106,6 +111,11 @@ class PersonalController extends Controller
     if (!$especialidad) {
         $especialidad = new Especialidad();
         $especialidad->descripcion = $request->especialidad;
+
+        activity()
+            ->causedBy(auth()->user())//usuario responsable de actividad
+            ->log('Actualizo la especialidad del personal: '. $personal->nombre);
+
         $especialidad->save();
     }
     $personal->id_especialidad = $especialidad->id;
@@ -123,6 +133,11 @@ class PersonalController extends Controller
 
     // Guardar los cambios en la base de datos
     $personal->save();
+
+    activity()
+        ->causedBy(auth()->user())//usuario responsable de actividad
+        ->log('Actualizo datos del personal: '. $personal->nombre);
+
     $personals = Personal::all();
     // Redirigir a la vista de detalles o a donde desees después de la actualización
     return redirect()->route('Personal.index', compact('personals'));
@@ -136,6 +151,11 @@ class PersonalController extends Controller
     {
         try {
             $personal = Personal::findOrFail($id); // Encuentra el personal por su ID o lanza una excepción si no existe
+
+            activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Elimino al personal: '. $personal->nombre);
+
             $personal->delete(); // Elimina el registro del personal
 
             return redirect()->route('Personal.index')->with('success', 'Personal eliminado correctamente');
@@ -164,6 +184,17 @@ class PersonalController extends Controller
         //dd($id);
         $personal = Personal::findOrFail($id);
         $personal->baja = !$personal->baja;
+
+        if($personal->baja){
+            activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Se dio inactividad al personal: '. $personal->nombre);
+        }else{
+            activity()
+                ->causedBy(auth()->user())//usuario responsable de actividad
+                ->log('Se volvio activo al personal: '. $personal->nombre);
+        }
+
         $personal->save();
         $personals = Personal::all();
         return redirect()->route('Personal.index', compact('personals'));
