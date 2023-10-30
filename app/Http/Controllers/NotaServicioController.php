@@ -172,4 +172,27 @@ class NotaServicioController extends Controller
     {
         //
     }
+
+    public function obtenerServiciosRequeridos(Request $request){
+        try {
+            $fechaIni = !empty($request->input('fechaIni')) ? $request->input('fechaIni'): '';
+            $fechaFin = !empty($request->input('fechaFin'))? $request->input('fechaFin'): '';
+            $data = NotaServicio::obtenerServiciosRequeridos($fechaIni, $fechaFin);
+
+            $cantidadProductos = 0;
+
+            foreach($data as $item){
+                $cantidadProductos += $item->cantidad;
+            }
+
+            foreach($data as $item){
+                $item->porcentaje = round($item->cantidad * 100 / $cantidadProductos, 1);
+                $item->nameservicio = $item->servicio;
+            }
+
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }
