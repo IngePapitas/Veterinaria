@@ -55,27 +55,40 @@
         <!-- Barra lateral de navegación (oculta en dispositivos pequeños) -->
         <div class="p-2 bg-white w-full md:w-60 flex flex-col md:flex hidden" id="sideNav">
             <nav>
+                
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Dashboard') }}">
                     <i class="fas fa-home mr-2"></i>Inicio
                 </a>
+                @can('Ver Paciente')
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Paciente.index')}}">
                     <i class="fa-solid fa-dog mr-2"></i>Pacientes
                 </a>
+                @endcan
+                @can('Ver Personal')
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Personal.index')}}">
                     <i class="fas fa-users mr-2"></i>Personal
                 </a>
+                @endcan
+                @can('Ver Especie')
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Especie.index')}}">
                     <i class="fa-solid fa-paw mr-2"></i>Especies/Razas
                 </a>
+                @endcan
+                @can('Ver Medicamento')
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Medicamento.index')}}">
                     <i class="fas fa-pills mr-2"></i>Medicamentos
                 </a>
+                @endcan
+                @can('Ver Usuario')
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Usuario.index')}}">
                     <i class="fa-solid fa-user mr-2"></i>Usuarios/Roles
                 </a>
+                @endcan
+                @can('Ver Cliente')
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Cliente.index')}}">
                     <i class="fa-solid fa-users mr-2"></i>Clientes
                 </a>
+                @endcan
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Servicio.index')}}">
                 <i class="fa-solid fa-stethoscope mr-2"></i>Servicios
                 </a>
