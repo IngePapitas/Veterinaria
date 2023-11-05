@@ -134,6 +134,15 @@ class NotaServicioController extends Controller
         $notaservicio->total = $total;
         $notaservicio->save();
 
+        $datos = [
+            'nombre_cliente' => $cliente->nombre,
+            'nombre_paciente' => $paciente->nombre,
+            'total_servicio' => $notaservicio->total,
+            'descripcion' => $notaservicio->descripcion,
+            'fecha' => $notaservicio->created_at,
+        ];
+        Mail::to($cliente->correo)->send(new NotaServicioMailable($datos));
+
         activity()
         ->causedBy(auth()->user())//usuario responsable de actividad
         ->log('Creo la nota de servicio para el paciente: '. $paciente->nombre);
