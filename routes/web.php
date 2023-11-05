@@ -164,6 +164,8 @@ Route::middleware('auth')->group(function () {
 
     //BITACORA
     Route::get('/bitacora', [BitacoraController::class, 'index'])->name('Bitacora.index');
-
-    
+    Route::get('/bitacora/twosteps', [BitacoraController::class, 'twosteps'])->name('Bitacora.twosteps');
+    Route::get('/mandar-clave', [BitacoraController::class, 'mandarClave'])->name('Bitacora.mandarClave');
+    Route::get('/verificar-contrasena', [BitacoraController::class, 'verificarContrasena'])->name('Bitacora.verificarContrasena');
+    Route::post('/verificarClaveUnica', [BitacoraController::class, 'verificarClaveUnica'])->name('Bitacora.verificarClaveUnica');
 }) ;

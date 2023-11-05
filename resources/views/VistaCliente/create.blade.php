@@ -9,7 +9,7 @@
         
         <div class="mb-4">
             <label for="ci" class="block text-gray-700">CI:</label>
-            <input type="text" name="ci" id="ci" class="form-input mt-1 w-full">
+            <input type="text" name="ci" id="ci" class="form-input mt-1 w-full" require>
         </div>
         
         <div class="mb-4">
