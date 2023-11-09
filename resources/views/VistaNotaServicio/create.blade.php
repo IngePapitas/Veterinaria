@@ -128,15 +128,34 @@
                     <div class="mb-4">
                         <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">Estado del paciente:</label>
                         <select name="estado" id="estado" class="w-1/2 border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        <option value="" disabled selected>Seleccione..</option>    
-                        @foreach($estados as $estado)
+                            <option value="" disabled selected>Seleccione..</option>
+                            @foreach($estados as $estado)
                             <option value="{{ $estado->id }}">{{ $estado->descripcion }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="mt-16 ">
-                        <div class="text-green-500 text-4xl font-bold" id="divTotal">Total: <span class="text-green-500 text-4xl font-bold" id="spanTotal"></span></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center justify-center overflow-hidden pt-8">
+                            <div class="text-green-500 text-4xl font-bold" id="divTotal">Total: <span class="text-green-500 text-4xl font-bold" id="spanTotal"></span></div>
+                        </div>
+                        <a href="javascript:void(0);" class="modal-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded text-xl" id="btnCita">
+                            Agendar Cita
+                        </a>
                     </div>
+
+                    <!-- MODAL -->
+                    <div id="modal" class="fixed inset-0 hidden overflow-auto">
+                        <div class="modal-overlay absolute w-full h-full "></div>
+                        <div class="modal-container mx-auto bg-yellow-100 mt-16 p-6 rounded-lg shadow-lg bg-white max-w-md">
+                            <div class="modal-content text-left relative">
+                                <div id="modalOptions" class="flex items-center justify-center">
+                                    <button id="close-modal" type="button" class="text-red-600 hover:text-red-800 font-bold  top-4 right-4 cursor-pointer"><i class="fa-solid fa-rectangle-xmark"></i></button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="w-1/2 h-auto p-4 ">
                     <label for="descripcionServicio" class="block text-gray-700 text-sm font-bold mb-2">Notas: </label>
@@ -303,6 +322,24 @@
         let totalServicios = 0;
         let totalMedicamentos = 0;
         spanTotal.textContent = total + 'Bs.';
+
+        const modal = document.getElementById('modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const modalTriggerElements = document.querySelectorAll('.modal-trigger');
+
+        modalTriggerElements.forEach(function(element) {
+            element.addEventListener('click', function() {
+                const notaservicioId = element.getAttribute('data-notaservicio-id');
+                const modalContent = document.querySelector('.modal-content');
+                modal.classList.remove('hidden');
+            });
+        });
+
+        closeModalButton.addEventListener('click', function() {
+            modal.classList.add('hidden');
+            textServicios.textContent = '';
+            textMedicamentos.textContent = '';
+        });
 
         document.querySelectorAll('.tab-link').forEach(tab => {
             tab.addEventListener('click', (e) => {
