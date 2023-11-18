@@ -15,8 +15,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = producto::get();
-        $categorias = categoria::get();
+        $productos = producto::all();
+        $categorias = categoria::all();
 
         return view('VistaProductos.index', compact('productos','categorias'));
     }
@@ -76,7 +76,7 @@ class ProductoController extends Controller
     {
         $p = producto::find($producto->id);
 
-        return view('VistaEmpresa.productoShow', compact('p'));
+        return view('VistaProductos.show', compact('p'));
     }
 
     /**
@@ -123,7 +123,7 @@ class ProductoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(producto $producto)
+    public function destroy(producto $id)
     {
         $p = producto::where('id',$id)->first();
         $p->delete();

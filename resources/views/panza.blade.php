@@ -79,6 +79,12 @@
                     <i class="fas fa-pills mr-2"></i>Medicamentos
                 </a>
                 @endcan
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('producto.index')}}">
+                    <i class="fa-brands fa-shopify mr-2"></i>Productos/Categorias
+                </a>
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('proveedor.index')}}">
+                    <i class="fa-solid fa-comments-dollar"></i>Proveedor
+                </a>
                 @can('Ver Usuario')
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Usuario.index')}}">
                     <i class="fa-solid fa-user mr-2"></i>Usuarios/Roles
