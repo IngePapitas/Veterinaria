@@ -30,13 +30,13 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $categoria = new Categoria();
-        $categoria->nombre = $request->nombre;
+        $categoria = new categoria();
+        $categoria->categoria = $request->categoria;
         $categoria->save();
 
         activity()
             ->causedBy(auth()->user()) // El usuario responsable de la actividad
-            ->log('Se creó una nueva categoría: ' . $categoria->nombre);
+            ->log('Se creó una nueva categoría: ' . $categoria->categoria);
 
         return redirect()->route('categoria.index');
     }

@@ -1,22 +1,27 @@
 <?php
 
-use App\Http\Controllers\BitacoraController;
-use App\Http\Controllers\CategoriaMedicamentoController;
+use App\Models\NotaServicio;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PersonalController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EspecialidadController;
-use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\RazaController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EspecieController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\MedicamentoController;
-use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\NotaServicioController;
-use App\Http\Controllers\ServicioController;
-use App\Models\NotaServicio;
+use App\Http\Controllers\CategoriaMedicamentoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +41,7 @@ Route::get('/', function () {
 Route::get('/servicios-ofrecidos', function () {
     return view('VistaWelcome.servicios');
 })->name('servicios-ofrecidos');
-Route::get('/productos', function () {
+Route::get('/ver-productos', function () {
     return view('VistaWelcome.productos');
 })->name('productos');
 Route::get('/contacto', function () {
@@ -168,4 +173,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/mandar-clave', [BitacoraController::class, 'mandarClave'])->name('Bitacora.mandarClave');
     Route::get('/verificar-contrasena', [BitacoraController::class, 'verificarContrasena'])->name('Bitacora.verificarContrasena');
     Route::post('/verificarClaveUnica', [BitacoraController::class, 'verificarClaveUnica'])->name('Bitacora.verificarClaveUnica');
+
+    // ----------------------- PARTE DE ECOMMERCE ---------------------------
+        //carrito
+    Route::resource('carrito', CarritoController::class)->except(['update']);
+    Route::put('carrito$carrito', [CarritoController::class, 'update'])->name('carrito.update');
+    Route::resource('categoria', CategoriaController::class);
+    Route::resource('marca',MarcaController::class);
+    Route::resource('stock',StockController::class);
+    Route::resource('producto', ProductoController::class);
+    Route::resource('proveedor',ProveedorController::class);
+
+
 }) ;
