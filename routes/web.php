@@ -1,6 +1,12 @@
 <?php
 
+<<<<<<< Updated upstream
 use App\Models\NotaServicio;
+=======
+use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\CategoriaMedicamentoController;
+use App\Http\Controllers\CitaController;
+>>>>>>> Stashed changes
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RazaController;
 use App\Http\Controllers\RoleController;
@@ -174,6 +180,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/verificar-contrasena', [BitacoraController::class, 'verificarContrasena'])->name('Bitacora.verificarContrasena');
     Route::post('/verificarClaveUnica', [BitacoraController::class, 'verificarClaveUnica'])->name('Bitacora.verificarClaveUnica');
 
+<<<<<<< Updated upstream
     // ----------------------- PARTE DE ECOMMERCE ---------------------------
         //carrito
     Route::resource('carrito', CarritoController::class)->except(['update']);
@@ -185,4 +192,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('proveedor',ProveedorController::class);
 
 
+=======
+    //CITAS YA TU SABE POR QUIEN
+    Route::get('/citas', [CitaController::class, 'index'])->name('Cita.index');
+    Route::get('/citas/create', [CitaController::class, 'create'])->name('Cita.create');
+    Route::post('/citas', [CitaController::class, 'store'])->name('Cita.store');
+    Route::get('/citas/{cita}/edit', [CitaController::class, 'edit'])->name('Cita.edit');
+    Route::put('/citas/{cita}', [CitaController::class, 'update'])->name('Cita.update');
+    Route::delete('/citas/{cita}', [CitaController::class, 'destroy'])->name('Cita.destroy');
+    Route::get('/buscar-citas', [CitaController::class, 'buscarCitas'])->name('Cita.buscar');
+    //Route::get('/buscar-citas-create', [ServicioController::class, 'buscarServiciosCreate'])->name('Servicio.buscarServicio');
+>>>>>>> Stashed changes
 }) ;

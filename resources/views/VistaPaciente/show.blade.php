@@ -75,6 +75,11 @@
 
                         </div>
                         @endforeach
+                        @if($citaPendiente)
+                        <div class="p-2 mt-2 bg-yellow-300 rounded-xl text-base shadow">
+                            Tiene una cita pendiente para <strong>{{ $citaPendiente->fecha}}</strong> a las <strong>{{$citaPendiente->hora}}</strong> con el doctor <strong>{{$citaPendiente->personal}}</strong>
+                        </div>
+                        @endif
                         <div id="modal" class="fixed inset-0 hidden overflow-auto">
                             <div class="modal-overlay absolute w-full h-full "></div>
                             <div class="modal-container mx-auto bg-yellow-100 mt-16 p-6 rounded-lg shadow-lg bg-white max-w-md">

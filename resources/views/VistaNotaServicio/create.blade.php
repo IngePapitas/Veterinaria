@@ -151,7 +151,13 @@
                                 <div id="modalOptions" class="flex items-center justify-center">
                                     <button id="close-modal" type="button" class="text-red-600 hover:text-red-800 font-bold  top-4 right-4 cursor-pointer"><i class="fa-solid fa-rectangle-xmark"></i></button>
                                 </div>
-                                
+                                <div class="flex flex-col items-center justify-center mt-4">
+                                    <p class="text-lg font-semibold mb-2">AGENDAR PROXIMA CITA</p>
+                                    <input type="date" class="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="fecha_cita">
+                                    <input type="time" id="hora_cita" name="hora_cita" class="mt-2 border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+
+
                             </div>
                         </div>
                     </div>

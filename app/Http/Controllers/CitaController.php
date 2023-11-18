@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cita;
 use Illuminate\Http\Request;
 
 class CitaController extends Controller
@@ -11,7 +12,11 @@ class CitaController extends Controller
      */
     public function index()
     {
-        //
+        $personal = '';
+        $paciente = '';
+
+        $citas = Cita::allData($personal, $paciente);
+        return view('VistaCita.index', compact('citas'));
     }
 
     /**

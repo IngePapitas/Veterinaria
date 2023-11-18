@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cita;
 use App\Models\Cliente;
 use App\Models\Especie;
 use App\Models\EstadoPaciente;
@@ -13,6 +14,7 @@ use App\Models\Paciente;
 use App\Models\Personal;
 use App\Models\Raza;
 use App\Models\Servicio;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NotaServicioController extends Controller
@@ -51,7 +53,6 @@ class NotaServicioController extends Controller
      */
     public function store(Request $request)
     {
-
         if($request->codigo == null){
             $paciente = new Paciente();
             $paciente->nombre = $request->nombre;
@@ -134,6 +135,30 @@ class NotaServicioController extends Controller
         $notaservicio->total = $total;
         $notaservicio->save();
 
+        $now = Carbon::now();
+
+        $citaAnterior = Cita::getCitaAnterior($paciente->id, $request->personal);
+
+        if($citaAnterior){
+            $citaAnterior->estado = 1;
+            $citaAnterior->visitado = $now;
+            $citaAnterior->save();
+        }
+
+        if($request->input('fecha_cita')){
+            $cita = new Cita();
+            $cita->id_paciente = $paciente->id;
+            $cita->id_personal = $request->personal;
+            $cita->fecha = $request->input('fecha_cita');
+            if($request->input('hora_cita')){
+                $cita->hora = $request->input('hora_cita');
+            }
+            $cita->estado = 0;
+            $cita->save();
+        }
+
+        
+
         $datos = [
             'nombre_cliente' => $cliente->nombre,
             'nombre_paciente' => $paciente->nombre,
@@ -141,7 +166,7 @@ class NotaServicioController extends Controller
             'descripcion' => $notaservicio->descripcion,
             'fecha' => $notaservicio->created_at,
         ];
-        Mail::to($cliente->correo)->send(new NotaServicioMailable($datos));
+       // Mail::to($cliente->correo)->send(new NotaServicioMailable($datos));
 
         activity()
         ->causedBy(auth()->user())//usuario responsable de actividad

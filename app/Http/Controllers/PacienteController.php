@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cita;
 use Illuminate\Http\Request;
 use App\Models\Paciente;
 use App\Models\Especie;
@@ -79,8 +80,10 @@ class PacienteController extends Controller
         $historial = Paciente::getNotasServicio($id);
         $allNotasServicio = NotaServicio::allData();
         $duenos = NotaServicio::allDuenos();
+        $personal = '';
+        $citaPendiente = Cita::getCitaAnterior($id, $personal);
 
-        return view ('VistaPaciente.show',compact('paciente','historial','allNotasServicio','duenos'));
+        return view ('VistaPaciente.show',compact('paciente','historial','allNotasServicio','duenos', 'citaPendiente'));
         
     }
 

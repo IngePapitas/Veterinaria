@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->id();
+            $table->date('fecha');
+            $table->time('hora');
+            $table->string('estado');
+            $table->datetime('visitado')->nullable();
+            $table->unsignedBigInteger('id_personal');
+            $table->unsignedBigInteger('id_paciente');
             $table->timestamps();
+
+            $table->foreign('id_paciente')->references('id')->on('pacientes')->onDelete('cascade');
+            $table->foreign('id_personal')->references('id')->on('personals')->onDelete('cascade');
         });
     }
 
