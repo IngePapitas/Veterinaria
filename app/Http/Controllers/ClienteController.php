@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Models\NotaServicio;
-
+use App\Models\User;
 class ClienteController extends Controller
 {
     /**
@@ -36,7 +36,11 @@ class ClienteController extends Controller
         $cliente->correo = $request->input('correo');
         $cliente->telefono = $request->input('telefono');
         $cliente->save();
-
+        $usercliente = new User();
+        $usercliente->name = $request->input('nombre');
+        $usercliente->email = $request->input('correo');
+        $usercliente->password = bcrypt('password');
+        $usercliente->save();
         activity()
             ->causedBy(auth()->user())//usuario responsable de actividad
             ->log('Registro al nuevo cliente: '. $cliente->nombre);

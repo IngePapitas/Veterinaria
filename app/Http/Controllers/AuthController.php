@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
+use App\Models\Cita;
 class AuthController extends Controller
 {
     //Register user
@@ -51,6 +52,13 @@ class AuthController extends Controller
 
             'user' => $user,
             'token' => $user->createToken('secret')->plainTextToken
+        ],200);
+    }
+
+    public function citas(){
+        $citas = Cita::where('user_id', Auth::user()->id)->get();
+        return response([
+            'citas' => $citas
         ],200);
     }
 
