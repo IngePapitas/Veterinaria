@@ -16,7 +16,7 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = producto::all();
-        $categorias = categoria::all();
+        $categorias = categoria::get();
 
         return view('VistaProductos.index', compact('productos','categorias'));
     }
@@ -86,7 +86,8 @@ class ProductoController extends Controller
     {
         $categorias = categoria::get();
         $p = producto::find($producto->id);
-        return view('VistaProductos.edit', compact('p', 'categorias'));
+        $marcas = marca::get();
+        return view('VistaProductos.edit', compact('p', 'categorias','marcas'));
     }
 
     /**

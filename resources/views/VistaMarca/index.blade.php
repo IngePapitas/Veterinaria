@@ -2,21 +2,17 @@
 
 @section('Panza')
     <div class="container mx-auto px-4 my-4">
-        <div class="flex flex-col items-center sm:flex-row">
-            <div class="mt-4 sm:ml-4">
-                <a href="{{ route('categoria.index') }}" class="bg-indigo-500 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out">
-                    Categorías
-                </a>
-            </div>
-            <div class="mt-4 sm:ml-4">
-                <a href="{{ route('marca.index') }}" class="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out">
-                    Marcas
-                </a>
-            </div>
-            <div class="mt-4 sm:ml-4">
-                <a href="{{ route('producto.index') }}" class="bg-orange-500 hover:bg-orange-700 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out">
-                    Productos
-                </a>
+        <div class="border border-gray-300 bg-white rounded-lg shadow-md p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="md:col-span-1">
+                    <a href="{{ route('categoria.index') }}" class="block w-full bg-blue-500 text-white px-4 py-3 rounded-lg text-center transition duration-300 ease-in-out hover:bg-blue-800 hover:text-gray-100">Categorías</a>
+                </div>
+                <div class="md:col-span-1">
+                    <a href="{{ route('marca.index') }}" class="block w-full bg-blue-500 text-white px-4 py-3 rounded-lg text-center transition duration-300 ease-in-out hover:bg-blue-800 hover:text-gray-100">Marcas</a>
+                </div>
+                <div class="md:col-span-1">
+                    <a href="{{ route('producto.index') }}" class="block w-full bg-blue-500 text-white px-4 py-3 rounded-lg text-center transition duration-300 ease-in-out hover:bg-blue-800 hover:text-gray-100">Productos</a>
+                </div>
             </div>
         </div>
     </div>
