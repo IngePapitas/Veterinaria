@@ -78,6 +78,21 @@ class NotaServicio extends Model
         return $results;
     }
 
+    public static function getPacientes($dueno)
+    {
+        $results = DB::table('nota_servicios')
+            ->select(
+                'pacientes.*'
+            )
+            ->leftJoin('clientes', 'clientes.id', '=', 'nota_servicios.id_cliente')
+            ->leftJoin('pacientes', 'pacientes.id', '=', 'nota_servicios.id_paciente')
+            ->groupBy('clientes.nombre', 'clientes.ci', 'pacientes.id')
+            ->where('clientes.id', '=', $dueno)
+            ->get();
+
+        return $results;
+    }
+
     public static function obtenerIngresosServicios($fechaIni, $fechaFin, $servicio)
     {
         $filter = [];

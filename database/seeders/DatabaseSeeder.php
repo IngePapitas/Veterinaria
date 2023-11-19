@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
     public function cargarUsuarios(){
         $u = new User();
         $u->id = 100;
-        $u->name = 'Elio Andres Osinaga Vargas';
+        $u->name = 'Julio Tuturrito';
         $u->email = 'julio@correo.com';
         $u->password = bcrypt('password');
         $u->assignRole(['Admin']);
@@ -43,5 +43,14 @@ class DatabaseSeeder extends Seeder
         $u->password = bcrypt('12345678');
         $u->assignRole(['Admin']);
         $u->save();
+
+        $u = new User();
+        $u->id = 102;
+        $u->name = 'Elio Andres Osinaga Vargas';
+        $u->email = 'osinagax10@gmail.com';
+        $u->password = bcrypt('12345678e');
+        $u->assignRole(['Admin']);
+        $u->save();
+
     }
 }
