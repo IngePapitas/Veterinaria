@@ -43,9 +43,8 @@ Route::get('/', function () {
 Route::get('/servicios-ofrecidos', function () {
     return view('VistaWelcome.servicios');
 })->name('servicios-ofrecidos');
-Route::get('/ver-productos', function () {
-    return view('VistaWelcome.productos');
-})->name('productos');
+Route::get('/ver-productos', [ProductoController::class, 'mostrarProductos'])->name('productos');
+
 Route::get('/contacto', function () {
     return view('VistaWelcome.contacto');
 })->name('contacto');

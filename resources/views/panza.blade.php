@@ -43,10 +43,20 @@
                 <i class="fas fa-bell text-gray-500 text-lg"></i>
             </button>
             <!-- Botón de Perfil -->
-            <button>
+            <button id="user-menu-button">
                 <i class="fas fa-user text-gray-500 text-lg"></i>
                 <span class="text-gray-500 hidden md:inline">{{ Auth::user()->name }}</span>
             </button>
+            <div id="user-menu-popup" class="hidden absolute right-0 w-36 bg-white rounded-lg shadow-lg z-50">
+                <button class="block text-gray-900 py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700 hover:text-white mt-auto w-full" type="submit">
+                    <a href="{{ route('profile.show') }}">Perfil</a>
+                </button>
+                <!-- Ítem de Cerrar Sesión -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="block text-gray-900 py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700 hover:text-white mt-auto w-full" type="submit">Cerrar sesión</button>
+                </form>                   
+            </div>
         </div>
     </div>
 
@@ -166,6 +176,35 @@
 
     menuBtn.addEventListener('click', () => {
         sideNav.classList.toggle('hidden'); // Agrega o quita la clase 'hidden' para mostrar u ocultar la navegación lateral
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenuPopup = document.getElementById('user-menu-popup');
+        const menuBtn = document.getElementById('menu-Btn');
+        const navbaruser = document.getElementById('navbar-user');
+
+        userMenuButton.addEventListener('click', function () {
+            userMenuPopup.classList.toggle('hidden');
+        });
+
+        // Cierra el menú emergente al hacer clic en cualquier parte fuera de él
+        window.addEventListener('click', function (event) {
+            if (!userMenuButton.contains(event.target) && !userMenuPopup.contains(event.target)) {
+                userMenuPopup.classList.add('hidden');
+            }
+        });
+
+        menuBtn.addEventListener('click', function () {
+            navbaruser.classList.toggle('hidden');
+        });
+
+        // Cierra el menú emergente al hacer clic en cualquier parte fuera de él
+        window.addEventListener('click', function (event) {
+            if (!menuBtn.contains(event.target) && !userMenuPopup.contains(event.target)) {
+                navbaruser.classList.add('hidden');
+            }
+        });
     });
 </script>
 </body>

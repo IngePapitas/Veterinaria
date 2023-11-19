@@ -1,20 +1,16 @@
 @extends('Panza')
 
 @section('Panza')
-    <div class="container mx-auto px-4 my-4">
-        <div class="border border-gray-300 bg-white rounded-lg shadow-md p-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="md:col-span-1">
-                    <a href="{{ route('categoria.index') }}" class="block w-full bg-blue-500 text-white px-4 py-3 rounded-lg text-center transition duration-300 ease-in-out hover:bg-blue-800 hover:text-gray-100">Categorías</a>
-                </div>
-                <div class="md:col-span-1">
-                    <a href="{{ route('marca.index') }}" class="block w-full bg-blue-500 text-white px-4 py-3 rounded-lg text-center transition duration-300 ease-in-out hover:bg-blue-800 hover:text-gray-100">Marcas</a>
-                </div>
-                <div class="md:col-span-1">
-                    <a href="{{ route('producto.index') }}" class="block w-full bg-blue-500 text-white px-4 py-3 rounded-lg text-center transition duration-300 ease-in-out hover:bg-blue-800 hover:text-gray-100">Productos</a>
-                </div>
-            </div>
-        </div>
+    <div class="mb-4">
+        <a href="{{ route('marca.index') }}" class="bg-blue-500 hover:bg-blue-600 m-4 text-white font-bold py-2 px-4 rounded">
+            Marcas
+        </a>
+        <a href="{{ route('categoria.index') }}" class="bg-blue-500 hover:bg-blue-600 m-4 text-white font-bold py-2 px-4 rounded">
+            Categorias
+        </a>
+        <a href="{{ route('producto.index') }}" class="bg-blue-500 hover:bg-blue-600 m-4 text-white font-bold py-2 px-4 rounded">
+            Productos
+        </a>
     </div>
     <div class="grid grid-cols-2 gap-6">
         <div class="w-full lg:w-3/4 mx-auto mb-4">

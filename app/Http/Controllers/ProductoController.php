@@ -21,6 +21,12 @@ class ProductoController extends Controller
         return view('VistaProductos.index', compact('productos','categorias'));
     }
 
+    public function mostrarProductos()
+    {
+        $productos = producto::all(); // Obtén todos los productos desde tu base de datos
+        $categorias = categoria::get();
+        return view('VistaWelcome.productos', compact('productos','categorias'));
+    }
     /**
      * Show the form for creating a new resource.
      */
