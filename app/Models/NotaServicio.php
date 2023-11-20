@@ -82,16 +82,19 @@ class NotaServicio extends Model
     {
         $results = DB::table('nota_servicios')
             ->select(
-                'pacientes.*'
+                'pacientes.*', 'especies.nombre as especie', 'razas.nombre as raza'
             )
             ->leftJoin('clientes', 'clientes.id', '=', 'nota_servicios.id_cliente')
             ->leftJoin('pacientes', 'pacientes.id', '=', 'nota_servicios.id_paciente')
+            ->leftJoin('razas', 'razas.id', '=', 'pacientes.id_raza')
+            ->leftJoin('especies', 'especies.id', '=', 'pacientes.id_especie')
             ->groupBy('clientes.nombre', 'clientes.ci', 'pacientes.id')
             ->where('clientes.id', '=', $dueno)
             ->get();
 
         return $results;
     }
+
 
     public static function obtenerIngresosServicios($fechaIni, $fechaFin, $servicio)
     {

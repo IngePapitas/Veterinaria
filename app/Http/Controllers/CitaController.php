@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cita;
+use App\Models\Paciente;
+use App\Models\Personal;
 use Illuminate\Http\Request;
 
 class CitaController extends Controller
@@ -14,9 +16,11 @@ class CitaController extends Controller
     {
         $personal = '';
         $paciente = '';
+        $personals = Personal::all();
+        $pacientes = Paciente::all();
 
         $citas = Cita::allData($personal, $paciente);
-        return view('VistaCita.index', compact('citas'));
+        return view('VistaCita.index', compact('citas','personals','pacientes'));
     }
 
     /**
@@ -48,7 +52,9 @@ class CitaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cita = Cita::findOrFail($id);
+        $personals = Personal::all();
+        return view('VistaCita.edit', compact('cita','personals'));
     }
 
     /**
@@ -56,7 +62,22 @@ class CitaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'fecha' => 'required|date',
+            'hora' => 'required',
+            'id_personal' => 'required|exists:personals,id',
+        ]);
+
+        $cita = Cita::findOrFail($id);
+
+        $cita->fecha = $request->input('fecha');
+        $cita->hora = $request->input('hora');
+        $cita->id_personal = $request->input('id_personal');
+        // Otros campos que puedas tener en la tabla cita
+
+        $cita->save();
+
+        return redirect()->route('Cita.index')->with('success', 'Cita actualizada exitosamente.');
     }
 
     /**
@@ -65,5 +86,13 @@ class CitaController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function buscarCitas(Request $request)
+    {
+        $personal = $request->input('personal');
+        $paciente = $request->input('paciente');
+        $citas = Cita::allData($personal, $paciente);
+        return view('_resultadosCitas', compact('citas'));
     }
 }

@@ -56,6 +56,9 @@ Route::get('/nuestro-equipo', function () {
 
 Route::middleware('auth')->group(function () {
     //DASHBOARD Y SUS FUNCIONES
+    Route::get('/mismascotas', [DashboardController::class, 'misMascotas'])->name('mismascotas');
+    Route::post('/reprogramar/{pacienteId}', [DashboardController::class, 'reprogramar'])->name('reprogramar');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('Dashboard');
     Route::post('/generar-excel', [DashboardController::class, 'generarExcel'])->name('Dashboard.generarExcel');
     Route::post('/enviar-administradores', [DashboardController::class, 'enviarAdministradores'])->name('Dashboard.enviarAdministradores');

@@ -9,11 +9,27 @@
             Crear Nueva Cita
         </a>
     </div>
-    
 
-    <div class="mb-4">
+    <div class="mb-4 p-4 rounded-2xl bg-gray-300  grid grid-cols-3 gap-2">
+        <select id="personalSelect" class="p-2 border rounded">
+            <option value="" disabled selected>Personal..</option>
+            <option value="">Todos los doctores</option>
+            @foreach ($personals as $personal)
+            <option value="{{ $personal->id }}">{{ $personal->nombre }}</option>
+            @endforeach
+        </select>
 
+        <select id="pacienteSelect" class="p-2 border rounded">
+            <option value="" disabled selected>Paciente..</option>
+            <option value="">Todos los pacientes</option>
+            @foreach ($pacientes as $paciente)
+            <option value="{{ $paciente->id }}">{{ $paciente->nombre }}</option>
+            @endforeach
+        </select>
+
+        <button class="bg-blue-500 text-white p-2 rounded" id="btnFiltro">Generar</button>
     </div>
+    
 
     <table id="tabla-clientes" class="table-auto w-full">
         <thead>
@@ -32,14 +48,18 @@
             @include('_resultadosCitas')
         </tbody>
     </table>
+
+    
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const buscar = document.getElementById('buscar');
         const tablaClientes = document.getElementById('tabla-clientes');
+        const btnFiltro = document.getElementById('btnFiltro');
+        
 
-        function cargarClientes(texto) {
-            fetch(`/buscar-citas?texto=${texto}`)
+        function cargarCitas(personal, paciente) {
+            fetch(`/buscar-citas?personal=${personal}&paciente=${paciente}`)
                 .then(response => response.text())
                 .then(data => {
                     tablaClientes.querySelector('tbody').innerHTML = data;
@@ -49,14 +69,11 @@
                 });
         }
 
-        buscar.addEventListener('input', () => {
-            const texto = buscar.value.trim().toLowerCase();
+        btnFiltro.addEventListener('click', () => {
+            const personal = document.getElementById('personalSelect').value;
+            const paciente = document.getElementById('pacienteSelect').value;
 
-            if (texto === '') {
-                cargarClientes('');
-            } else {
-                cargarClientes(texto);
-            }
+            cargarCitas(personal,paciente);
         });
     });
 </script>

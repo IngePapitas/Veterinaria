@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Exports\EstadisticasDashboardExports;
+use App\Models\Cita;
+use App\Models\Cliente;
 use App\Models\Medicamento;
+use App\Models\NotaServicio;
+use App\Models\Paciente;
 use App\Models\Servicio;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Google_Client;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Swift_Attachment;
 use Swift_Mailer;
@@ -133,5 +138,31 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function misMascotas(){
+        $usuario = Auth::user();
+        $cliente = Cliente::where('correo', $usuario->email)->first();
+
+        if($cliente){
+            $pacientes = NotaServicio::getPacientes($cliente->id);
+            return view ('VistaWelcome.mismascotas', compact('pacientes'));
+        }
+    }
+
+    public function reprogramar(Request $request, $pacienteId){
+        //dd($request);
+
+        $paciente = Paciente::findOrFail($pacienteId);
+
+        $citaAnterior = Cita::getCitaAnterior($paciente->id);
+        $citaAnteriorEncontrada = Cita::where('id', $citaAnterior->id)->first();
+
+        if($citaAnteriorEncontrada){
+            $citaAnteriorEncontrada->fecha = $request->input('nuevaFecha');
+            $citaAnteriorEncontrada->hora = $request->input('nuevaHora');
+            $citaAnteriorEncontrada->save();
+        }
+        return view('welcome');
     }
 }
