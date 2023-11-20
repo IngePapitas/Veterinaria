@@ -16,11 +16,17 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = producto::all();
-        $categorias = categoria::all();
+        $categorias = categoria::get();
 
         return view('VistaProductos.index', compact('productos','categorias'));
     }
 
+    public function mostrarProductos()
+    {
+        $productos = producto::all(); // Obtén todos los productos desde tu base de datos
+        $categorias = categoria::get();
+        return view('VistaWelcome.productos', compact('productos','categorias'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -86,7 +92,8 @@ class ProductoController extends Controller
     {
         $categorias = categoria::get();
         $p = producto::find($producto->id);
-        return view('VistaProductos.edit', compact('p', 'categorias'));
+        $marcas = marca::get();
+        return view('VistaProductos.edit', compact('p', 'categorias','marcas'));
     }
 
     /**

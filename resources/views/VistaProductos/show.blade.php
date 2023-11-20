@@ -2,14 +2,8 @@
 <!--SE MUESTRA AL CLIENTE ESTA PARTE-->
 @include('nav-welcome')
 
-@section('Panza')
     <div class="container mx-auto mt-8">
         <div class="bg-white shadow-md rounded p-4 lg:p-8">
-            <div class="text-center">
-                <a href="{{ route('welcome') }}">
-                    <h2 class="text-4xl text-black font-bold mb-6">VETLINK</h2>
-                </a>
-            </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
@@ -30,7 +24,7 @@
 
                             <div class="flex items-center">
                                 <input type="number" name="cantidad" placeholder="Cantidad" required min="1" max="{{ $p->stock }}" class="border border-gray-300 px-4 py-2 rounded-l-md w-32">
-                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-r-md hover:bg-green-600 transition duration-300">Agregar al Carrito</button>
+                                <button type="submit" class="bg-gray-700 text-white px-4 py-2 rounded-r-md hover:bg-gray-600 transition duration-300">Agregar al Carrito</button>
                             </div>
                         </form>
                     @else
@@ -40,6 +34,5 @@
             </div>
         </div>
     </div>
-@endsection
 
 @include('footer')

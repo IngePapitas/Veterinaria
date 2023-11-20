@@ -18,10 +18,10 @@ class ProveedorController extends Controller
             $marca = marca::where('id', $p->marca_id)->first();
 
             $arrayProveedores[] = [
-                "proveedor_id"    => $p->id,
-                "producto_Nombre"    => $p->Nombre,
-                "producto_Telefono"    => $p->Telefono,
-                "marca"              => $marca->nombre,
+                "id"       => $p->id,
+                "nombre"   => $p->nombre,
+                "telefono" => $p->telefono,
+                "marca"    => $marca->nombre,
             ];
         }
 

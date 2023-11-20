@@ -1,24 +1,16 @@
 @extends('Panza')
 
 @section('Panza')
-    <div class="container mx-auto px-4 my-4">
-        <div class="flex flex-col items-center sm:flex-row">
-            <div class="mt-4 sm:ml-4">
-                <a href="{{ route('categoria.index') }}" class="bg-indigo-500 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out">
-                    Categorías
-                </a>
-            </div>
-            <div class="mt-4 sm:ml-4">
-                <a href="{{ route('marca.index') }}" class="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out">
-                    Marcas
-                </a>
-            </div>
-            <div class="mt-4 sm:ml-4">
-                <a href="{{ route('producto.index') }}" class="bg-orange-500 hover:bg-orange-700 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out">
-                    Productos
-                </a>
-            </div>
-        </div>
+    <div class="mb-4">
+        <a href="{{ route('marca.index') }}" class="bg-blue-500 hover:bg-blue-600 m-4 text-white font-bold py-2 px-4 rounded">
+            Marcas
+        </a>
+        <a href="{{ route('categoria.index') }}" class="bg-blue-500 hover:bg-blue-600 m-4 text-white font-bold py-2 px-4 rounded">
+            Categorias
+        </a>
+        <a href="{{ route('producto.index') }}" class="bg-blue-500 hover:bg-blue-600 m-4 text-white font-bold py-2 px-4 rounded">
+            Productos
+        </a>
     </div>
 
     <div class="grid grid-cols-2 gap-6">
