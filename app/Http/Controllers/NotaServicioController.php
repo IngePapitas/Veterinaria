@@ -140,11 +140,12 @@ class NotaServicioController extends Controller
         $now = Carbon::now();
 
         $citaAnterior = Cita::getCitaAnterior($paciente->id, $request->personal);
-
+        //dd($citaAnterior);
         if ($citaAnterior) {
-            $citaAnterior->estado = 1;
-            $citaAnterior->visitado = $now;
-            $citaAnterior->save();
+            $citaAnteriorEncontrada = Cita::findOrFail($citaAnterior->id);
+            $citaAnteriorEncontrada->estado = 1;
+            $citaAnteriorEncontrada->visitado = $now;
+            $citaAnteriorEncontrada->save();
         }
 
         if ($request->input('fecha_cita')) {
