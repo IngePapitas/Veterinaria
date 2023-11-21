@@ -101,10 +101,9 @@ class ProductoController extends Controller
     public function update(Request $request, producto $producto)
     {
         $p = producto::where('id', $producto->id)->first();
-
+        $destino = 'img/fotosProductos/';
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
-            $destino = 'img/fotosProductos/';
             $foto = time() . '-' . $file->getClientOriginalName();
             $subirImagen = $request->file('foto')->move($destino, $foto);
         } else {
