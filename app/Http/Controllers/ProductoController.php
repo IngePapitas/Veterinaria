@@ -62,7 +62,6 @@ class ProductoController extends Controller
         $p->precio = $request->precio;
         $p->imagen = $destino . $foto;
         $p->categoria_id = $request->categoria;
-        $p->talla = $request->talla;
         $p->marca_id = $request->marca;
         $p->stock = 0;
         $p->stock_min = $request->cant_min;
@@ -133,10 +132,10 @@ class ProductoController extends Controller
     public function destroy(producto $id)
     {
         $p = producto::where('id',$id)->first();
-        $p->delete();
         activity()
-        ->causedBy(auth()->user()) // El usuario responsable de la actividad
-        ->log('Se elimino un producto : ' . $p->nombre);
+            ->causedBy(auth()->user()) // El usuario responsable de la actividad
+            ->log('Se elimino un producto : ' . $p->nombre);
+        $p->delete();
         return redirect()->route('producto.index')->with('success', 'Producto Eliminado con Exito');;
     }
 }
