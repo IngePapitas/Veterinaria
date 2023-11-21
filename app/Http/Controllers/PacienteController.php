@@ -83,7 +83,11 @@ class PacienteController extends Controller
         $personal = '';
         $citaPendiente = Cita::getCitaAnterior($id, $personal);
 
-        return view ('VistaPaciente.show',compact('paciente','historial','allNotasServicio','duenos', 'citaPendiente'));
+        $vacunas = Cita::where('id_paciente',$id)
+        ->where('tipo', 1)
+        ->get();
+
+        return view ('VistaPaciente.show',compact('paciente','historial','allNotasServicio','duenos', 'citaPendiente', 'vacunas'));
         
     }
 
