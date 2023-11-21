@@ -34,8 +34,8 @@ class MarcaController extends Controller
         $marca->nombre = $request->marca;
         $marca->save();
         activity()
-    ->causedBy(auth()->user()) // El usuario responsable de la actividad
-    ->log('Se creo una marca : ' . $marca->nombre);
+            ->causedBy(auth()->user()) // El usuario responsable de la actividad
+            ->log('Se creo una marca : ' . $marca->nombre);
         return redirect()->route('marca.index');
     }
 
@@ -83,11 +83,11 @@ class MarcaController extends Controller
         return redirect()->route('marca.index')->with('error', 'No se puede eliminar la categoría porque tiene productos asociados');
     }
 
+    activity()
+        ->causedBy(auth()->user()) // El usuario responsable de la actividad
+        ->log('Se elimino una marca : ' . $marca->nombre);
     // Si no hay productos relacionados, se puede eliminar la marca
     $marca->delete();
-    activity()
-    ->causedBy(auth()->user()) // El usuario responsable de la actividad
-    ->log('Se elimino una marca : ' . $marca->nombre);
     return redirect()->route('marca.index')->with('success', 'Categoría eliminada correctamente');
     }
 }
