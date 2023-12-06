@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->cargarUsuarios();
         $this->call(EstadoPacientesSeeder::class);
         $this->call(VacunasSeeder::class);
+        $this->call(EventSeeder::class);
         $this->call(ServicioSeeder::class);
     }
 
