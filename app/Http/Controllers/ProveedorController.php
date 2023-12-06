@@ -52,7 +52,7 @@ class ProveedorController extends Controller
         activity()
     ->causedBy(auth()->user()) // El usuario responsable de la actividad
     ->log('Se creo un proveedor : ' . $p->nombre);
-        return redirect()->route('proveedor.index');
+        return redirect()->route('proveedor.index')->with('success', 'Proveedor guardado correctamente.');
 
     }
 
@@ -72,7 +72,7 @@ class ProveedorController extends Controller
         //
         $p = proveedor::find($id);
         $marcas = marca::get();
-        return view('vistaproveedor.edit', compact('p','marcas'));
+        return view('VistaProveedor.edit', compact('p','marcas'));
     }
 
     /**
@@ -100,8 +100,8 @@ class ProveedorController extends Controller
         $prov = proveedor::find($id);
         $prov->delete();
         activity()
-    ->causedBy(auth()->user()) // El usuario responsable de la actividad
-    ->log('Se elimino un proveedor : ' . $prov->nombre);
-        return redirect()->route('proveedor.index');
+            ->causedBy(auth()->user()) // El usuario responsable de la actividad
+            ->log('Se elimino un proveedor : ' . $prov->nombre);
+        return redirect()->route('proveedor.index')->with('success', 'Proveedor eliminado correctamente.');
     }
 }

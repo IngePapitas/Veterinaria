@@ -71,7 +71,7 @@ class ProductoController extends Controller
     ->causedBy(auth()->user()) // El usuario responsable de la actividad
     ->log('Se creo un producto : ' . $p->nombre);
 
-        return redirect()->route('producto.index');
+        return redirect()->route('producto.index')->with('success','Producto creado exitosamente');
     }
 
     /**
@@ -101,10 +101,9 @@ class ProductoController extends Controller
     public function update(Request $request, producto $producto)
     {
         $p = producto::where('id', $producto->id)->first();
-
+        $destino = 'img/fotosProductos/';
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
-            $destino = 'img/fotosProductos/';
             $foto = time() . '-' . $file->getClientOriginalName();
             $subirImagen = $request->file('foto')->move($destino, $foto);
         } else {
@@ -132,10 +131,10 @@ class ProductoController extends Controller
     public function destroy(producto $id)
     {
         $p = producto::where('id',$id)->first();
-        $p->delete();
         activity()
-        ->causedBy(auth()->user()) // El usuario responsable de la actividad
-        ->log('Se elimino un producto : ' . $p->nombre);
+            ->causedBy(auth()->user()) // El usuario responsable de la actividad
+            ->log('Se elimino un producto : ' . $p->nombre);
+        $p->delete();
         return redirect()->route('producto.index')->with('success', 'Producto Eliminado con Exito');;
     }
 }

@@ -43,8 +43,11 @@
                         <div class="font-bold large-text">{{ $paciente->nombre }}</div>
                     </div>
                     <div class="ml-4  text-xl mt-4">
-                        <strong>Historial:</strong>
+                        
+                        <a class="tab-link bg-white inline-block py-2 px-4  hover:text-blue-400 font-semibold rounded-t" data-tab="tab1" href="#">Historial</a>
+                        <a class="tab-link bg-white inline-block py-2 px-4  hover:text-blue-400 font-semibold rounded-t" data-tab="tab2" href="#">Vacunas</a>
 
+                        <div id="tab1" class="bg-white border-l border-r border-b p-4 grid">
                         @foreach($historial as $notaservicio)
                         @php
 
@@ -80,6 +83,16 @@
                             Tiene una cita pendiente para <strong>{{ $citaPendiente->fecha}}</strong> a las <strong>{{$citaPendiente->hora}}</strong> con el doctor <strong>{{$citaPendiente->personal}}</strong>
                         </div>
                         @endif
+                        </div>
+                        <div id="tab2" class="hidden bg-white border-l border-r border-b p-4 grid">
+                            @foreach($vacunas as $vacuna)
+                            <div class="p-2 mt-2 bg-yellow-300 rounded-xl text-base shadow">
+                                Vacuna para <strong>{{ $vacuna->descripcion}}</strong> el dia <strong>{{$vacuna->fecha}}</strong> a las <strong>{{$vacuna->hora}}</strong> 
+                            </div>
+                            @endforeach
+                        </div>
+
+
                         <div id="modal" class="fixed inset-0 hidden overflow-auto">
                             <div class="modal-overlay absolute w-full h-full "></div>
                             <div class="modal-container mx-auto bg-yellow-100 mt-16 p-6 rounded-lg shadow-lg bg-white max-w-md">
@@ -231,6 +244,21 @@
             });
 
 
+        });
+        document.querySelectorAll('.tab-link').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = tab.getAttribute('data-tab');
+
+                document.querySelectorAll('div[id^="tab"]').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(target).classList.remove('hidden');
+                document.querySelectorAll('a').forEach(tabItem => {
+                    tabItem.classList.remove('selected');
+                });
+                tab.classList.add('selected');
+            });
         });
     });
 </script>

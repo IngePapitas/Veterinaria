@@ -14,6 +14,7 @@ use App\Models\Paciente;
 use App\Models\Personal;
 use App\Models\Raza;
 use App\Models\Servicio;
+use App\Models\Vacuna;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -45,7 +46,8 @@ class NotaServicioController extends Controller
         $estados = EstadoPaciente::all();
         $servicios = [];
         $medicamentos = [];
-        return view('VistaNotaServicio.create', compact('clientes','pacientes', 'personals', 'especies', 'razas','allRazas', 'allEspecies', 'servicios','allServicios','medicamentos','allMedicamentos','estados'));
+        $vacunas = Vacuna::all();
+        return view('VistaNotaServicio.create', compact('clientes', 'pacientes', 'personals', 'especies', 'razas', 'allRazas', 'allEspecies', 'servicios', 'allServicios', 'medicamentos', 'allMedicamentos', 'estados', 'vacunas'));
     }
 
     /**
@@ -53,22 +55,23 @@ class NotaServicioController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->codigo == null){
+        //dd($request);
+        if ($request->codigo == null) {
             $paciente = new Paciente();
             $paciente->nombre = $request->nombre;
             $paciente->peso = $request->peso;
             $paciente->tamano = $request->tamano;
             $especie = Especie::where('nombre', $request->especie)->first();
-            if(!$especie){
-                $especie = new Especie();   
+            if (!$especie) {
+                $especie = new Especie();
                 $especie->nombre = $request->especie;
                 $especie->save();
             }
             $paciente->id_especie = $especie->id;
             $raza = Raza::where('nombre', $request->raza)
-            ->where('id_especie', $especie->id)->first();
-            if(!$raza){
-                $raza = new Raza();   
+                ->where('id_especie', $especie->id)->first();
+            if (!$raza) {
+                $raza = new Raza();
                 $raza->nombre = $request->raza;
                 $raza->id_especie = $especie->id;
                 $raza->save();
@@ -79,11 +82,11 @@ class NotaServicioController extends Controller
                 $paciente->imagen_path = $imagenPath;
             }
             $paciente->save();
-        }else{
+        } else {
             $paciente = Paciente::findOrFail($request->codigo);
         }
         $cliente = Cliente::where('ci', $request->ci_cliente)->first();
-        if(!$cliente){
+        if (!$cliente) {
             $cliente = new Cliente();
             $cliente->ci = $request->input('ci_cliente');
             $cliente->nombre = $request->input('nombre_cliente');
@@ -101,25 +104,24 @@ class NotaServicioController extends Controller
         $notaservicio->id_estado = $request->estado;
         $notaservicio->save();
         $total = 0;
-        
-        if($request->InputServicios != null){
+
+        if ($request->InputServicios != null) {
             $servicios = explode(',', $request->InputServicios);
             $numeroServicios = count($servicios);
-            for($i = 0; $i < $numeroServicios; $i++){
+            for ($i = 0; $i < $numeroServicios; $i++) {
                 $servicio = Servicio::where('descripcion', $servicios[$i])->first();
                 $total += $servicio->precio;
                 $notaservicio_servicio = new NotaServicioServicio();
                 $notaservicio_servicio->id_notaservicio = $notaservicio->id;
                 $notaservicio_servicio->id_servicio = $servicio->id;
                 $notaservicio_servicio->save();
-
             }
         }
-        if($request->InputMedicamentos != null){
+        if ($request->InputMedicamentos != null) {
             $medicamentos = explode(',', $request->InputMedicamentos);
             $cantidades = explode(',', $request->InputCantidades);
             $numeromedicamentos = count($medicamentos);
-            for($i = 0; $i < $numeromedicamentos; $i++){
+            for ($i = 0; $i < $numeromedicamentos; $i++) {
                 $medicamento = Medicamento::where('nombre', $medicamentos[$i])->first();
                 $total += $medicamento->precio * $cantidades[$i];
                 $notaservicio_medicamento = new NotaServicioMedicamento();
@@ -138,26 +140,68 @@ class NotaServicioController extends Controller
         $now = Carbon::now();
 
         $citaAnterior = Cita::getCitaAnterior($paciente->id, $request->personal);
-
-        if($citaAnterior){
-            $citaAnterior->estado = 1;
-            $citaAnterior->visitado = $now;
-            $citaAnterior->save();
+        //dd($citaAnterior);
+        if ($citaAnterior) {
+            $citaAnteriorEncontrada = Cita::findOrFail($citaAnterior->id);
+            $citaAnteriorEncontrada->estado = 1;
+            $citaAnteriorEncontrada->visitado = $now;
+            $citaAnteriorEncontrada->save();
         }
 
-        if($request->input('fecha_cita')){
-            $cita = new Cita();
-            $cita->id_paciente = $paciente->id;
-            $cita->id_personal = $request->personal;
-            $cita->fecha = $request->input('fecha_cita');
-            if($request->input('hora_cita')){
-                $cita->hora = $request->input('hora_cita');
+        if ($request->input('fecha_cita')) {
+            if (!empty($request->input('selTipoVac')) && ($request->input('selTipoVac') != null)) {
+                if (($request->input('checkboxPlan')) == "on") {
+                    $vacunaSel = Vacuna::where('id', $request->input('selVacunasPlan'))->first();
+                    $intervaloSel = $vacunaSel->intervalo;
+                    $vacunasEspecie = Vacuna::where('id_especie', $vacunaSel->id_especie)
+                        ->where('intervalo', '>=', $vacunaSel->intervalo)
+                        ->get();
+
+                    foreach ($vacunasEspecie as $vacunaEspecie) {
+                        $cita = new Cita();
+                        $cita->id_paciente = $paciente->id;
+                        $cita->id_personal = $request->personal;
+                        $fechaIni = $request->input('fecha_cita');
+                        $intervalo = $vacunaEspecie->intervalo - $intervaloSel;
+                        $nuevaFecha = date('Y-m-d', strtotime("$fechaIni + $intervalo days"));
+                        $cita->fecha = $nuevaFecha;
+                        if ($request->input('hora_cita')) {
+                            $cita->hora = $request->input('hora_cita');
+                        }
+                        $cita->descripcion = $vacunaEspecie->nombre;
+                        $cita->tipo = 1;
+                        $cita->estado = 0;
+                        $cita->save();
+                    }
+                } else {
+                    $vacunaSel = Vacuna::where('id', $request->input('selVacunasUnica'))->first();
+                    $cita = new Cita();
+                    $cita->id_paciente = $paciente->id;
+                    $cita->id_personal = $request->personal;
+                    $cita->fecha = $request->input('fecha_cita');
+                    if ($request->input('hora_cita')) {
+                        $cita->hora = $request->input('hora_cita');
+                    }
+                    $cita->descripcion = $vacunaSel->nombre;
+                    $cita->tipo = 1;
+                    $cita->estado = 0;
+                    $cita->save();
+                }
+            } else {
+                $cita = new Cita();
+                $cita->id_paciente = $paciente->id;
+                $cita->id_personal = $request->personal;
+                $cita->fecha = $request->input('fecha_cita');
+                if ($request->input('hora_cita')) {
+                    $cita->hora = $request->input('hora_cita');
+                }
+                $cita->tipo = 0;
+                $cita->estado = 0;
+                $cita->save();
             }
-            $cita->estado = 0;
-            $cita->save();
         }
 
-        
+
 
         $datos = [
             'nombre_cliente' => $cliente->nombre,
@@ -166,11 +210,11 @@ class NotaServicioController extends Controller
             'descripcion' => $notaservicio->descripcion,
             'fecha' => $notaservicio->created_at,
         ];
-       // Mail::to($cliente->correo)->send(new NotaServicioMailable($datos));
+        // Mail::to($cliente->correo)->send(new NotaServicioMailable($datos));
 
         activity()
-        ->causedBy(auth()->user())//usuario responsable de actividad
-        ->log('Creo la nota de servicio para el paciente: '. $paciente->nombre);
+            ->causedBy(auth()->user()) //usuario responsable de actividad
+            ->log('Creo la nota de servicio para el paciente: ' . $paciente->nombre);
 
         return redirect()->route('NotaServicio.index');
     }
@@ -207,19 +251,20 @@ class NotaServicioController extends Controller
         //
     }
 
-    public function obtenerServiciosRequeridos(Request $request){
+    public function obtenerServiciosRequeridos(Request $request)
+    {
         try {
-            $fechaIni = !empty($request->input('fechaIni')) ? $request->input('fechaIni'): '';
-            $fechaFin = !empty($request->input('fechaFin'))? $request->input('fechaFin'): '';
+            $fechaIni = !empty($request->input('fechaIni')) ? $request->input('fechaIni') : '';
+            $fechaFin = !empty($request->input('fechaFin')) ? $request->input('fechaFin') : '';
             $data = NotaServicio::obtenerServiciosRequeridos($fechaIni, $fechaFin);
 
             $cantidadProductos = 0;
 
-            foreach($data as $item){
+            foreach ($data as $item) {
                 $cantidadProductos += $item->cantidad;
             }
 
-            foreach($data as $item){
+            foreach ($data as $item) {
                 $item->porcentaje = round($item->cantidad * 100 / $cantidadProductos, 1);
                 $item->nameservicio = $item->servicio;
             }

@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Exports\EstadisticasDashboardExports;
+use App\Models\Cita;
+use App\Models\Cliente;
 use App\Models\Medicamento;
+use App\Models\NotaServicio;
+use App\Models\Paciente;
 use App\Models\Servicio;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Google_Client;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Swift_Attachment;
 use Swift_Mailer;
@@ -94,7 +99,7 @@ class DashboardController extends Controller
                 $rutaTemporal = $archivo->storeAs('temp', $archivo->getClientOriginalName());
                 $nombreArchivo = $archivo->getClientOriginalName();
                 //return response()->json($rutaTemporal);
-                $refreshToken = '1//045l57gKGvVWzCgYIARAAGAQSNwF-L9IrQBXX7PUG1Liy5qQusroQKaHAtFM7Gx6IN4m10UB7X2uKTHh8f3k5IxPF194thtw3iPc';
+                $refreshToken = '1//04pham9jiTklyCgYIARAAGAQSNwF-L9IryNLO7AXFn0pKSUO22Bq0SOwwohvzEEx__iPhkJV-uthq_jlFVC6dK9ylCKit6MCnE_w';
                 $client = new Google_Client();
                 $client->setApplicationName('VetLink');
                 $client->setClientId('804250747503-tvbvko3rum72ptepgqqfhomnbaq6u73l.apps.googleusercontent.com');
@@ -133,5 +138,31 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function misMascotas(){
+        $usuario = Auth::user();
+        $cliente = Cliente::where('correo', $usuario->email)->first();
+
+        if($cliente){
+            $pacientes = NotaServicio::getPacientes($cliente->id);
+            return view ('VistaWelcome.mismascotas', compact('pacientes'));
+        }
+    }
+
+    public function reprogramar(Request $request, $pacienteId){
+        //dd($request);
+
+        $paciente = Paciente::findOrFail($pacienteId);
+
+        $citaAnterior = Cita::getCitaAnterior($paciente->id);
+        $citaAnteriorEncontrada = Cita::where('id', $citaAnterior->id)->first();
+
+        if($citaAnteriorEncontrada){
+            $citaAnteriorEncontrada->fecha = $request->input('nuevaFecha');
+            $citaAnteriorEncontrada->hora = $request->input('nuevaHora');
+            $citaAnteriorEncontrada->save();
+        }
+        return view('welcome');
     }
 }

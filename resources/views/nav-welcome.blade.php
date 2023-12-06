@@ -35,6 +35,9 @@
                         <button class="block text-gray-900 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700 hover:text-white mt-auto w-full" type="submit">
                             <a href="{{ route('profile.show') }}">Perfil</a>
                         </button>
+                        <button class="block text-gray-900 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700 hover:text-white mt-auto w-full" type="submit">
+                            <a href="{{ route('mismascotas') }}">Mis mascotas</a>
+                        </button>
                         <!-- Ítem de Cerrar Sesión -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -106,6 +109,7 @@
                             {{ __('Nuestro Equipo') }}
                         </x-nav-link>
                     </li>
+                    
                 </ul>
             </div>
         </div>

@@ -39,7 +39,7 @@ class ClienteController extends Controller
         $usercliente = new User();
         $usercliente->name = $request->input('nombre');
         $usercliente->email = $request->input('correo');
-        $usercliente->password = bcrypt('password');
+        $usercliente->password = bcrypt($request->input('ci'));
         $usercliente->save();
         activity()
             ->causedBy(auth()->user())//usuario responsable de actividad

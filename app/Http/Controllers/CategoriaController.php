@@ -38,7 +38,7 @@ class CategoriaController extends Controller
             ->causedBy(auth()->user()) // El usuario responsable de la actividad
             ->log('Se creó una nueva categoría: ' . $categoria->categoria);
 
-        return redirect()->route('categoria.index');
+        return redirect()->route('categoria.index')->with('success', 'Categoria creada correctamente');
     }
 
     /**
@@ -72,8 +72,7 @@ class CategoriaController extends Controller
             ->causedBy(auth()->user()) // El usuario responsable de la actividad
             ->log('Se edito una categoría: ' . $m->nombre);
 
-        return redirect()->route('categoria.index');
-        return redirect()->route('categoria.index');
+        return redirect()->route('categoria.index')->with('success', 'Categoria actualizado correctamente');
     }
 
     /**

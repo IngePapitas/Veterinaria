@@ -17,12 +17,16 @@ use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\MedicamentoController;
 use App\Http\Controllers\EspecialidadController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\NotaServicioController;
+use App\Http\Controllers\PedidoController;
+
 //use App\Http\Controllers\CategoriaMedicamentoController;
 
 /*
@@ -55,6 +59,9 @@ Route::get('/nuestro-equipo', function () {
 
 Route::middleware('auth')->group(function () {
     //DASHBOARD Y SUS FUNCIONES
+    Route::get('/mismascotas', [DashboardController::class, 'misMascotas'])->name('mismascotas');
+    Route::post('/reprogramar/{pacienteId}', [DashboardController::class, 'reprogramar'])->name('reprogramar');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('Dashboard');
     Route::post('/generar-excel', [DashboardController::class, 'generarExcel'])->name('Dashboard.generarExcel');
     Route::post('/enviar-administradores', [DashboardController::class, 'enviarAdministradores'])->name('Dashboard.enviarAdministradores');
@@ -191,8 +198,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('marca',MarcaController::class);
     Route::resource('stock',StockController::class);
     Route::resource('producto', ProductoController::class);
+    Route::resource('compra', CompraController::class);
     Route::resource('proveedor',ProveedorController::class);
-
     
+    //Eventos del calendario
+    Route::resource('calendario', EventController::class);
+    Route::get('/calendario/vista',[EventController::class, 'vercalendario'])->name('calendario.vercalendario');
+
+    //Pedidos
+    Route::resource('pedido', PedidoController::class)->except(['update']);
+    Route::get('notaCompra{id}', [CompraController::class, 'notaCompra'])->name('notaCompra');
+    Route::resource('compra', CompraController::class);
 
 }) ;

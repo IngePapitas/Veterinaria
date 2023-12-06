@@ -14,6 +14,10 @@
         bottom: 20px;
         right: 20px;
     }
+
+    a.citaselected {
+        color: blue;
+    }
 </style>
 <form action="{{ route('NotaServicio.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -138,7 +142,7 @@
                         <div class="text-center justify-center overflow-hidden pt-8">
                             <div class="text-green-500 text-4xl font-bold" id="divTotal">Total: <span class="text-green-500 text-4xl font-bold" id="spanTotal"></span></div>
                         </div>
-                        <a href="javascript:void(0);" class="modal-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded text-xl" id="btnCita">
+                        <a href="javascript:void(0);" class="modal-trigger bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded text-2xl text-center" id="btnCita">
                             Agendar Cita
                         </a>
                     </div>
@@ -146,15 +150,66 @@
                     <!-- MODAL -->
                     <div id="modal" class="fixed inset-0 hidden overflow-auto">
                         <div class="modal-overlay absolute w-full h-full "></div>
-                        <div class="modal-container mx-auto bg-yellow-100 mt-16 p-6 rounded-lg shadow-lg bg-white max-w-md">
+                        <div class="modal-container mx-auto border-4 mt-16 p-6 rounded-lg shadow-lg bg-white max-w-md">
                             <div class="modal-content text-left relative">
                                 <div id="modalOptions" class="flex items-center justify-center">
                                     <button id="close-modal" type="button" class="text-red-600 hover:text-red-800 font-bold  top-4 right-4 cursor-pointer"><i class="fa-solid fa-rectangle-xmark"></i></button>
                                 </div>
-                                <div class="flex flex-col items-center justify-center mt-4">
+                                <div class="flex flex-col mt-4 p-4">
                                     <p class="text-lg font-semibold mb-2">AGENDAR PROXIMA CITA</p>
-                                    <input type="date" class="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="fecha_cita">
-                                    <input type="time" id="hora_cita" name="hora_cita" class="mt-2 border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <!-- <p class="text-sm mb-2">Cita normal</p> -->
+                                    <div class=" grid grid-cols-3 gap-2">
+                                        <a class="tab-link-cita bg-white inline-block rounded-t py-2 px-4   citaselected" data-tab="tabcita1" href="#">Detalles</a>
+                                        <a class="tab-link-cita bg-white inline-block py-2 px-4  hover:text-blue-800  rounded-t" data-tab="tabcita2" href="#">Vacuna</a>
+                                        <a class="tab-link-cita bg-white inline-block py-2 px-4  hover:text-blue-800  rounded-t" data-tab="tabcita3" href="#">Cirujia</a>
+                                    </div>
+                                    <!-- TAB CITA NORMAL -->
+                                    <div id="tabcita1" class="bg-white border-l border-r border-b rounded-xl p-4">
+                                        Datos cita
+                                        <div class="grid grid-cols-2 gap-2 pt-4 border-t">
+                                            <input type="date" class="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="fecha_cita">
+                                            <input type="time" id="hora_cita" name="hora_cita" class="border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        </div>
+                                        <!-- TAB CITA VACUNA -->
+
+                                    </div>
+                                    <div id="tabcita2" class="hidden bg-white border-l border-r border-b rounded-xl p-4">
+                                        <select id="selTipoVac" name="selTipoVac" class="rounded mr-2">
+                                            <option disabled selected>Seleccione especie..</option>
+                                            <option value="1">Can</option>
+                                            <option value="2">Felino</option>
+                                        </select>
+
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" id="checkboxVacuna" name="checkboxPlan" class="form-checkbox h-5 w-5 text-blue-500">
+                                            <span class="ml-2 text-gray-700">Plan?</span>
+                                        </label>
+
+                                        <div id="divPlan" class="hidden mt-4  p-2 rounded-xl">
+                                            <span class="ml-2 text-gray-700">Plan de Vacunas</span>
+
+                                            <select id="selVacunasPlan" name="selVacunasPlan" class="rounded mr-2">
+                                                <option disabled selected>Seleccionar desde..</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div id="divUnica" class=" mt-4  p-2 rounded-xl">
+                                            <span class="ml-2 text-gray-700">Vacuna Unica</span>
+                                            <select id="selVacunasUnica" name="selVacunasUnica" class="rounded mr-2">
+                                                <option disabled selected>Seleccionar vacuna..</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- TAB CITA CIRUJIA -->
+
+                                    <div id="tabcita3" class="hidden bg-white border-l border-r border-b rounded-xl p-4">
+                                        Cirujia
+                                    </div>
+
+
                                 </div>
 
 
@@ -271,6 +326,7 @@
                     <input type="hidden" name="InputServicios" id="InputServicios">
                     <input type="hidden" name="InputMedicamentos" id="InputMedicamentos">
                     <input type="hidden" name="InputCantidades" id="InputCantidades">
+            
                 </div>
             </div>
         </div>
@@ -332,6 +388,11 @@
         const modal = document.getElementById('modal');
         const closeModalButton = document.getElementById('close-modal');
         const modalTriggerElements = document.querySelectorAll('.modal-trigger');
+        const checkboxVacuna = document.getElementById('checkboxVacuna');
+        const selTipoVac = document.getElementById('selTipoVac');
+        const selVacunasPlan = document.getElementById('selVacunasPlan');
+        const selVacunasUnica = document.getElementById('selVacunasUnica');
+        const vacunas = @json($vacunas);
 
         modalTriggerElements.forEach(function(element) {
             element.addEventListener('click', function() {
@@ -339,6 +400,40 @@
                 const modalContent = document.querySelector('.modal-content');
                 modal.classList.remove('hidden');
             });
+        });
+
+        selTipoVac.addEventListener('change', function() {
+            actualizarVacunas();
+        });
+
+        function actualizarVacunas() {
+            const especieSeleccionada = parseInt(selTipoVac.value);
+            const vacunasFiltradas = vacunas.filter(vacuna => vacuna.id_especie === especieSeleccionada);
+
+            selVacunasPlan.innerHTML = '';
+            selVacunasUnica.innerHTML = '';
+
+            // Agregar las nuevas opciones al segundo select
+            vacunasFiltradas.forEach(vacuna => {
+                const option = document.createElement('option');
+                option.value = vacuna.id;
+                option.textContent = vacuna.nombre;
+                selVacunasPlan.appendChild(option);
+            });
+            vacunasFiltradas.forEach(vacuna => {
+                const option = document.createElement('option');
+                option.value = vacuna.id;
+                option.textContent = vacuna.nombre;
+                selVacunasUnica.appendChild(option);
+            });
+        }
+
+        checkboxVacuna.addEventListener('change', function() {
+            const divPlan = document.getElementById('divPlan');
+            const divUnica = document.getElementById('divUnica');
+
+            divPlan.classList.toggle('hidden');
+            divUnica.classList.toggle('hidden');
         });
 
         closeModalButton.addEventListener('click', function() {
@@ -360,6 +455,24 @@
                     tabItem.classList.remove('selected');
                 });
                 tab.classList.add('selected');
+                actualizarTablaDeServicios();
+                actualizarTablaDeMedicamentos();
+            });
+        });
+
+        document.querySelectorAll('.tab-link-cita').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = tab.getAttribute('data-tab');
+
+                document.querySelectorAll('div[id^="tabcita"]').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(target).classList.remove('hidden');
+                document.querySelectorAll('a').forEach(tabItem => {
+                    tabItem.classList.remove('citaselected');
+                });
+                tab.classList.add('citaselected');
                 actualizarTablaDeServicios();
                 actualizarTablaDeMedicamentos();
             });
@@ -827,11 +940,7 @@
             }
             console.log(cantidadesSeleccionadas);
         }
-
-
-
     });
 </script>
-
 
 @endsection

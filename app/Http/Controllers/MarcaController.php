@@ -34,9 +34,9 @@ class MarcaController extends Controller
         $marca->nombre = $request->marca;
         $marca->save();
         activity()
-    ->causedBy(auth()->user()) // El usuario responsable de la actividad
-    ->log('Se creo una marca : ' . $marca->nombre);
-        return redirect()->route('marca.index');
+            ->causedBy(auth()->user()) // El usuario responsable de la actividad
+            ->log('Se creo una marca : ' . $marca->nombre);
+        return redirect()->route('marca.index')->with('success', 'Marca creada correctamente');
     }
 
     /**
@@ -66,9 +66,9 @@ class MarcaController extends Controller
         $m->nombre = $request->nombre;
         $m->save();
         activity()
-    ->causedBy(auth()->user()) // El usuario responsable de la actividad
-    ->log('Se actualizo una marca : ' . $m->nombre);
-        return redirect()->route('marca.index');
+            ->causedBy(auth()->user()) // El usuario responsable de la actividad
+            ->log('Se actualizo una marca : ' . $m->nombre);
+        return redirect()->route('marca.index')->with('success', 'Marca actualizada correctamente');
     }
 
     /**
@@ -80,15 +80,15 @@ class MarcaController extends Controller
 
     // Verificar si la categoría tiene productos relacionados
     if ($marca->productos()->exists()) {
-        return redirect()->route('marca.index')->with('error', 'No se puede eliminar la categoría porque tiene productos asociados');
+        return redirect()->route('marca.index')->with('error', 'No se puede eliminar la marca porque tiene productos asociados');
     }
 
+    activity()
+        ->causedBy(auth()->user()) // El usuario responsable de la actividad
+        ->log('Se elimino una marca : ' . $marca->nombre);
     // Si no hay productos relacionados, se puede eliminar la marca
     $marca->delete();
-    activity()
-    ->causedBy(auth()->user()) // El usuario responsable de la actividad
-    ->log('Se elimino una marca : ' . $marca->nombre);
-    return redirect()->route('marca.index')->with('success', 'Categoría eliminada correctamente');
+    return redirect()->route('marca.index')->with('success', 'Marca eliminada correctamente');
     }
 }
 
