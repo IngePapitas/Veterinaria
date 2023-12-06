@@ -21,7 +21,7 @@ class EventSeeder extends Seeder
         $e->save();
 
         $e = new Event();
-        $e->event = 'Esterilizacion para gatos';
+        $e->event = 'Parrillada con pacientes bovinos muertos';
         $e->start_date = '2023-12-13 10:00';
         $e->end_date = '2023-12-13 16:00';
         $e->save();

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('registros', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion');
+            $table->string('path_archivo')->nullable();
+            $table->string('tipo_archivo')->nullable();
             $table->unsignedBigInteger('id_nota');
             $table->timestamps();
 

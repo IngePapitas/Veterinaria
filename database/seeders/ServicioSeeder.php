@@ -21,6 +21,7 @@ class ServicioSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        
         DB::table('servicios')->insert([
             'descripcion'=>'Castracion canina',
             'precio'=> 150,
