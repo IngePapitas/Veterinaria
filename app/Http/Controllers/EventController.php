@@ -41,7 +41,7 @@ class EventController extends Controller
 
         activity()
             ->causedBy(auth()->user()) // El usuario responsable de la actividad
-            ->log('Creo un nuevo evento: ' . $nuevoEvento->event . 'en la fecha de ' . $nuevoEvento->start_date);
+            ->log('Creo un nuevo evento: ' . $nuevoEvento->event . ' en la fecha de ' . $nuevoEvento->start_date);
 
         // Puedes redirigir a una ruta específica después de guardar el evento
         return redirect()->route('calendario.vercalendario')->with('success', 'Se creo el evento correctamente');

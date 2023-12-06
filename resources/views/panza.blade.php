@@ -94,6 +94,9 @@
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('producto.index')}}">
                     <i class="fa-brands fa-shopify mr-2"></i>Productos/Categorias
                 </a>
+                <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('pedido.index')}}">
+                    <i class="fa-brands fa-shopify mr-2"></i>Realizar pedidos
+                </a>
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('proveedor.index')}}">
                     <i class="fa-solid fa-comments-dollar"></i>Proveedor
                 </a>
@@ -167,7 +170,6 @@
         </div>
     </div>
 
-    @stack('scripts')
 </div>
 
 <!-- Script para las gráficas -->

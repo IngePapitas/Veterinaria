@@ -52,7 +52,7 @@ class ProveedorController extends Controller
         activity()
     ->causedBy(auth()->user()) // El usuario responsable de la actividad
     ->log('Se creo un proveedor : ' . $p->nombre);
-        return redirect()->route('proveedor.index');
+        return redirect()->route('proveedor.index')->with('success', 'Proveedor guardado correctamente.');
 
     }
 
@@ -102,6 +102,6 @@ class ProveedorController extends Controller
         activity()
             ->causedBy(auth()->user()) // El usuario responsable de la actividad
             ->log('Se elimino un proveedor : ' . $prov->nombre);
-        return redirect()->route('proveedor.index');
+        return redirect()->route('proveedor.index')->with('success', 'Proveedor eliminado correctamente.');
     }
 }

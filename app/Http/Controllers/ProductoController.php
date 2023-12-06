@@ -71,7 +71,7 @@ class ProductoController extends Controller
     ->causedBy(auth()->user()) // El usuario responsable de la actividad
     ->log('Se creo un producto : ' . $p->nombre);
 
-        return redirect()->route('producto.index');
+        return redirect()->route('producto.index')->with('success','Producto creado exitosamente');
     }
 
     /**
