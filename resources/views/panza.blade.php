@@ -68,6 +68,9 @@
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Dashboard') }}">
                     <i class="fas fa-home mr-2"></i>Inicio
                 </a>
+                <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('calendario.index')}}">
+                    <i class="fa-regular fa-calendar mr-2"></i>Calendario de eventos
+                </a>
                 @can('Ver Paciente')
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Paciente.index')}}">
                     <i class="fa-solid fa-dog mr-2"></i>Pacientes
@@ -105,16 +108,16 @@
                 </a>
                 @endcan
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Servicio.index')}}">
-                <i class="fa-solid fa-stethoscope mr-2"></i>Servicios
+                    <i class="fa-solid fa-stethoscope mr-2"></i>Servicios
                 </a>
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('NotaServicio.index')}}">
-                <i class="fa-regular fa-note-sticky mr-2"></i>Notas de Servicio
+                    <i class="fa-regular fa-note-sticky mr-2"></i>Notas de Servicio
                 </a>
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Cita.index')}}">
-                <i class="fa-regular fa-note-sticky mr-2"></i>Citas
+                    <i class="fa-regular fa-note-sticky mr-2"></i>Citas
                 </a>
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Bitacora.twosteps')}}">
-                <i class="fa-regular fa-clipboard mr-2"></i>Bitacora
+                    <i class="fa-regular fa-clipboard mr-2"></i>Bitacora
                 </a>
             </nav>
 
@@ -163,6 +166,8 @@
 
         </div>
     </div>
+
+    @stack('scripts')
 </div>
 
 <!-- Script para las gráficas -->
