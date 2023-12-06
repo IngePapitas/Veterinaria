@@ -62,7 +62,6 @@ class ProductoController extends Controller
         $p->precio = $request->precio;
         $p->imagen = $destino . $foto;
         $p->categoria_id = $request->categoria;
-        $p->talla = $request->talla;
         $p->marca_id = $request->marca;
         $p->stock = 0;
         $p->stock_min = $request->cant_min;
