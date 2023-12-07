@@ -74,4 +74,5 @@ class PedidoController extends Controller
         return redirect()->route('compra.index')->with('success', 'Pedido solicitado correctamente.');
     }
 
+
 }

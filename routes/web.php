@@ -19,6 +19,7 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EfectivoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\MedicamentoController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NotaServicioController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\VentaController;
 
 //use App\Http\Controllers\CategoriaMedicamentoController;
 
@@ -207,7 +209,12 @@ Route::middleware('auth')->group(function () {
 
     //Pedidos
     Route::resource('pedido', PedidoController::class)->except(['update']);
+    Route::post('/session', [SessionController::class, 'store'])->name('session');
+
+    Route::get('notaVenta{id}', [VentaController::class, 'notaVenta'])->name('notaVenta');
     Route::get('notaCompra{id}', [CompraController::class, 'notaCompra'])->name('notaCompra');
     Route::resource('compra', CompraController::class);
+    Route::resource('venta', VentaController::class);
+    Route::get('/pagoefectivo', [EfectivoController::class,'mostrarPagoEfectivo'])->name('continuarefectivo');
 
 }) ;

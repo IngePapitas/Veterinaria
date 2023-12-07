@@ -69,7 +69,7 @@
                     <i class="fas fa-home mr-2"></i>Inicio
                 </a>
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('calendario.index')}}">
-                    <i class="fa-regular fa-calendar mr-2"></i>Calendario de eventos
+                    <i class="fa-solid fa-calendar mr-2"></i>Calendario de eventos
                 </a>
                 @can('Ver Paciente')
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Paciente.index')}}">
@@ -95,7 +95,7 @@
                     <i class="fa-brands fa-shopify mr-2"></i>Productos/Categorias
                 </a>
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('pedido.index')}}">
-                    <i class="fa-brands fa-shopify mr-2"></i>Realizar pedidos
+                    <i class="fa-solid fa-address-book mr-2"></i>Realizar pedidos
                 </a>
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('proveedor.index')}}">
                     <i class="fa-solid fa-comments-dollar"></i>Proveedor

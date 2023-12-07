@@ -1,6 +1,5 @@
-@include('Panza')
+@include('nav-welcome')
 
-@section('Panza')
     @php
         use Carbon\Carbon;
     @endphp
@@ -12,7 +11,7 @@
                 <div class="container mx-auto p-4">
                     <div class="header flex justify-between items-center">
                         <div>
-                            <img src="{{asset('img/logo.png')}}" alt="Logo" style="max-width: 150px;">
+                            <img src="{{asset('images/logo-prueba.jpg')}}" alt="Logo" style="max-width: 150px;">
                         </div>
                         <div class="text-right">
                             <p class="text-gray-700 text-sm"><strong>Fecha:</strong> {{ \Carbon\Carbon::parse($ventas[0]->fecha)->format('d/m/Y') }}</p>
@@ -84,14 +83,17 @@
         </div>
     </div>
 
-    <script>
-        function imprimirContenido() {
-            var contenido = document.getElementById("contenido-a-imprimir").innerHTML;
-            var ventana = window.open("", "_blank");
-            ventana.document.write('<html><head><title>Nota de Venta</title><style>body {font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f2f2f2;} .container {max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);} .header {text-align: center;} .header h2 {font-size: 24px; color: #333; margin: 0 0 10px;} .header p {font-size: 16px; color: #777;} .invoice {margin-top: 20px;} table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 10px; text-align: center;} th {background-color: #f9f9f9; color: #333;} .total {margin-top: 20px; text-align: right;} .total p {font-weight: bold; font-size: 18px; color: #333;} .print-button {text-align: center; margin-top: 20px;} .print-button button {background-color: #007bff; color: #fff; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer;} .notes {margin-top: 20px;} .notes p {font-size: 14px;}</style></head><body>' + contenido + '</body></html>');
-            ventana.document.close();
-            ventana.print();
-            ventana.close();
-        }
-    </script>
-@endsection
+    
+
+@include('footer')
+
+<script>
+    function imprimirContenido() {
+        var contenido = document.getElementById("contenido-a-imprimir").innerHTML;
+        var ventana = window.open("", "_blank");
+        ventana.document.write('<html><head><title>Nota de Venta</title><style>body {font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f2f2f2;} .container {max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);} .header {text-align: center;} .header h2 {font-size: 24px; color: #333; margin: 0 0 10px;} .header p {font-size: 16px; color: #777;} .invoice {margin-top: 20px;} table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 10px; text-align: center;} th {background-color: #f9f9f9; color: #333;} .total {margin-top: 20px; text-align: right;} .total p {font-weight: bold; font-size: 18px; color: #333;} .print-button {text-align: center; margin-top: 20px;} .print-button button {background-color: #007bff; color: #fff; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer;} .notes {margin-top: 20px;} .notes p {font-size: 14px;}</style></head><body>' + contenido + '</body></html>');
+        ventana.document.close();
+        ventana.print();
+        ventana.close();
+    }
+</script>

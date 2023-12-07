@@ -65,39 +65,42 @@ class CarritoController extends Controller
     public function update(Request $request, carrito $carrito)
     {
         $id = auth()->user()->id;
-        $carrito = carrito::where('cliente_id', $id)->first();
-        $dc = new detalle_carrito();
-        $dc->carrito_id = $carrito->id;
-        $dc->producto_id = $request->producto_id;
-        $dc->cantidad = $request->cantidad;
-        $dc->precio = $request->producto_precio;
-        $dc->save();
+        $carritoUsuario = Carrito::where('cliente_id', $id)->first();
 
-        $carrito->total = $carrito->total + ($request->producto_precio * $request->cantidad);
-        $carrito->save();
+        if (!$carritoUsuario) {
+            $carritoUsuario = new Carrito();
+            $carritoUsuario->cliente_id = $id;
+            $carritoUsuario->total = 0; // Inicializar el total en cero para un nuevo carrito
+            $carritoUsuario->save();
+        }
 
-        // $p = producto::where('id', $request->producto_id)->first();
-        // $p->cantidad = $p->cantidad - $request->cantidad;
-        // $p->save();
+        $detalle_carrito = new detalle_carrito();
+        $detalle_carrito->carrito_id = $carritoUsuario->id;
+        $detalle_carrito->producto_id = $request->producto_id;
+        $detalle_carrito->cantidad = $request->cantidad;
+        $detalle_carrito->precio = $request->producto_precio;
+        $detalle_carrito->save();
+
+        // Actualizar el total del carrito sumando el precio del producto agregado
+        $carritoUsuario->total += ($request->producto_precio * $request->cantidad);
+        $carritoUsuario->save();
+
         return redirect()->route('carrito.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request,$id)
     {
-        $id = auth()->user()->id;
-        $carrito = Carrito::where('cliente_id', $id)->first();
-        $detalle_carrito = detalle_carrito::where('carrito_id', $carrito->id)
-            ->where('producto_id', $request->producto_id)
-            ->first();
+        $detalle_carrito = detalle_carrito::find($id);
 
         if ($detalle_carrito) {
-            $subtotal = $request->precio * $request->cantidad;
+            $subtotal = $detalle_carrito->precio * $detalle_carrito->cantidad;
+            
+            $carrito = Carrito::find($detalle_carrito->carrito_id);
             $carrito->total = $carrito->total - $subtotal;
             $carrito->save();
-            // dd($carrito);
 
             $detalle_carrito->delete();
         }
