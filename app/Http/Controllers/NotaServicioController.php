@@ -140,6 +140,23 @@ class NotaServicioController extends Controller
                 $medicamento->save();
             }
         }
+        if ($request->alergiasSubmit != null) {
+            $alergia = explode(',', $request->alergiasSubmit);
+            $numeromedicamentos = count($alergia);
+            for ($i = 0; $i < $numeromedicamentos; $i++) {
+                $medicamento = Medicamento::where('nombre', $alergia[$i])->first();
+                $alergiaEncontrada = Alergia::where('id_medicamento',$medicamento->id)
+                ->where('id_paciente',$paciente->id)->first();
+                if(!$alergiaEncontrada){
+                    $alergiaEncontrada = new Alergia();
+                    $alergiaEncontrada->id_medicamento = $medicamento->id;
+                    $alergiaEncontrada->id_paciente = $paciente->id;
+                    $alergiaEncontrada->save();
+                }
+                
+            }
+            
+        }
         $notaservicio->total = $total;
         $notaservicio->save();
 

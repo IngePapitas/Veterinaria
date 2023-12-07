@@ -83,12 +83,13 @@ class PacienteController extends Controller
         $tieneCirujias = NotaServicio::cirujias($id);
         $personal = '';
         $citaPendiente = Cita::getCitaAnterior($id, $personal);
+        $alergias = Paciente::getAlergias($id);
 
         $vacunas = Cita::where('id_paciente',$id)
         ->where('tipo', 1)
         ->get();
 
-        return view ('VistaPaciente.show',compact('paciente','historial','allNotasServicio','duenos', 'citaPendiente', 'vacunas','tieneCirujias'));
+        return view ('VistaPaciente.show',compact('paciente','historial','allNotasServicio','duenos', 'citaPendiente', 'vacunas','tieneCirujias', 'alergias'));
         
     }
 

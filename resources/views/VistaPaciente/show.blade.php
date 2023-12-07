@@ -35,6 +35,16 @@
                     </div>
                     @endif
                     @endforeach
+                    @if(count($alergias) > 0 )
+                    <div class="font-small ">
+<strong>Alergico a:</strong>
+                    </div>
+                    @foreach($alergias as $alergia)
+                    <div class="font-small block ">
+                        {{$alergia->nombre}}
+                    </div>
+                    @endforeach
+                    @endif
 
                 </div>
 

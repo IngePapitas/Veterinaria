@@ -261,7 +261,7 @@
         <!-- TAB PACIENTE -->
         <div id="tab3" class="hidden bg-white border-l border-r border-b p-4">
             <div class="flex mt-4 overflow-hidden">
-                <div class="w-1/4 h-screen ">
+                <div class="w-1/4 h-auto ">
                     <div class="w-full bg-blue-300 flex items-center justify-center" id="avatar-container" style="padding-bottom: 100%;">
                         <button id="eliminarImagenBtn" type="button" class="hidden  bg-red-500 text-white font-semibold py-1 px-2 rounded">
                             Eliminar Imagen
@@ -276,7 +276,7 @@
 
 
                 </div>
-                <div class="w-3/4 h-screen  p-16">
+                <div class="w-3/4 h-auto  p-16">
 
                     <div class="mb-4">
                         <label for="codigo" class="block text-gray-700 text-sm font-bold mb-2">Codigo:</label>
@@ -325,19 +325,39 @@
                             </div>
                         </div>
                     </div>
+                    <div class="mb-4">
+                        <label for="alergiaInput" class="block text-gray-700 text-sm font-bold mb-2">Alergias:</label>
+                        <div class="mr-4 flex items-center relative">
+                            <input type="text" class="w-full border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="alergiaInput" id="alergiaInput">
+                            <div id="tablaAlergiasDiv" class="absolute top-full left-0 bg-yellow-100 hidden">
+                                <table id="tabla-alergias" class="table-auto w-full">
+                                    <tbody>
+                                        @include('_resultadoMedicamentos_CreateNS')
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-                    
+                    </div>
+                    <div class="mb-4">
+                        <div id="divAlergias" class=" rounded-xl bg-gray-200 flex">
+                        </div>
+                    </div>
+
+
+
                     <input type="hidden" name="imagen_cargada" id="imagenCargadaInput">
                     <input type="hidden" name="InputServicios" id="InputServicios">
                     <input type="hidden" name="InputMedicamentos" id="InputMedicamentos">
                     <input type="hidden" name="InputCantidades" id="InputCantidades">
                     <input type="hidden" name="cantidadDivs" id="cantidadDivs">
+                    <input type="hidden" name="alergiasSubmit" id="alergiasSubmit">
 
 
                 </div>
             </div>
         </div>
-        <div id="tab4" class="bg-white border-l border-r border-b p-4 grid hidden">
+        <div id="tab4" class="bg-white border-l border-r border-b p-4 hidden">
             <button id="agregarDiv" type="button" class="w-10 h-10 bg-blue-500 text-white rounded-full text-2xl">+</button>
 
         </div>
@@ -369,7 +389,16 @@
         const pacientes = @json($pacientes);
         const allEspecies = @json($allEspecies);
         const allRazas = @json($allRazas);
+        const allAlergias = @json($allAlergias);
 
+        //ALERGIAS
+
+        const tablaAlergiasDiv = document.getElementById('tablaAlergiasDiv');
+        const alergiaInput = document.getElementById('alergiaInput');
+        const tablaAlergias = document.getElementById('tabla-alergias');
+        const divAlergias = document.getElementById('divAlergias');
+        const alergiasSeleccionadas = [];
+        const alergiasSubmit = document.getElementById('alergiasSubmit');
         //CONSTANTES SERVICIOS
         const servicioInput = document.getElementById('servicioInput');
         const tablaServicios = document.getElementById('tabla-servicios');
@@ -409,95 +438,95 @@
 
         //NOTAS
         const tab4 = document.getElementById('tab4');
-    const botonAgregar = document.getElementById('agregarDiv');
+        const botonAgregar = document.getElementById('agregarDiv');
         const cantidadDivs = document.getElementById('cantidadDivs');
-    let contadorDivs = 0;
-    cantidadDivs.value = contadorDivs;
-
-    function crearNuevoDiv() {
-        const nuevoDiv = document.createElement('div');
-        nuevoDiv.id = 'div' + contadorDivs;
-        nuevoDiv.classList.add('rounded-xl', 'bg-blue-200', 'grid','grid-cols-3','gap-2',  'p-4', 'mb-2');
-
-        contadorDivs++;
+        let contadorDivs = 0;
         cantidadDivs.value = contadorDivs;
 
-        const inputTexto = document.createElement('input');
-        inputTexto.type = 'text';
-        inputTexto.name = 'texto_' + nuevoDiv.id;
-        inputTexto.placeholder = 'Texto';
-        inputTexto.classList.add('border', 'p-2', 'mb-2');
+        function crearNuevoDiv() {
+            const nuevoDiv = document.createElement('div');
+            nuevoDiv.id = 'div' + contadorDivs;
+            nuevoDiv.classList.add('rounded-xl', 'bg-blue-200', 'grid', 'grid-cols-3', 'gap-2', 'p-4', 'mb-2');
 
-        const radioFoto = document.createElement('input');
-        radioFoto.type = 'radio';
-        radioFoto.name = 'tipoArchivo_' + nuevoDiv.id;
-        radioFoto.value = 'foto';
-        radioFoto.checked = true;
-
-        const radioDocumento = document.createElement('input');
-        radioDocumento.type = 'radio';
-        radioDocumento.name = 'tipoArchivo_' + nuevoDiv.id;
-        radioDocumento.value = 'documento';
-
-        const inputArchivo = document.createElement('input');
-        inputArchivo.type = 'file';
-        inputArchivo.name = 'archivo_' + nuevoDiv.id;
-        inputArchivo.accept = 'image/*'; 
-        inputArchivo.classList.add('mb-2');
-
-        radioFoto.addEventListener('change', () => {
-            inputArchivo.accept = 'image/*';
-        });
-
-        radioDocumento.addEventListener('change', () => {
-            inputArchivo.accept = '.pdf';
-        });
-
-        const close = document.createElement('i');
-        close.classList.add('fa-solid', 'fa-circle-xmark');
-
-        const botonEliminar = document.createElement('button');
-        botonEliminar.type = 'button';
-        botonEliminar.classList.add('w-10', 'h-10', 'bg-red-500', 'text-white', 'rounded-xl', 'text-2xl', 'ml-2');
-        botonEliminar.appendChild(close);
-
-        
-        
-        botonEliminar.addEventListener('click', () => {
-            tab4.removeChild(nuevoDiv);
-            contadorDivs--;
+            contadorDivs++;
             cantidadDivs.value = contadorDivs;
-        });
 
-        const divInput = document.createElement('div');
-        divInput.id = 'divInput' + contadorDivs;
-        divInput.classList.add('bg-blue-200', 'p-2', 'mb-2');
+            const inputTexto = document.createElement('input');
+            inputTexto.type = 'text';
+            inputTexto.name = 'texto_' + nuevoDiv.id;
+            inputTexto.placeholder = 'Texto';
+            inputTexto.classList.add('border', 'p-2', 'mb-2');
 
-        const divRadio = document.createElement('div');
-        divRadio.id = 'divRadio' + contadorDivs;
-        divRadio.classList.add('bg-blue-200','w-full');
-        nuevoDiv.appendChild(inputTexto);
-        divInput.appendChild(inputArchivo);
-        divRadio.appendChild(radioFoto);
-        divRadio.appendChild(document.createTextNode('Foto'));
-        divRadio.appendChild(radioDocumento);    
-        divRadio.appendChild(document.createTextNode('Documento'));
-        divInput.appendChild(divRadio);
-        nuevoDiv.appendChild(divInput);
-        
-        //nuevoDiv.appendChild(botonEliminar);
+            const radioFoto = document.createElement('input');
+            radioFoto.type = 'radio';
+            radioFoto.name = 'tipoArchivo_' + nuevoDiv.id;
+            radioFoto.value = 'foto';
+            radioFoto.checked = true;
 
-        const divBorrar = document.createElement('div');
-        divBorrar.id = 'divBorrar' + contadorDivs;
-        divBorrar.classList.add('w-full','block','text-center', 'p-2', 'mb-2');
-        divBorrar.appendChild(botonEliminar);
-        nuevoDiv.appendChild(divBorrar);
+            const radioDocumento = document.createElement('input');
+            radioDocumento.type = 'radio';
+            radioDocumento.name = 'tipoArchivo_' + nuevoDiv.id;
+            radioDocumento.value = 'documento';
 
-        tab4.insertBefore(nuevoDiv, botonAgregar);
-    }
+            const inputArchivo = document.createElement('input');
+            inputArchivo.type = 'file';
+            inputArchivo.name = 'archivo_' + nuevoDiv.id;
+            inputArchivo.accept = 'image/*';
+            inputArchivo.classList.add('mb-2');
 
- 
-    botonAgregar.addEventListener('click', crearNuevoDiv);
+            radioFoto.addEventListener('change', () => {
+                inputArchivo.accept = 'image/*';
+            });
+
+            radioDocumento.addEventListener('change', () => {
+                inputArchivo.accept = '.pdf';
+            });
+
+            const close = document.createElement('i');
+            close.classList.add('fa-solid', 'fa-circle-xmark');
+
+            const botonEliminar = document.createElement('button');
+            botonEliminar.type = 'button';
+            botonEliminar.classList.add('w-10', 'h-10', 'bg-red-500', 'text-white', 'rounded-xl', 'text-2xl', 'ml-2');
+            botonEliminar.appendChild(close);
+
+
+
+            botonEliminar.addEventListener('click', () => {
+                tab4.removeChild(nuevoDiv);
+                contadorDivs--;
+                cantidadDivs.value = contadorDivs;
+            });
+
+            const divInput = document.createElement('div');
+            divInput.id = 'divInput' + contadorDivs;
+            divInput.classList.add('bg-blue-200', 'p-2', 'mb-2');
+
+            const divRadio = document.createElement('div');
+            divRadio.id = 'divRadio' + contadorDivs;
+            divRadio.classList.add('bg-blue-200', 'w-full');
+            nuevoDiv.appendChild(inputTexto);
+            divInput.appendChild(inputArchivo);
+            divRadio.appendChild(radioFoto);
+            divRadio.appendChild(document.createTextNode('Foto'));
+            divRadio.appendChild(radioDocumento);
+            divRadio.appendChild(document.createTextNode('Documento'));
+            divInput.appendChild(divRadio);
+            nuevoDiv.appendChild(divInput);
+
+            //nuevoDiv.appendChild(botonEliminar);
+
+            const divBorrar = document.createElement('div');
+            divBorrar.id = 'divBorrar' + contadorDivs;
+            divBorrar.classList.add('w-full', 'block', 'text-center', 'p-2', 'mb-2');
+            divBorrar.appendChild(botonEliminar);
+            nuevoDiv.appendChild(divBorrar);
+
+            tab4.insertBefore(nuevoDiv, botonAgregar);
+        }
+
+
+        botonAgregar.addEventListener('click', crearNuevoDiv);
 
 
         modalTriggerElements.forEach(function(element) {
@@ -750,6 +779,23 @@
                 const razaencontrada = allRazas.find(raza => raza.id === parseInt(pacienteencontrado.id_raza));
                 raza.value = razaencontrada.nombre;
 
+                const alergiasEncontradas = allAlergias.filter(alergia => alergia.id_paciente === parseInt(pacienteencontrado.id));
+
+
+                alergiasEncontradas.forEach(alergia => {
+                    const medicamentoAlergico = allMedicamentos.find(medicamento => medicamento.id === parseInt(alergia.id_medicamento));
+                    if (!alergiasSeleccionadas.includes(medicamentoAlergico.nombre)) {
+
+                        alergiasSeleccionadas.push(medicamentoAlergico.nombre);
+
+                    }
+
+
+                });
+                actualizarAlergiasDiv();
+
+
+
                 if (pacienteencontrado.imagen_path) {
                     const pathrecortado = pacienteencontrado.imagen_path.substring(7);
                     console.log("path recortado", pathrecortado);
@@ -776,6 +822,91 @@
                 actualizarAvatar();
             }
         });
+
+        tablaAlergias.addEventListener('click', (event) => {
+            if (event.target.tagName === 'BUTTON') {
+                const alergiaValue = event.target.value;
+                const medicamentoEncontrado = allMedicamentos.find(medicamento => medicamento.nombre == alergiaValue);
+                console.log(alergiaValue);
+                if (alergiasSeleccionadas.includes(medicamentoEncontrado.nombre)) {
+                    alert('Alergia ya seleccionada');
+                } else {
+
+                    alergiasSeleccionadas.push(alergiaValue);
+
+                }
+                alergiaInput.value = '';
+                actualizarAlergiasDiv();
+                console.log(alergiasSeleccionadas);
+                tablaAlergiasDiv.classList.add('hidden');
+            }
+        });
+
+        function actualizarAlergiasDiv() {
+            divAlergias.innerHTML = '';
+            alergiasSeleccionadas.forEach(alergia => {
+                const nuevoDiv = document.createElement('div');
+                nuevoDiv.classList.add('rounded-xl', 'border', 'p-2', 'm-2', 'text-sm', 'bg-gray-500', 'text-white');
+
+                nuevoDiv.id = `alergia-${alergia}`;
+                nuevoDiv.textContent = alergia;
+
+                const close = document.createElement('i');
+                close.classList.add('fa-solid', 'fa-circle-xmark', 'text-red-500'); // Agregamos 'text-red-500' para cambiar el color del icono
+                close.style.marginLeft = 'auto';
+                const botonEliminar = document.createElement('button');
+                botonEliminar.classList.add('text-white'); // Agregamos 'text-white' para cambiar el color del texto del botón
+
+                botonEliminar.appendChild(close);
+                botonEliminar.type = 'button';
+                botonEliminar.addEventListener('click', () => eliminarAlergia(alergia));
+                botonEliminar.style.marginLeft = 'auto';
+                nuevoDiv.appendChild(botonEliminar);
+
+                divAlergias.appendChild(nuevoDiv);
+                
+            });
+            alergiasSubmit.value = alergiasSeleccionadas;
+        }
+
+
+        function eliminarAlergia(idAlergia) {
+            // Encuentra el índice del elemento a eliminar en alergiasSeleccionadas
+            const indiceEliminar = alergiasSeleccionadas.indexOf(idAlergia);
+
+            if (indiceEliminar !== -1) {
+                alergiasSeleccionadas.splice(indiceEliminar, 1);
+                const divAlergia = document.getElementById(`alergia-${idAlergia}`);
+                if (divAlergia) {
+                    divAlergia.remove();
+                }
+                actualizarAlergiasDiv();
+            }
+        }
+
+        alergiaInput.addEventListener('input', () => {
+            const texto = alergiaInput.value.trim().toLowerCase();
+            console.log(texto);
+            if (texto === '') {
+                tablaAlergiasDiv.classList.add('hidden');
+                cargarAlergias('');
+            } else {
+                tablaAlergiasDiv.classList.remove('hidden');
+                cargarAlergias(texto);
+            }
+        });
+
+        function cargarAlergias(texto) {
+            console.log(texto);
+            fetch(`/buscar-medicamentos-create?texto=${texto}`)
+                .then(response => response.text())
+                .then(data => {
+                    tablaAlergiasDiv.querySelector('tbody').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error al cargar los resultados:', error);
+                });
+        }
 
         //PARTE DE SERVICIO
 

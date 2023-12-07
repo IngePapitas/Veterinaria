@@ -81,4 +81,18 @@ class Paciente extends Model
 
         return $results;
     }
+
+    public static function getAlergias($id){
+        $results = DB::table('alergias')
+            ->select(
+                
+                'medicamentos.nombre'
+            )
+            ->leftJoin('medicamentos', 'alergias.id_medicamento', '=', 'medicamentos.id')
+            
+            ->where('alergias.id_paciente', $id)
+            ->get();
+
+        return $results;
+    }
 }
