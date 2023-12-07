@@ -27,6 +27,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/mascotas', [AuthController::class, 'mascotas']);
     Route::get('/citas', [AuthController::class, 'citas']);
+    Route::get('/carrito', [AuthController::class, 'carrito']);
+    Route::post('/addcart', [AuthController::class, 'addToCart']);
+    Route::get('/misnotas', [AuthController::class, 'notasDeServicio']);
+    Route::post('/valoracion', [AuthController::class, 'valoracion']);
 });
 
 Route::get('/productos',[AuthController::class, 'productos']);

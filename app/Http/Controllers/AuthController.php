@@ -8,6 +8,9 @@ use Laravel\Sanctum\Sanctum;
 use App\Models\Cita;
 use App\Models\producto;
 use Illuminate\Support\Facades\DB;
+use App\Models\carrito;
+use App\Models\detalle_carrito;
+use App\Models\valoracion;
 class AuthController extends Controller
 {
     //Register user
@@ -141,6 +144,87 @@ class AuthController extends Controller
         ],200);
         
     }
+
+    public function notasDeServicio(){
+        $user = Auth::user();
+        $correo = $user->email;
+        $id = DB::table('clientes')
+        ->join('users', 'clientes.correo', '=', 'users.email')
+        ->where('users.email', '=', $correo)
+        ->select('clientes.id')
+        ->first();
+    
+        $notasDeServicio = DB::table('nota_servicios')
+        ->select(
+            'nota_servicios.id',
+            'pacientes.nombre as nombre_paciente',
+            'nota_servicios.total',
+            'nota_servicios.created_at as fecha'
+        )
+        ->join('clientes', 'clientes.id', '=', 'nota_servicios.id_cliente')
+        ->join('pacientes', 'pacientes.id', '=', 'nota_servicios.id_paciente')
+        ->where('clientes.id', '=', $id->id) // Acceder al ID de la consulta anterior
+        ->get();
+    
+        return response([
+            'notasDeServicio' => $notasDeServicio,
+        ],200);
+    }
+
+    public function valoracion(Request $request)
+{
+    $valoracion = new Valoracion();
+    $valoracion->valoracion = $request->valoracion;
+    $valoracion->id_nota = $request->id_nota;
+    $valoracion->save();
+
+    return response()->json(['message' => 'Valoración guardada']);
+}
+
+    
+
+
+    public function carrito(){
+        $id = auth()->user()->id;
+        $carrito = carrito::where('cliente_id', $id)->first();
+        // dd($id);
+        // dd($carrito);
+        $detalle_carrito = detalle_carrito::where('carrito_id', $carrito->id)
+        ->join('productos','productos.id','=','detalle_carritos.producto_id')
+        ->select('detalle_carritos.*','productos.nombre','productos.descripcion','productos.imagen')
+        ->get();
+
+        return response([
+            'carrito' => $detalle_carrito,
+
+        ],200);
+    }
+
+            public function addToCart(Request $request)
+        {
+            $id = auth()->user()->id;
+            $carritoUsuario = Carrito::where('cliente_id', $id)->first();
+
+            if (!$carritoUsuario) {
+                $carritoUsuario = new Carrito();
+                $carritoUsuario->cliente_id = $id;
+                $carritoUsuario->total = 0; // Inicializar el total en cero para un nuevo carrito
+                $carritoUsuario->save();
+            }
+
+            $detalle_carrito = new detalle_carrito();
+            $detalle_carrito->carrito_id = $carritoUsuario->id;
+            $detalle_carrito->producto_id = $request->producto_id;
+            $detalle_carrito->cantidad = $request->cantidad;
+            $detalle_carrito->precio = $request->producto_precio;
+            $detalle_carrito->save();
+
+            // Actualizar el total del carrito sumando el precio del producto agregado
+            $carritoUsuario->total += ($request->producto_precio * $request->cantidad);
+            $carritoUsuario->save();
+
+            return response()->json(['message' => 'Producto añadido al carrito']);
+        }
 
 
 }

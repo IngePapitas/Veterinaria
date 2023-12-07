@@ -28,7 +28,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\NotaServicioController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\VentaController;
-
+use App\Http\Controllers\valoracionController;
 //use App\Http\Controllers\CategoriaMedicamentoController;
 
 /*
@@ -220,5 +220,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('compra', CompraController::class);
     Route::resource('venta', VentaController::class);
     Route::get('/pagoefectivo', [EfectivoController::class,'mostrarPagoEfectivo'])->name('continuarefectivo');
+    Route::get('/valoraciones', [valoracionController::class,'index'])->name('valoracion.index');
 
 }) ;

@@ -122,6 +122,9 @@
                 <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('Bitacora.twosteps')}}">
                     <i class="fa-regular fa-clipboard mr-2"></i>Bitacora
                 </a>
+                <a class="block text-gray-500 py-1.5 px-4 my-0 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="{{ route('valoracion.index')}}">
+                    <i class="fa-regular fa-clipboard mr-2"></i>Valoraciones
+                </a>
             </nav>
 
             <!-- Ítem de Cerrar Sesión -->
