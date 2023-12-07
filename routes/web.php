@@ -88,6 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/buscar-paciente', [PacienteController::class, 'buscarPaciente'])->name('Paciente.buscarPaciente');
     Route::get('/paciente/{paciente}/show', [PacienteController::class, 'show'])->name('Paciente.show');
     Route::delete('/paciente', [PacienteController::class, 'destroy'])->name('Paciente.destroy');
+    Route::get('/paciente/{paciente}/cirujia', [PacienteController::class, 'cirujia'])->name('Paciente.cirujia');
+
 
     //BUSCADORES DE ESPECIES, CREADOR DE PACIENTES
     Route::get('/buscar-especie-imagen', [EspecieController::class, 'buscarEspecieImagen'])->name('Especie.buscarImagen');
@@ -154,6 +156,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/notasservicio/{cliente}', [NotaServicioController::class, 'update'])->name('NotaServicio.update');
     Route::delete('/notasservicio/{cliente}', [NotaServicioController::class, 'destroy'])->name('NotaServicio.destroy');
     Route::get('/buscar-notasservicio', [NotaServicioController::class, 'buscarNotasServicio'])->name('NotaServicio.clientes');
+    Route::get('/notasservicio/{notaservicio}/show', [NotaServicioController::class, 'show'])->name('NotaServicio.show');
+
 
     //SERVICIO YA TU SABE POR QUIEN
     Route::get('/servicios', [ServicioController::class, 'index'])->name('Servicio.index');

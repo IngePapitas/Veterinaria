@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alergia;
 use App\Models\Cita;
 use App\Models\Cliente;
 use App\Models\Especie;
@@ -13,6 +14,7 @@ use App\Models\NotaServicioServicio;
 use App\Models\Paciente;
 use App\Models\Personal;
 use App\Models\Raza;
+use App\Models\Registro;
 use App\Models\Servicio;
 use App\Models\Vacuna;
 use Carbon\Carbon;
@@ -25,8 +27,11 @@ class NotaServicioController extends Controller
      */
     public function index()
     {
-        $notasservicio = NotaServicio::all();
-        return view('VistaNotaServicio.index', compact('notasservicio'));
+        
+            $servicios = NotaServicio::servicios();
+    
+            
+        return view('VistaNotaServicio.index', compact('servicios'));
     }
 
     /**
@@ -43,11 +48,12 @@ class NotaServicioController extends Controller
         $allEspecies = Especie::all();
         $allServicios = Servicio::all();
         $allMedicamentos = Medicamento::all();
+        $allAlergias = Alergia::all();
         $estados = EstadoPaciente::all();
         $servicios = [];
         $medicamentos = [];
         $vacunas = Vacuna::all();
-        return view('VistaNotaServicio.create', compact('clientes', 'pacientes', 'personals', 'especies', 'razas', 'allRazas', 'allEspecies', 'servicios', 'allServicios', 'medicamentos', 'allMedicamentos', 'estados', 'vacunas'));
+        return view('VistaNotaServicio.create', compact('clientes', 'pacientes', 'personals', 'especies', 'razas', 'allRazas', 'allEspecies', 'servicios', 'allServicios', 'medicamentos', 'allMedicamentos', 'estados', 'vacunas','allAlergias'));
     }
 
     /**
@@ -201,6 +207,28 @@ class NotaServicioController extends Controller
             }
         }
 
+        $cantidadDivs = $request->input('cantidadDivs');
+        for ($i = 0; $i < $cantidadDivs; $i++) {
+            $registro = new Registro();
+            $registro->id_nota = $notaservicio->id;
+            $registro->descripcion = $request->input('texto_div' . $i);
+            $tipoArchivo = $request->input('tipoArchivo_div' . $i);
+            if($tipoArchivo == 'foto'){
+                if ($request->hasFile('archivo_div'. $i)) {
+                    $imagenPath = $request->file('archivo_div'. $i)->store('public/fotosServicios');
+                    $registro->path_archivo = $imagenPath;
+                    $registro->tipo_archivo = '2';
+                }
+            }else{
+                if ($request->hasFile('archivo_div'. $i)) {
+                    $imagenPath = $request->file('archivo_div'. $i)->store('public/documentosServicios');
+                    $registro->path_archivo = $imagenPath;
+                    $registro->tipo_archivo = '1';
+                }
+            }
+            $registro->save();
+        }
+
 
 
         $datos = [
@@ -224,7 +252,17 @@ class NotaServicioController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $servicioRealizado = NotaServicioServicio::getDetalles($id);
+        $encabezado = NotaServicio::detalles($servicioRealizado->id_notaservicio);
+        $notasDocumentos = Registro::where('id_nota',$servicioRealizado->id_notaservicio)
+        ->where('tipo_archivo','1')->get();
+        $notasImagenes = Registro::where('id_nota',$servicioRealizado->id_notaservicio)
+        ->where('tipo_archivo','2')->get(); 
+        $notas = Registro::where('id_nota',$servicioRealizado->id_notaservicio)
+        ->where('tipo_archivo', null)->get();
+        $historial = NotaServicioServicio::historialServicios($encabezado->id_paciente);
+
+        return view('VistaNotaServicio.show', compact('encabezado', 'notas','notasImagenes' ,'notasDocumentos','servicioRealizado','historial'));
     }
 
     /**

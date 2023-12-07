@@ -18,6 +18,12 @@
             <input type="text" name="precio" id="precio" class="form-input mt-1 w-full">
         </div>
 
+        <select class="block mb-4" name="tipo_servicio">
+        @foreach($tipoServicios as $tipoServicio)
+            <option value="{{$tipoServicio->id}}">{{$tipoServicio->nombre}}</option>
+        @endforeach
+        </select>
+
         
         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
             Guardar Servicio

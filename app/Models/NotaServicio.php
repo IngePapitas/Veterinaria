@@ -62,6 +62,28 @@ class NotaServicio extends Model
 
         return $results;
     }
+
+    public static function detalles($id)
+    {
+        $results = DB::table('nota_servicios')
+            ->select(
+                'nota_servicios.*',
+                'personals.nombre as personal',
+                'clientes.nombre as cliente',
+                'clientes.ci as clienteci',
+                'estado_pacientes.descripcion as estado',
+                'pacientes.nombre as paciente',
+                'pacientes.id as id_paciente'
+            )
+            ->leftJoin('personals', 'personals.id', '=', 'nota_servicios.id_personal')
+            ->leftJoin('clientes', 'clientes.id', '=', 'nota_servicios.id_cliente')
+            ->leftJoin('estado_pacientes', 'estado_pacientes.id', '=', 'nota_servicios.id_estado')
+            ->leftJoin('pacientes', 'pacientes.id', '=', 'nota_servicios.id_paciente')
+            ->where('nota_servicios.id', '=', $id)
+            ->first();
+
+        return $results;
+    }
     public static function allDuenos()
     {
         $results = DB::table('nota_servicios')
@@ -90,6 +112,43 @@ class NotaServicio extends Model
             ->leftJoin('especies', 'especies.id', '=', 'pacientes.id_especie')
             ->groupBy('clientes.nombre', 'clientes.ci', 'pacientes.id')
             ->where('clientes.id', '=', $dueno)
+            ->get();
+
+        return $results;
+    }
+
+    public static function cirujias($id)
+    {
+        $results = DB::table('nota_servicios')
+            ->select(
+                'nota_servicio_servicios.id', 'servicios.id_tipo_servicio', 'servicios.descripcion as servicio', 'nota_servicios.created_at',
+                'personals.nombre', 'nota_servicios.id_estado', 'estado_pacientes.descripcion as estado'
+            )
+            ->leftJoin('nota_servicio_servicios', 'nota_servicios.id', '=', 'nota_servicio_servicios.id_notaservicio')
+            ->leftJoin('pacientes', 'pacientes.id', '=', 'nota_servicios.id_paciente')
+            ->leftJoin('estado_pacientes', 'estado_pacientes.id', '=', 'nota_servicios.id_estado')
+            ->leftJoin('servicios', 'servicios.id', '=', 'nota_servicio_servicios.id_servicio')
+            ->leftJoin('personals', 'personals.id', '=', 'nota_servicios.id_personal')
+            ->where('servicios.id_tipo_servicio','=',1)
+            ->where('pacientes.id','=',$id)
+            ->get();
+
+        return $results;
+    }
+
+    public static function servicios()
+    {
+        $results = DB::table('nota_servicios')
+            ->select(
+                'nota_servicio_servicios.id', 'servicios.id_tipo_servicio', 'servicios.descripcion as servicio', 'nota_servicios.created_at',
+                'personals.nombre', 'nota_servicios.id_estado', 'estado_pacientes.descripcion as estado','tipo_servicios.nombre as tipo', 'pacientes.nombre as paciente'
+            )
+            ->leftJoin('nota_servicio_servicios', 'nota_servicios.id', '=', 'nota_servicio_servicios.id_notaservicio')
+            ->leftJoin('pacientes', 'pacientes.id', '=', 'nota_servicios.id_paciente')
+            ->leftJoin('estado_pacientes', 'estado_pacientes.id', '=', 'nota_servicios.id_estado')
+            ->leftJoin('servicios', 'servicios.id', '=', 'nota_servicio_servicios.id_servicio')
+            ->leftJoin('tipo_servicios', 'tipo_servicios.id', '=', 'servicios.id_tipo_servicio')
+            ->leftJoin('personals', 'personals.id', '=', 'nota_servicios.id_personal')
             ->get();
 
         return $results;
