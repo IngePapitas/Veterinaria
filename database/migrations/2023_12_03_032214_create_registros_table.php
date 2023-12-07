@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('descripcion');
             $table->string('path_archivo')->nullable();
-            $table->string('tipo_archivo')->nullable();
+            $table->string('tipo_archivo')->nullable(); //1 pdf, 2 foto (añadir si requieren mas tipo y especificar)
             $table->unsignedBigInteger('id_nota');
             $table->timestamps();
 

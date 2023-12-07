@@ -19,6 +19,7 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EfectivoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\MedicamentoController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NotaServicioController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\VentaController;
 
 //use App\Http\Controllers\CategoriaMedicamentoController;
 
@@ -86,6 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/buscar-paciente', [PacienteController::class, 'buscarPaciente'])->name('Paciente.buscarPaciente');
     Route::get('/paciente/{paciente}/show', [PacienteController::class, 'show'])->name('Paciente.show');
     Route::delete('/paciente', [PacienteController::class, 'destroy'])->name('Paciente.destroy');
+    Route::get('/paciente/{paciente}/cirujia', [PacienteController::class, 'cirujia'])->name('Paciente.cirujia');
+
 
     //BUSCADORES DE ESPECIES, CREADOR DE PACIENTES
     Route::get('/buscar-especie-imagen', [EspecieController::class, 'buscarEspecieImagen'])->name('Especie.buscarImagen');
@@ -152,6 +156,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/notasservicio/{cliente}', [NotaServicioController::class, 'update'])->name('NotaServicio.update');
     Route::delete('/notasservicio/{cliente}', [NotaServicioController::class, 'destroy'])->name('NotaServicio.destroy');
     Route::get('/buscar-notasservicio', [NotaServicioController::class, 'buscarNotasServicio'])->name('NotaServicio.clientes');
+    Route::get('/notasservicio/{notaservicio}/show', [NotaServicioController::class, 'show'])->name('NotaServicio.show');
+
 
     //SERVICIO YA TU SABE POR QUIEN
     Route::get('/servicios', [ServicioController::class, 'index'])->name('Servicio.index');
@@ -207,7 +213,12 @@ Route::middleware('auth')->group(function () {
 
     //Pedidos
     Route::resource('pedido', PedidoController::class)->except(['update']);
+    Route::post('/session', [SessionController::class, 'store'])->name('session');
+
+    Route::get('notaVenta{id}', [VentaController::class, 'notaVenta'])->name('notaVenta');
     Route::get('notaCompra{id}', [CompraController::class, 'notaCompra'])->name('notaCompra');
     Route::resource('compra', CompraController::class);
+    Route::resource('venta', VentaController::class);
+    Route::get('/pagoefectivo', [EfectivoController::class,'mostrarPagoEfectivo'])->name('continuarefectivo');
 
 }) ;

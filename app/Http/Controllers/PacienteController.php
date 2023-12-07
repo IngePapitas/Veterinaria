@@ -80,6 +80,7 @@ class PacienteController extends Controller
         $historial = Paciente::getNotasServicio($id);
         $allNotasServicio = NotaServicio::allData();
         $duenos = NotaServicio::allDuenos();
+        $tieneCirujias = NotaServicio::cirujias($id);
         $personal = '';
         $citaPendiente = Cita::getCitaAnterior($id, $personal);
 
@@ -87,7 +88,7 @@ class PacienteController extends Controller
         ->where('tipo', 1)
         ->get();
 
-        return view ('VistaPaciente.show',compact('paciente','historial','allNotasServicio','duenos', 'citaPendiente', 'vacunas'));
+        return view ('VistaPaciente.show',compact('paciente','historial','allNotasServicio','duenos', 'citaPendiente', 'vacunas','tieneCirujias'));
         
     }
 
@@ -152,6 +153,13 @@ class PacienteController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function cirujia(string $id){
+        $paciente = Paciente::findOrFail($id);
+        $cirujias = NotaServicio::cirujias($id);
+
+        return view('VistaPaciente.cirujia', compact('paciente','cirujias'));
     }
     
 }

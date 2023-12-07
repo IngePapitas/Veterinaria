@@ -1,6 +1,5 @@
-@include('Panza')
+@include('nav-welcome')
 
-@section('Panza')
 <div class="container mx-auto px-4 mt-8">
     <h1 class="text-3xl font-bold mb-4">Compras Realizadas</h1>
 
@@ -33,4 +32,5 @@
         </table>
     </div>
 </div>
-@endsection
+
+@include('footer')

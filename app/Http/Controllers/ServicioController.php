@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NotaServicio;
 use App\Models\Servicio;
+use App\Models\TipoServicio;
 use Illuminate\Http\Request;
 
 class ServicioController extends Controller
@@ -22,8 +23,8 @@ class ServicioController extends Controller
      */
     public function create()
     {
-
-        return view('VistaServicio.create');
+        $tipoServicios = TipoServicio::all();
+        return view('VistaServicio.create', compact('tipoServicios'));
     }
 
     public function store(Request $request)
@@ -36,6 +37,7 @@ class ServicioController extends Controller
         $servicio = new Servicio();
         $servicio->descripcion = $request->input('descripcion');
         $servicio->precio = $request->input('precio');
+        $servicio->id_tipo_servicio = $request->input('tipo_servicio');
         
         activity()
                 ->causedBy(auth()->user())//usuario responsable de actividad
@@ -59,8 +61,9 @@ class ServicioController extends Controller
      */
     public function edit($id)
     {
+        $tipoServicios = TipoServicio::all();
         $servicio = Servicio::find($id);
-        return view('VistaServicio.edit', compact('servicio'));
+        return view('VistaServicio.edit', compact('servicio','tipoServicios'));
     }
 
     public function update(Request $request, $id)
@@ -73,6 +76,7 @@ class ServicioController extends Controller
         $servicio = Servicio::find($id);
         $servicio->descripcion = $request->input('descripcion');
         $servicio->precio = $request->input('precio');
+        $servicio->id_tipo_servicio = $request->input('tipo_servicio');
         $servicio->save();
         
         activity()

@@ -32,6 +32,9 @@
             <li class="mr-1">
                 <a class="tab-link bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-t" data-tab="tab3" href="#">Paciente</a>
             </li>
+            <li class="mr-1">
+                <a class="tab-link bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold rounded-t" data-tab="tab4" href="#">Notas</a>
+            </li>
         </ul>
         <!-- TAB SERVICIO -->
         <div id="tab1" class="bg-white border-l border-r border-b p-4 grid">
@@ -322,13 +325,21 @@
                             </div>
                         </div>
                     </div>
+
+                    
                     <input type="hidden" name="imagen_cargada" id="imagenCargadaInput">
                     <input type="hidden" name="InputServicios" id="InputServicios">
                     <input type="hidden" name="InputMedicamentos" id="InputMedicamentos">
                     <input type="hidden" name="InputCantidades" id="InputCantidades">
-            
+                    <input type="hidden" name="cantidadDivs" id="cantidadDivs">
+
+
                 </div>
             </div>
+        </div>
+        <div id="tab4" class="bg-white border-l border-r border-b p-4 grid hidden">
+            <button id="agregarDiv" type="button" class="w-10 h-10 bg-blue-500 text-white rounded-full text-2xl">+</button>
+
         </div>
 </form>
 
@@ -385,6 +396,8 @@
         let totalMedicamentos = 0;
         spanTotal.textContent = total + 'Bs.';
 
+        //MODAL
+
         const modal = document.getElementById('modal');
         const closeModalButton = document.getElementById('close-modal');
         const modalTriggerElements = document.querySelectorAll('.modal-trigger');
@@ -393,6 +406,99 @@
         const selVacunasPlan = document.getElementById('selVacunasPlan');
         const selVacunasUnica = document.getElementById('selVacunasUnica');
         const vacunas = @json($vacunas);
+
+        //NOTAS
+        const tab4 = document.getElementById('tab4');
+    const botonAgregar = document.getElementById('agregarDiv');
+        const cantidadDivs = document.getElementById('cantidadDivs');
+    let contadorDivs = 0;
+    cantidadDivs.value = contadorDivs;
+
+    function crearNuevoDiv() {
+        const nuevoDiv = document.createElement('div');
+        nuevoDiv.id = 'div' + contadorDivs;
+        nuevoDiv.classList.add('rounded-xl', 'bg-blue-200', 'grid','grid-cols-3','gap-2',  'p-4', 'mb-2');
+
+        contadorDivs++;
+        cantidadDivs.value = contadorDivs;
+
+        const inputTexto = document.createElement('input');
+        inputTexto.type = 'text';
+        inputTexto.name = 'texto_' + nuevoDiv.id;
+        inputTexto.placeholder = 'Texto';
+        inputTexto.classList.add('border', 'p-2', 'mb-2');
+
+        const radioFoto = document.createElement('input');
+        radioFoto.type = 'radio';
+        radioFoto.name = 'tipoArchivo_' + nuevoDiv.id;
+        radioFoto.value = 'foto';
+        radioFoto.checked = true;
+
+        const radioDocumento = document.createElement('input');
+        radioDocumento.type = 'radio';
+        radioDocumento.name = 'tipoArchivo_' + nuevoDiv.id;
+        radioDocumento.value = 'documento';
+
+        const inputArchivo = document.createElement('input');
+        inputArchivo.type = 'file';
+        inputArchivo.name = 'archivo_' + nuevoDiv.id;
+        inputArchivo.accept = 'image/*'; 
+        inputArchivo.classList.add('mb-2');
+
+        radioFoto.addEventListener('change', () => {
+            inputArchivo.accept = 'image/*';
+        });
+
+        radioDocumento.addEventListener('change', () => {
+            inputArchivo.accept = '.pdf';
+        });
+
+        const close = document.createElement('i');
+        close.classList.add('fa-solid', 'fa-circle-xmark');
+
+        const botonEliminar = document.createElement('button');
+        botonEliminar.type = 'button';
+        botonEliminar.classList.add('w-10', 'h-10', 'bg-red-500', 'text-white', 'rounded-xl', 'text-2xl', 'ml-2');
+        botonEliminar.appendChild(close);
+
+        
+        
+        botonEliminar.addEventListener('click', () => {
+            tab4.removeChild(nuevoDiv);
+            contadorDivs--;
+            cantidadDivs.value = contadorDivs;
+        });
+
+        const divInput = document.createElement('div');
+        divInput.id = 'divInput' + contadorDivs;
+        divInput.classList.add('bg-blue-200', 'p-2', 'mb-2');
+
+        const divRadio = document.createElement('div');
+        divRadio.id = 'divRadio' + contadorDivs;
+        divRadio.classList.add('bg-blue-200','w-full');
+        nuevoDiv.appendChild(inputTexto);
+        divInput.appendChild(inputArchivo);
+        divRadio.appendChild(radioFoto);
+        divRadio.appendChild(document.createTextNode('Foto'));
+        divRadio.appendChild(radioDocumento);    
+        divRadio.appendChild(document.createTextNode('Documento'));
+        divInput.appendChild(divRadio);
+        nuevoDiv.appendChild(divInput);
+        
+        //nuevoDiv.appendChild(botonEliminar);
+
+        const divBorrar = document.createElement('div');
+        divBorrar.id = 'divBorrar' + contadorDivs;
+        divBorrar.classList.add('w-full','block','text-center', 'p-2', 'mb-2');
+        divBorrar.appendChild(botonEliminar);
+        nuevoDiv.appendChild(divBorrar);
+
+        tab4.insertBefore(nuevoDiv, botonAgregar);
+    }
+
+ 
+    botonAgregar.addEventListener('click', crearNuevoDiv);
+
 
         modalTriggerElements.forEach(function(element) {
             element.addEventListener('click', function() {

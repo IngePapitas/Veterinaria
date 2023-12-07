@@ -18,6 +18,12 @@
             <input type="text" name="precio" id="precio" class="form-input mt-1 w-full" value="{{ $servicio->precio }}">
         </div>
         
+        <select class="block mb-4" name="tipo_servicio">
+        @foreach($tipoServicios as $tipoServicio)
+            <option value="{{$tipoServicio->id}}" {{ $servicio->id_tipo_servicio == $tipoServicio->id ? 'selected' : '' }}>{{$tipoServicio->nombre}}</option>
+        @endforeach
+        </select>
+
         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
             Actualizar Servicio
         </button>

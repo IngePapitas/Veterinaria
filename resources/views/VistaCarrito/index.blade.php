@@ -1,6 +1,5 @@
-@include('Panza')
+@include('nav-welcome')
 
-@section('Panza')
 <div class="container mx-auto mt-8">
     <div class="bg-white shadow-md rounded-lg p-6 lg:p-12">
         <h2 class="text-3xl text-black font-bold mb-6">Carrito de Compras</h2>
@@ -39,8 +38,7 @@
                             <form action="{{ route('carrito.destroy', $producto->id) }}" method="post">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit"
-                                    class="text-red-600 hover:text-red-800 cursor-pointer">Eliminar</button>
+                                <button type="submit" class="text-red-600 hover:text-red-800 cursor-pointer">Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -50,30 +48,18 @@
         </div>
 
         <div class="flex justify-between items-center mt-8">
-                <form action="{{ route('session') }}" method="post">
+                <form action="{{ route('continuarefectivo') }}" method="get">
                     @csrf
                     <input type="text" name="carrito" hidden value="{{ $carrito->id }}">
                     @foreach ($detalle_carrito as $producto)
                         <input type="text" name="producto{{ $producto->id }}" hidden value="{{ $producto->producto_id }}">
                     @endforeach
-                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full transition duration-300" id="pagarTarjeta">Pagar con tarjeta</button>
+                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full transition duration-300" id="pagarTarjeta">Pagar</button>
                     
-                </form>
-                <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full transition duration-300" id="pagarEfectivo">Pagar con efectivo</button>
-                <script>
-                    // Detectar clic en el botón "Pagar con tarjeta"
-                    document.getElementById('pagarTarjeta').addEventListener('click', function () {
-                        // No es necesario realizar ninguna acción aquí, el formulario se enviará a la ruta de Stripe
-                    });
-                
-                    // Detectar clic en el botón "Pagar con efectivo"
-                    document.getElementById('pagarEfectivo').addEventListener('click', function () {
-                        // Redirigir al usuario a la página de efectivo
-                        window.location.href = "{{ route('continuarefectivo') }}"; // Reemplaza 'pagina.efectivo' con la ruta correcta
-                    });
-                </script>
+                </form>                
             <div class="text-2xl font-semibold">Total: BOB {{ $carrito->total }}</div>
         </div>
     </div>
 </div>
-@endsection
+
+@include('footer')
