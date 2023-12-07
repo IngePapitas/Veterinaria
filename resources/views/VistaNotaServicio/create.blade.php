@@ -864,7 +864,7 @@
                 nuevoDiv.appendChild(botonEliminar);
 
                 divAlergias.appendChild(nuevoDiv);
-                
+
             });
             alergiasSubmit.value = alergiasSeleccionadas;
         }
@@ -1018,8 +1018,13 @@
                     }, 2000);
                 } else {
                     if (medicamentoEncontrado.stock > 0) {
-                        medicamentosSeleccionados.push(medicamentoValue);
-                        cantidadesSeleccionadas.push(1);
+                        if (alergiasSeleccionadas.includes(medicamentoEncontrado.nombre)) {
+                            alert('El paciente es alergico a ese medicamento');
+                        } else {
+                            medicamentosSeleccionados.push(medicamentoValue);
+                            cantidadesSeleccionadas.push(1);
+                        }
+
                     } else {
                         const stockInsuficienteSpan = document.getElementById('stockInvalidoSpan');
                         stockInsuficienteSpan.classList.remove('hidden');
